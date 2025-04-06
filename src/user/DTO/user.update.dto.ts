@@ -1,5 +1,5 @@
 import { IsString, IsEmail, IsOptional, IsEnum, Length } from 'class-validator';
-import { UserRole } from '../enums/user.role.enum'; 
+import { UserRole } from '../enums/user.role.enum';
 import { IsEmailUnique } from 'src/decorators/is-email-unique.decorator';
 
 export class UpdateUserDto {

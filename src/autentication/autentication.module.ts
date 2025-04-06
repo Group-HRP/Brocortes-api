@@ -6,13 +6,13 @@ import { PrismaClient } from '@prisma/client';
 import { JwtStrategy } from './jwt.strategy';
 
 @Module({
-    imports: [
-        JwtModule.register({
-            secret: process.env.JWT_TOKEN,
-            signOptions: { expiresIn: '72h' },
-        }),
-    ],
-    controllers: [AuthController],
-    providers: [AuthService, PrismaClient, JwtStrategy],
+  imports: [
+    JwtModule.register({
+      secret: process.env.JWT_TOKEN,
+      signOptions: { expiresIn: '72h' },
+    }),
+  ],
+  controllers: [AuthController],
+  providers: [AuthService, PrismaClient, JwtStrategy],
 })
-export class AutenticationModule { }
+export class AutenticationModule {}
