@@ -1,5 +1,6 @@
 import {
   IsEmail,
+  IsOptional,
   IsString,
   Matches,
   MaxLength,
@@ -26,4 +27,8 @@ export class RegisterDTO {
     },
   )
   password: string;
+
+  @IsString()
+  @IsOptional()
+  role: 'admin' | 'client';
 }
