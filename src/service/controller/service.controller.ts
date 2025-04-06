@@ -19,11 +19,10 @@ import { ServiceResponseDto } from '../DTO/response.service.dto';
 import { UpdateServiceDto } from '../DTO/update.service.dto';
 import { DeleteServiceOptionsDto } from '../DTO/delete.service.dto';
 
-
 @Controller('service')
 @UseGuards(AuthGuard('jwt'), RolesGuard)
 export class ServiceController {
-  constructor(private readonly serviceService: ServiceService) { }
+  constructor(private readonly serviceService: ServiceService) {}
 
   @Post()
   @Roles('admin')
@@ -59,15 +58,21 @@ export class ServiceController {
     return {
       statusCode: HttpStatus.OK,
       message: 'Serviços listados com sucesso',
-      data: services.map(services => new ServiceResponseDto(services))
-    }
+      data: services.map((services) => new ServiceResponseDto(services)),
+    };
   }
 
   @Patch(':id')
   @Roles('admin')
-  async update(@Param('id') id: number, @Body() updateServiceDto: UpdateServiceDto) {
+  async update(
+    @Param('id') id: number,
+    @Body() updateServiceDto: UpdateServiceDto,
+  ) {
     try {
-      const updatedService = await this.serviceService.update(id, updateServiceDto);
+      const updatedService = await this.serviceService.update(
+        id,
+        updateServiceDto,
+      );
       return {
         statusCode: HttpStatus.OK,
         message: 'Serviço atualizado com sucesso',
@@ -91,7 +96,10 @@ export class ServiceController {
 
   @Delete(':id')
   @Roles('admin')
-  async remove(@Param('id') id: number, @Body() deleteServiceOptionsDto: DeleteServiceOptionsDto) {
+  async remove(
+    @Param('id') id: number,
+    @Body() deleteServiceOptionsDto: DeleteServiceOptionsDto,
+  ) {
     try {
       await this.serviceService.remove(id, deleteServiceOptionsDto);
       return {
