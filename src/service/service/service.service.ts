@@ -1,6 +1,7 @@
 import { Injectable, HttpException, HttpStatus } from '@nestjs/common';
 import { PrismaClient } from '@prisma/client';
 import { CreateServiceDto } from '../DTO/create.service.dto';
+import { UpdateServiceDto } from '../DTO/update.service.dto';
 
 @Injectable()
 export class ServiceService {
@@ -81,6 +82,40 @@ export class ServiceService {
         error.message || 'Falha ao listar serviços',
         error.status || HttpStatus.INTERNAL_SERVER_ERROR,
       )
+    }
+  }
+
+  async update(id: number, updateServiceDto: UpdateServiceDto) {
+    try {
+      const service = await this.prisma.service.update({
+        where: { id: Number(id) },
+        data: updateServiceDto,
+      });
+      return service;
+    } catch (error) {
+      if (error.code === 'P2002') {
+        throw new HttpException(
+          {
+            statusCode: HttpStatus.CONFLICT,
+            message: 'Service with this name already exists',
+            error: 'Conflict',
+          },
+          HttpStatus.CONFLICT,
+        );
+      }
+
+      if (error instanceof HttpException) {
+        throw error;
+      }
+
+      throw new HttpException(
+        {
+          statusCode: HttpStatus.INTERNAL_SERVER_ERROR,
+          message: 'Failed to update service',
+          error: 'Internal Server Error',
+        },
+        HttpStatus.INTERNAL_SERVER_ERROR,
+      );
     }
   }
 }

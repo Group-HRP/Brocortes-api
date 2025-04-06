@@ -6,6 +6,8 @@ import {
   HttpException,
   HttpStatus,
   Get,
+  Patch,
+  Param,
 } from '@nestjs/common';
 import { ServiceService } from '../service/service.service';
 import { CreateServiceDto } from '../DTO/create.service.dto';
@@ -13,12 +15,13 @@ import { RolesGuard } from 'src/user/guards/roles.guard';
 import { AuthGuard } from '@nestjs/passport';
 import { Roles } from 'src/decorators/roles.decorator';
 import { ServiceResponseDto } from '../DTO/response.service.dto';
+import { UpdateServiceDto } from '../DTO/update.service.dto';
 
 
 @Controller('service')
 @UseGuards(AuthGuard('jwt'), RolesGuard)
 export class ServiceController {
-  constructor(private readonly serviceService: ServiceService) {}
+  constructor(private readonly serviceService: ServiceService) { }
 
   @Post()
   @Roles('admin')
@@ -58,5 +61,29 @@ export class ServiceController {
     }
   }
 
-  
+  @Patch(':id')
+  @Roles('admin')
+  async update(@Param('id') id: number, @Body() updateServiceDto: UpdateServiceDto) {
+    try {
+      const updatedService = await this.serviceService.update(id, updateServiceDto);
+      return {
+        statusCode: HttpStatus.OK,
+        message: 'Serviço atualizado com sucesso',
+        data: updatedService,
+      };
+    } catch (error) {
+      if (error instanceof HttpException) {
+        throw error;
+      }
+
+      throw new HttpException(
+        {
+          statusCode: HttpStatus.INTERNAL_SERVER_ERROR,
+          message: 'Erro ao atualizar serviço',
+          error: 'Internal Server Error',
+        },
+        HttpStatus.INTERNAL_SERVER_ERROR,
+      );
+    }
+  }
 }
