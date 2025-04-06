@@ -1,7 +1,8 @@
-import { Injectable, HttpException, HttpStatus } from '@nestjs/common';
+import { Injectable, HttpException, HttpStatus, NotFoundException } from '@nestjs/common';
 import { PrismaClient } from '@prisma/client';
 import { CreateServiceDto } from '../DTO/create.service.dto';
 import { UpdateServiceDto } from '../DTO/update.service.dto';
+import { DeleteServiceOptionsDto } from '../DTO/delete.service.dto';
 
 @Injectable()
 export class ServiceService {
@@ -112,6 +113,39 @@ export class ServiceService {
         {
           statusCode: HttpStatus.INTERNAL_SERVER_ERROR,
           message: 'Failed to update service',
+          error: 'Internal Server Error',
+        },
+        HttpStatus.INTERNAL_SERVER_ERROR,
+      );
+    }
+  }
+
+  async remove(id: number, deleteServiceOptionsDto: DeleteServiceOptionsDto) {
+    try {
+
+      const existingService = await this.prisma.service.findUnique({
+        where: { id: Number(id) },
+      })
+
+      if(!existingService) {
+        throw new NotFoundException('Service nao encontrado')
+      }
+
+      const hardDelete = await this.prisma.service.delete({
+        where: { id: Number(id) },
+      })
+
+      return hardDelete;
+     
+    } catch (error) {
+      if (error instanceof HttpException) {
+        throw error;
+      }
+
+      throw new HttpException(
+        {
+          statusCode: HttpStatus.INTERNAL_SERVER_ERROR,
+          message: 'Failed to delete service',
           error: 'Internal Server Error',
         },
         HttpStatus.INTERNAL_SERVER_ERROR,

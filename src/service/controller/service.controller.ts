@@ -8,6 +8,7 @@ import {
   Get,
   Patch,
   Param,
+  Delete,
 } from '@nestjs/common';
 import { ServiceService } from '../service/service.service';
 import { CreateServiceDto } from '../DTO/create.service.dto';
@@ -16,6 +17,7 @@ import { AuthGuard } from '@nestjs/passport';
 import { Roles } from 'src/decorators/roles.decorator';
 import { ServiceResponseDto } from '../DTO/response.service.dto';
 import { UpdateServiceDto } from '../DTO/update.service.dto';
+import { DeleteServiceOptionsDto } from '../DTO/delete.service.dto';
 
 
 @Controller('service')
@@ -80,6 +82,31 @@ export class ServiceController {
         {
           statusCode: HttpStatus.INTERNAL_SERVER_ERROR,
           message: 'Erro ao atualizar serviço',
+          error: 'Internal Server Error',
+        },
+        HttpStatus.INTERNAL_SERVER_ERROR,
+      );
+    }
+  }
+
+  @Delete(':id')
+  @Roles('admin')
+  async remove(@Param('id') id: number, @Body() deleteServiceOptionsDto: DeleteServiceOptionsDto) {
+    try {
+      await this.serviceService.remove(id, deleteServiceOptionsDto);
+      return {
+        statusCode: HttpStatus.OK,
+        message: 'Serviço removido com sucesso',
+      };
+    } catch (error) {
+      if (error instanceof HttpException) {
+        throw error;
+      }
+
+      throw new HttpException(
+        {
+          statusCode: HttpStatus.INTERNAL_SERVER_ERROR,
+          message: 'Erro ao remover serviço',
           error: 'Internal Server Error',
         },
         HttpStatus.INTERNAL_SERVER_ERROR,
