@@ -7,6 +7,8 @@ import { UserModule } from './user/user.module';
 import { ServiceModule } from './service/service.module';
 import { AppointmentsModule } from './appointments/appointments.module';
 import { BlockedHoursModule } from './blockedHours/blocked-hours.module';
+import { NotificationsController } from './notifications/controller/notifications.controller';
+import { NotificationsService } from './notifications/service/notifications.service';
 
 @Module({
   imports: [
@@ -19,5 +21,7 @@ import { BlockedHoursModule } from './blockedHours/blocked-hours.module';
     AppointmentsModule,
     BlockedHoursModule,
   ],
+  controllers: [NotificationsController],
+  providers: [NotificationsService],
 })
 export class AppModule {}
