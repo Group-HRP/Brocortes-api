@@ -10,12 +10,15 @@ export class BlockedHoursResponseDto {
     example: '2023-12-25T14:00:00Z',
     description: 'Data e hora bloqueada',
     type: String,
-    format: 'date-time'
+    format: 'date-time',
   })
   @Expose()
   date: Date;
 
-  @ApiProperty({ example: 'Feriado de Natal', description: 'Motivo do bloqueio' })
+  @ApiProperty({
+    example: 'Feriado de Natal',
+    description: 'Motivo do bloqueio',
+  })
   @Expose()
   reason: string;
 
@@ -23,7 +26,7 @@ export class BlockedHoursResponseDto {
     example: '2023-12-20T09:00:00Z',
     description: 'Data de criação do registro',
     type: String,
-    format: 'date-time'
+    format: 'date-time',
   })
   @Expose()
   createdAt: Date;

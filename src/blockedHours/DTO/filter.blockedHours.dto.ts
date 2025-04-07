@@ -7,18 +7,18 @@ export class BlockedHoursFilterDto {
     description: 'Filtrar a partir desta data',
     required: false,
     type: String,
-    format: 'date'
+    format: 'date',
   })
   @IsDateString()
   @IsOptional()
-  startDate?: Date;
+  date?: Date;
 
   @ApiProperty({
     example: '2023-12-31',
     description: 'Filtrar até esta data',
     required: false,
     type: String,
-    format: 'date'
+    format: 'date',
   })
   @IsDateString()
   @IsOptional()
@@ -27,9 +27,9 @@ export class BlockedHoursFilterDto {
   @ApiProperty({
     example: 'Feriado',
     description: 'Filtrar por motivo (contém o texto)',
-    required: false
+    required: false,
   })
   @IsString()
   @IsOptional()
-  reasonContains?: string;
+  reason?: string;
 }

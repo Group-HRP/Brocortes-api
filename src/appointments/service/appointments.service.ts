@@ -94,10 +94,10 @@ export class AppointmentsService {
       cancellationReason?: string;
       canceledBy: number;
     },
-    userId?: number
+    userId?: number,
   ) {
     const appointment = await this.prisma.appointment.findUnique({
-      where: { id }
+      where: { id },
     });
 
     if (!appointment) {
@@ -105,18 +105,20 @@ export class AppointmentsService {
     }
 
     if (userId && appointment.userId !== userId) {
-      throw new ForbiddenException('Você só pode cancelar seus próprios agendamentos');
+      throw new ForbiddenException(
+        'Você só pode cancelar seus próprios agendamentos',
+      );
     }
 
     return this.prisma.appointment.update({
-        where: { id },
-        data: {
-          status: 'canceled',
-          cancellationReason: deleteData.cancellationReason,
-          canceledById: deleteData.canceledBy,
-          canceledAt: new Date()
-        }
-      });
+      where: { id },
+      data: {
+        status: 'canceled',
+        cancellationReason: deleteData.cancellationReason,
+        canceledById: deleteData.canceledBy,
+        canceledAt: new Date(),
+      },
+    });
 
     // return this.prisma.appointment.delete({ where: { id } });
   }

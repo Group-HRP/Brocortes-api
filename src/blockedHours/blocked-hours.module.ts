@@ -4,6 +4,6 @@ import { BlockedHoursService } from './service/blocked-hours.service';
 
 @Module({
   controllers: [BlockedHoursController],
-  providers: [BlockedHoursService]
+  providers: [BlockedHoursService],
 })
 export class BlockedHoursModule {}

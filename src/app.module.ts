@@ -6,7 +6,7 @@ import { PrismaModule } from './prisma/prisma.module';
 import { UserModule } from './user/user.module';
 import { ServiceModule } from './service/service.module';
 import { AppointmentsModule } from './appointments/appointments.module';
-import { BlockedHoursModule } from './blocked-hours/blocked-hours.module';
+import { BlockedHoursModule } from './blockedHours/blocked-hours.module';
 
 @Module({
   imports: [

@@ -7,7 +7,7 @@ export class UpdateBlockedHoursDto {
     description: 'Nova data e hora (opcional)',
     required: false,
     type: String,
-    format: 'date-time'
+    format: 'date-time',
   })
   @IsDateString()
   @IsOptional()
@@ -17,7 +17,7 @@ export class UpdateBlockedHoursDto {
     example: 'Recesso de fim de ano',
     description: 'Novo motivo (opcional)',
     required: false,
-    maxLength: 255
+    maxLength: 255,
   })
   @IsString()
   @IsOptional()

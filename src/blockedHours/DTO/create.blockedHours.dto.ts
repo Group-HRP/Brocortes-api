@@ -6,7 +6,7 @@ export class CreateBlockedHoursDto {
     example: '2023-12-25T14:00:00Z',
     description: 'Data e hora do bloqueio (formato ISO 8601)',
     type: String,
-    format: 'date-time'
+    format: 'date-time',
   })
   @IsDateString()
   @IsNotEmpty()
@@ -16,7 +16,7 @@ export class CreateBlockedHoursDto {
     example: 'Feriado de Natal',
     description: 'Motivo do bloqueio',
     minLength: 3,
-    maxLength: 255
+    maxLength: 255,
   })
   @IsString()
   @IsNotEmpty()
