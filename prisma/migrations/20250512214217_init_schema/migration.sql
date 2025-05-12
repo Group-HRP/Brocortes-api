@@ -33,6 +33,9 @@ CREATE TABLE "Appointment" (
     "status" TEXT NOT NULL DEFAULT 'scheduled',
     "createdAt" TIMESTAMP(3) NOT NULL DEFAULT CURRENT_TIMESTAMP,
     "updatedAt" TIMESTAMP(3) NOT NULL,
+    "canceledAt" TIMESTAMP(3),
+    "canceledById" INTEGER,
+    "cancellationReason" TEXT,
 
     CONSTRAINT "Appointment_pkey" PRIMARY KEY ("id")
 );
