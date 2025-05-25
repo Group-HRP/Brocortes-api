@@ -18,6 +18,7 @@ const appointments_module_1 = require("./appointments/appointments.module");
 const blocked_hours_module_1 = require("./blockedHours/blocked-hours.module");
 const notifications_controller_1 = require("./notifications/controller/notifications.controller");
 const notifications_service_1 = require("./notifications/service/notifications.service");
+const category_module_1 = require("./category/category.module");
 let AppModule = class AppModule {
 };
 exports.AppModule = AppModule;
@@ -32,6 +33,7 @@ exports.AppModule = AppModule = __decorate([
             service_module_1.ServiceModule,
             appointments_module_1.AppointmentsModule,
             blocked_hours_module_1.BlockedHoursModule,
+            category_module_1.CategoryModule,
         ],
         controllers: [notifications_controller_1.NotificationsController],
         providers: [notifications_service_1.NotificationsService],
