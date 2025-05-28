@@ -1,19 +1,23 @@
-import { BadRequestException, Injectable, NotFoundException } from '@nestjs/common';
+import {
+  BadRequestException,
+  Injectable,
+  NotFoundException,
+} from '@nestjs/common';
 import { CreateCategoryDto } from '../DTO/create-category.dto';
 import { UpdateCategoryDto } from '../DTO/update-category.dto';
 import { PrismaClient } from '@prisma/client';
 
 @Injectable()
 export class CategoryService {
-  constructor(private prisma: PrismaClient) { }
+  constructor(private prisma: PrismaClient) {}
 
   async serviceExisting(serviceId: number) {
     const service = await this.prisma.service.findUnique({
-      where: { id: serviceId }
-    })
+      where: { id: serviceId },
+    });
 
     if (!service) {
-      throw new NotFoundException("Servico nâo encontrado")
+      throw new NotFoundException('Servico nâo encontrado');
     }
 
     return service;
@@ -21,14 +25,14 @@ export class CategoryService {
 
   async create(createCategoryDto: CreateCategoryDto) {
     const category = await this.prisma.category.create({
-      data: createCategoryDto
-    })
+      data: createCategoryDto,
+    });
 
     return category;
   }
 
   async findAll() {
-    return this.prisma.category.findMany()
+    return this.prisma.category.findMany();
   }
 
   async findOne(id: number) {
@@ -37,12 +41,12 @@ export class CategoryService {
       select: {
         id: true,
         name: true,
-        service: true
-      }
-    })
+        service: true,
+      },
+    });
 
     if (!categoryList) {
-      throw new NotFoundException("Nenhuma cateogria encontrada")
+      throw new NotFoundException('Nenhuma cateogria encontrada');
     }
 
     return categoryList;
@@ -52,48 +56,49 @@ export class CategoryService {
     const categoryExisting = await this.findOne(id);
 
     if (!categoryExisting) {
-      throw new NotFoundException("categoria nao encontrada")
+      throw new NotFoundException('categoria nao encontrada');
     }
 
     if (updateCategoryDto.serviceId === undefined) {
-      throw new BadRequestException("servico nao informado")
+      throw new BadRequestException('servico nao informado');
     }
-    const serviceExisting = await this.serviceExisting(updateCategoryDto.serviceId);
+    const serviceExisting = await this.serviceExisting(
+      updateCategoryDto.serviceId,
+    );
 
     if (!serviceExisting) {
-      throw new NotFoundException("Servico nao encontrado")
+      throw new NotFoundException('Servico nao encontrado');
     }
     const categoryUpdate = await this.prisma.category.update({
       where: { id: id },
       data: {
         name: updateCategoryDto.name,
         service: {
-          connect: { id: updateCategoryDto.serviceId }
-        }
+          connect: { id: updateCategoryDto.serviceId },
+        },
       },
       select: {
         id: true,
         name: true,
         service: true,
-      }
-    })
+      },
+    });
 
     return categoryUpdate;
   }
 
   async remove(id: number) {
-    const categoryExisting = await this.findOne(id)
+    const categoryExisting = await this.findOne(id);
 
     const categoryDelete = await this.prisma.category.delete({
-      where: { id: id }
-    })
-
+      where: { id: id },
+    });
 
     return categoryDelete;
   }
 
   async removeService(id: number, serviceId: number) {
-    const categoryExisting = await this.findOne(id)
+    const categoryExisting = await this.findOne(id);
 
     const serviceExisting = await this.serviceExisting(serviceId);
 
@@ -101,10 +106,10 @@ export class CategoryService {
       where: { id: serviceId },
       data: {
         service: {
-          disconnect: { id: serviceId }
-        }
-      }
-    })
+          disconnect: { id: serviceId },
+        },
+      },
+    });
     return serviceDelete;
   }
 }

@@ -17,30 +17,30 @@ export declare class CategoryController {
         atualizedAt: Date;
     }[]>;
     findOne(id: string): Promise<{
+        id: number;
+        name: string;
         service: {
             id: number;
             name: string;
+            createdAt: Date;
+            updatedAt: Date;
             description: string | null;
             duration: number;
             price: number;
-            createdAt: Date;
-            updatedAt: Date;
         }[];
-        id: number;
-        name: string;
     }>;
     update(id: string, updateCategoryDto: UpdateCategoryDto): Promise<{
+        id: number;
+        name: string;
         service: {
             id: number;
             name: string;
+            createdAt: Date;
+            updatedAt: Date;
             description: string | null;
             duration: number;
             price: number;
-            createdAt: Date;
-            updatedAt: Date;
         }[];
-        id: number;
-        name: string;
     }>;
     remove(id: string): Promise<{
         id: number;

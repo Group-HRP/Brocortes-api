@@ -1,4 +1,14 @@
-import { Controller, Get, Post, Body, Patch, Param, Delete, UseGuards, Options } from '@nestjs/common';
+import {
+  Controller,
+  Get,
+  Post,
+  Body,
+  Patch,
+  Param,
+  Delete,
+  UseGuards,
+  Options,
+} from '@nestjs/common';
 import { CategoryService } from '../service/category.service';
 import { CreateCategoryDto } from '../DTO/create-category.dto';
 import { UpdateCategoryDto } from '../DTO/update-category.dto';
@@ -31,7 +41,10 @@ export class CategoryController {
 
   @Patch(':id')
   @Roles('admin')
-  async update(@Param('id') id: string, @Body() updateCategoryDto: UpdateCategoryDto) {
+  async update(
+    @Param('id') id: string,
+    @Body() updateCategoryDto: UpdateCategoryDto,
+  ) {
     return this.categoryService.update(+id, updateCategoryDto);
   }
 
@@ -43,7 +56,7 @@ export class CategoryController {
 
   @Patch('service/:id')
   @Roles('admin')
-  async removeService(@Param('id') id: string, @Body() serviceId: string){
-    return this.categoryService.removeService(+id, +serviceId)
+  async removeService(@Param('id') id: string, @Body() serviceId: string) {
+    return this.categoryService.removeService(+id, +serviceId);
   }
 }

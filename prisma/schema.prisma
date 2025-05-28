@@ -82,5 +82,5 @@ model WorkingHours {
   dayOfWeek   String
   openingTime String
   closingTime String
-  isClosed    Boolean
+  isClosed    Boolean @default(false)
 }

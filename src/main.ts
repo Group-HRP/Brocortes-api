@@ -9,7 +9,7 @@ async function bootstrap() {
     methods: ['GET', 'POST', 'PATCH', 'DELETE'],
     allowedHeaders: ['Content-Type', 'Authorization'],
     credentials: true,
-  })
+  });
 
   await app.listen(process.env.PORT ?? 3000);
   console.log(`Rodando na porta ${process.env.PORT}`);
