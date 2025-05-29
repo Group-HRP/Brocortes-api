@@ -34,10 +34,10 @@ let WorkingHoursController = class WorkingHoursController {
     async findOne(id) {
         return this.workingHoursService.findOne(+id);
     }
-    update(id, updateWorkingHourDto) {
+    async update(id, updateWorkingHourDto) {
         return this.workingHoursService.update(+id, updateWorkingHourDto);
     }
-    remove(id) {
+    async remove(id) {
         return this.workingHoursService.remove(+id);
     }
 };
@@ -67,18 +67,20 @@ __decorate([
 ], WorkingHoursController.prototype, "findOne", null);
 __decorate([
     (0, common_1.Patch)(':id'),
+    (0, roles_decorator_1.Roles)('admin'),
     __param(0, (0, common_1.Param)('id')),
     __param(1, (0, common_1.Body)()),
     __metadata("design:type", Function),
     __metadata("design:paramtypes", [String, update_working_hour_dto_1.UpdateWorkingHourDto]),
-    __metadata("design:returntype", void 0)
+    __metadata("design:returntype", Promise)
 ], WorkingHoursController.prototype, "update", null);
 __decorate([
     (0, common_1.Delete)(':id'),
+    (0, roles_decorator_1.Roles)('admin'),
     __param(0, (0, common_1.Param)('id')),
     __metadata("design:type", Function),
     __metadata("design:paramtypes", [String]),
-    __metadata("design:returntype", void 0)
+    __metadata("design:returntype", Promise)
 ], WorkingHoursController.prototype, "remove", null);
 exports.WorkingHoursController = WorkingHoursController = __decorate([
     (0, common_1.Controller)('working-hours'),

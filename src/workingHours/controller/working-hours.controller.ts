@@ -39,7 +39,8 @@ export class WorkingHoursController {
   }
 
   @Patch(':id')
-  update(
+  @Roles('admin')
+  async update(
     @Param('id') id: string,
     @Body() updateWorkingHourDto: UpdateWorkingHourDto,
   ) {
@@ -47,7 +48,8 @@ export class WorkingHoursController {
   }
 
   @Delete(':id')
-  remove(@Param('id') id: string) {
+  @Roles('admin')
+  async remove(@Param('id') id: string) {
     return this.workingHoursService.remove(+id);
   }
 }

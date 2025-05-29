@@ -5,23 +5,23 @@ export declare class CategoryController {
     private readonly categoryService;
     constructor(categoryService: CategoryService);
     create(createCategoryDto: CreateCategoryDto): Promise<{
-        id: number;
         name: string;
+        id: number;
         createdAt: Date;
         atualizedAt: Date;
     }>;
     findAll(): Promise<{
-        id: number;
         name: string;
+        id: number;
         createdAt: Date;
         atualizedAt: Date;
     }[]>;
     findOne(id: string): Promise<{
-        id: number;
         name: string;
+        id: number;
         service: {
-            id: number;
             name: string;
+            id: number;
             createdAt: Date;
             updatedAt: Date;
             description: string | null;
@@ -30,11 +30,11 @@ export declare class CategoryController {
         }[];
     }>;
     update(id: string, updateCategoryDto: UpdateCategoryDto): Promise<{
-        id: number;
         name: string;
+        id: number;
         service: {
-            id: number;
             name: string;
+            id: number;
             createdAt: Date;
             updatedAt: Date;
             description: string | null;
@@ -43,14 +43,14 @@ export declare class CategoryController {
         }[];
     }>;
     remove(id: string): Promise<{
-        id: number;
         name: string;
+        id: number;
         createdAt: Date;
         atualizedAt: Date;
     }>;
     removeService(id: string, serviceId: string): Promise<{
-        id: number;
         name: string;
+        id: number;
         createdAt: Date;
         atualizedAt: Date;
     }>;
