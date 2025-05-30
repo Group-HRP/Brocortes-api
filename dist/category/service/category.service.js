@@ -19,16 +19,16 @@ let CategoryService = class CategoryService {
     }
     async serviceExisting(serviceId) {
         const service = await this.prisma.service.findUnique({
-            where: { id: serviceId }
+            where: { id: serviceId },
         });
         if (!service) {
-            throw new common_1.NotFoundException("Servico nâo encontrado");
+            throw new common_1.NotFoundException('Servico nâo encontrado');
         }
         return service;
     }
     async create(createCategoryDto) {
         const category = await this.prisma.category.create({
-            data: createCategoryDto
+            data: createCategoryDto,
         });
         return category;
     }
@@ -41,46 +41,46 @@ let CategoryService = class CategoryService {
             select: {
                 id: true,
                 name: true,
-                service: true
-            }
+                service: true,
+            },
         });
         if (!categoryList) {
-            throw new common_1.NotFoundException("Nenhuma cateogria encontrada");
+            throw new common_1.NotFoundException('Nenhuma cateogria encontrada');
         }
         return categoryList;
     }
     async update(id, updateCategoryDto) {
         const categoryExisting = await this.findOne(id);
         if (!categoryExisting) {
-            throw new common_1.NotFoundException("categoria nao encontrada");
+            throw new common_1.NotFoundException('categoria nao encontrada');
         }
         if (updateCategoryDto.serviceId === undefined) {
-            throw new common_1.BadRequestException("servico nao informado");
+            throw new common_1.BadRequestException('servico nao informado');
         }
         const serviceExisting = await this.serviceExisting(updateCategoryDto.serviceId);
         if (!serviceExisting) {
-            throw new common_1.NotFoundException("Servico nao encontrado");
+            throw new common_1.NotFoundException('Servico nao encontrado');
         }
         const categoryUpdate = await this.prisma.category.update({
             where: { id: id },
             data: {
                 name: updateCategoryDto.name,
                 service: {
-                    connect: { id: updateCategoryDto.serviceId }
-                }
+                    connect: { id: updateCategoryDto.serviceId },
+                },
             },
             select: {
                 id: true,
                 name: true,
                 service: true,
-            }
+            },
         });
         return categoryUpdate;
     }
     async remove(id) {
         const categoryExisting = await this.findOne(id);
         const categoryDelete = await this.prisma.category.delete({
-            where: { id: id }
+            where: { id: id },
         });
         return categoryDelete;
     }
@@ -91,9 +91,9 @@ let CategoryService = class CategoryService {
             where: { id: serviceId },
             data: {
                 service: {
-                    disconnect: { id: serviceId }
-                }
-            }
+                    disconnect: { id: serviceId },
+                },
+            },
         });
         return serviceDelete;
     }

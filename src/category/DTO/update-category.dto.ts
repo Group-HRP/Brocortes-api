@@ -3,12 +3,12 @@ import { CreateCategoryDto } from './create-category.dto';
 import { IsInt, IsNumber, IsPositive, IsString, Length } from 'class-validator';
 
 export class UpdateCategoryDto extends PartialType(CreateCategoryDto) {
-    @IsString()
-    @Length(5, 50)
-    name?: string;
+  @IsString()
+  @Length(5, 50)
+  name?: string;
 
-    @IsNumber()
-    @IsPositive()
-    @IsInt()
-    serviceId?: number;
+  @IsNumber()
+  @IsPositive()
+  @IsInt()
+  serviceId?: number;
 }

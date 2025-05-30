@@ -27,5 +27,10 @@ export declare class AuthService {
         role: string;
     }): Promise<{
         access_token: string;
+        payload: {
+            sub: number;
+            email: string;
+            role: string;
+        };
     }>;
 }

@@ -22,5 +22,10 @@ export declare class AuthController {
     }>;
     loginUser(loginDTO: LoginDTO): Promise<{
         access_token: string;
+        payload: {
+            sub: number;
+            email: string;
+            role: string;
+        };
     }>;
 }
