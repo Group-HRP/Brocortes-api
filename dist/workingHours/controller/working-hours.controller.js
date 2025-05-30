@@ -28,6 +28,9 @@ let WorkingHoursController = class WorkingHoursController {
     async create(createWorkingHourDto) {
         return this.workingHoursService.create(createWorkingHourDto);
     }
+    async getAvailableTimes(date, serviceId) {
+        return this.workingHoursService.getAvailableTimes(date, serviceId);
+    }
     async findAll() {
         return this.workingHoursService.findAll();
     }
@@ -50,6 +53,15 @@ __decorate([
     __metadata("design:paramtypes", [create_working_hour_dto_1.CreateWorkingHourDto]),
     __metadata("design:returntype", Promise)
 ], WorkingHoursController.prototype, "create", null);
+__decorate([
+    (0, common_1.Get)('available-times'),
+    (0, roles_decorator_1.Roles)('admin', 'client'),
+    __param(0, (0, common_1.Query)('date')),
+    __param(1, (0, common_1.Query)('serviceId')),
+    __metadata("design:type", Function),
+    __metadata("design:paramtypes", [String, Number]),
+    __metadata("design:returntype", Promise)
+], WorkingHoursController.prototype, "getAvailableTimes", null);
 __decorate([
     (0, common_1.Get)(),
     (0, roles_decorator_1.Roles)('admin', 'client'),

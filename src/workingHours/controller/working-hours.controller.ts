@@ -7,6 +7,7 @@ import {
   Param,
   Delete,
   UseGuards,
+  Query,
 } from '@nestjs/common';
 import { WorkingHoursService } from '../service/working-hours.service';
 import { CreateWorkingHourDto } from '../DTO/create-working-hour.dto';
@@ -24,6 +25,15 @@ export class WorkingHoursController {
   @Roles('admin')
   async create(@Body() createWorkingHourDto: CreateWorkingHourDto) {
     return this.workingHoursService.create(createWorkingHourDto);
+  }
+
+  @Get('available-times')
+  @Roles('admin', 'client')
+  async getAvailableTimes(
+    @Query('date') date: string,
+    @Query('serviceId') serviceId: number,
+  ) {
+    return this.workingHoursService.getAvailableTimes(date, serviceId);
   }
 
   @Get()
