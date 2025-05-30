@@ -11,6 +11,7 @@ export declare class WorkingHoursController {
         closingTime: string;
         isClosed: boolean;
     }>;
+    getAvailableTimes(date: string, serviceId: number): Promise<string[]>;
     findAll(): Promise<{
         id: number;
         dayOfWeek: string;

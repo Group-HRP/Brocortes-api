@@ -12,6 +12,7 @@ Object.defineProperty(exports, "__esModule", { value: true });
 exports.WorkingHoursService = void 0;
 const common_1 = require("@nestjs/common");
 const client_1 = require("@prisma/client");
+const date_fns_1 = require("date-fns");
 let WorkingHoursService = class WorkingHoursService {
     prisma;
     constructor(prisma) {
@@ -30,6 +31,54 @@ let WorkingHoursService = class WorkingHoursService {
             data: createWorkingHourDto,
         });
         return workingHour;
+    }
+    async getAvailableTimes(date, serviceId) {
+        const parsedDate = new Date(date);
+        if (!parsedDate || isNaN(parsedDate.getTime())) {
+            throw new common_1.BadRequestException('Data inválida.');
+        }
+        const dayOfWeek = parsedDate
+            .toLocaleDateString('en-US', { weekday: 'long' })
+            .toLocaleLowerCase();
+        const workingHour = await this.prisma.workingHours.findFirst({
+            where: { dayOfWeek },
+        });
+        if (!workingHour || workingHour.isClosed) {
+            return [];
+        }
+        const service = await this.prisma.service.findUnique({
+            where: { id: Number(serviceId) },
+        });
+        if (!service) {
+            throw new common_1.BadRequestException('Serviço não encontrado.');
+        }
+        const duration = service.duration;
+        const oppeningTime = (0, date_fns_1.parse)(`${date} ${workingHour.openingTime}`, 'yyyy-MM-dd HH:mm', new Date());
+        const closingTime = (0, date_fns_1.parse)(`${date} ${workingHour.closingTime}`, 'yyyy-MM-dd HH:mm', new Date());
+        const appointments = await this.prisma.appointment.findMany({
+            where: {
+                date: {
+                    gte: oppeningTime,
+                    lt: closingTime,
+                },
+            },
+            select: {
+                date: true,
+            },
+        });
+        const bookedSlots = appointments.map((app) => (0, date_fns_1.format)(app.date, 'HH:mm'));
+        const avaliableSlots = [];
+        let currentSlot = oppeningTime;
+        while ((0, date_fns_1.isBefore)((0, date_fns_1.addMinutes)(currentSlot, duration), closingTime) ||
+            +(0, date_fns_1.addMinutes)(currentSlot, duration) === +closingTime) {
+            const slotFormatted = (0, date_fns_1.format)(currentSlot, 'HH:mm');
+            const isBooked = bookedSlots.includes(slotFormatted);
+            if (!isBooked) {
+                avaliableSlots.push(slotFormatted);
+            }
+            currentSlot = (0, date_fns_1.addMinutes)(currentSlot, duration);
+        }
+        return avaliableSlots;
     }
     async findAll() {
         return this.prisma.workingHours.findMany({
