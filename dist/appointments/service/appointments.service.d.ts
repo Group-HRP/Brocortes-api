@@ -21,6 +21,7 @@ export declare class AppointmentsService {
             id: number;
             name: string;
             duration: number;
+            price: number;
         };
     } & {
         id: number;

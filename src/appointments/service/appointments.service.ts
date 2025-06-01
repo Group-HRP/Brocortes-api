@@ -40,7 +40,7 @@ export class AppointmentsService {
         userId: user,
       },
       include: {
-        service: { select: { id: true, name: true, duration: true } },
+        service: { select: { id: true, name: true, duration: true, price: true } },
       },
     });
 
