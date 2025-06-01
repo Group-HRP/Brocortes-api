@@ -17,8 +17,6 @@ export declare class ServiceService {
     findAll(): Promise<{
         name: string;
         id: number;
-        createdAt: Date;
-        updatedAt: Date;
         description: string | null;
         duration: number;
         price: number;

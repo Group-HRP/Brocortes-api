@@ -40,9 +40,9 @@ let AppointmentsController = class AppointmentsController {
             throw new common_1.HttpException(error.statusCode || common_1.HttpStatus.BAD_REQUEST, error.message || error.message);
         }
     }
-    async getAllAppointments() {
+    async getAllAppointments(req) {
         try {
-            const appointments = await this.appointmentsService.getAllAppointments();
+            const appointments = await this.appointmentsService.getAllAppointments(req);
             return {
                 statusCode: common_1.HttpStatus.OK,
                 message: 'Agendamentos encontrados com sucesso',
@@ -50,6 +50,10 @@ let AppointmentsController = class AppointmentsController {
             };
         }
         catch (error) { }
+    }
+    async getAppointments(clientId) {
+        const appointments = await this.appointmentsService.getAppointments(clientId);
+        return appointments;
     }
     async updateAppointment(id, updateData, req) {
         if (req.user.role === 'client') {
@@ -95,10 +99,19 @@ __decorate([
 __decorate([
     (0, common_1.Get)(),
     (0, roles_decorator_1.Roles)('admin', 'client'),
+    __param(0, (0, common_1.Req)()),
     __metadata("design:type", Function),
-    __metadata("design:paramtypes", []),
+    __metadata("design:paramtypes", [Object]),
     __metadata("design:returntype", Promise)
 ], AppointmentsController.prototype, "getAllAppointments", null);
+__decorate([
+    (0, common_1.Get)(':clientId'),
+    (0, roles_decorator_1.Roles)('admin', 'client'),
+    __param(0, (0, common_1.Param)('clientId', common_1.ParseIntPipe)),
+    __metadata("design:type", Function),
+    __metadata("design:paramtypes", [Number]),
+    __metadata("design:returntype", Promise)
+], AppointmentsController.prototype, "getAppointments", null);
 __decorate([
     (0, common_1.Patch)(':id'),
     (0, roles_decorator_1.Roles)('admin', 'client'),

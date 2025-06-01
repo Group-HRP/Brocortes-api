@@ -32,17 +32,33 @@ export class AppointmentsService {
     }
   }
 
-  async getAllAppointments() {
-    try {
-      const appointments = await this.prisma.appointment.findMany();
+  async getAllAppointments(req) {
+    const user = req.user.id;
 
-      return appointments;
-    } catch (error) {
-      throw new HttpException(
-        error.message || 'Erro ao buscar agendamentos',
-        error.status || HttpStatus.BAD_REQUEST,
-      );
+    const appointments = await this.prisma.appointment.findFirst({
+      where: {
+        userId: user,
+      },
+      include: {
+        service: { select: { id: true, name: true, duration: true } },
+      },
+    });
+
+    if (!appointments) {
+      throw new NotFoundException('Nenhum agendamento encontrado');
     }
+
+    return appointments;
+  }
+
+  async getAppointments(clientId: number) {
+    const appointments = await this.prisma.appointment.findMany({
+      where: { userId: clientId },
+      include: {
+        service: { select: { id: true, name: true } },
+      },
+    });
+    return appointments;
   }
 
   async updateAppointment(

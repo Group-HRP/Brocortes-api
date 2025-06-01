@@ -6,45 +6,68 @@ export declare class AppointmentsService {
     constructor(prisma: PrismaClient);
     createAppointment(createAppointmentsDto: CreateAppointmentDto): Promise<{
         id: number;
-        createdAt: Date;
-        updatedAt: Date;
         userId: number;
         serviceId: number;
         date: Date;
         status: string;
+        createdAt: Date;
+        updatedAt: Date;
         canceledAt: Date | null;
         canceledById: number | null;
         cancellationReason: string | null;
     }>;
-    getAllAppointments(): Promise<{
-        id: number;
-        createdAt: Date;
-        updatedAt: Date;
-        userId: number;
-        serviceId: number;
-        date: Date;
-        status: string;
-        canceledAt: Date | null;
-        canceledById: number | null;
-        cancellationReason: string | null;
-    }[]>;
-    updateAppointment(id: number, updateData: UpdateAppointmentDto, userId?: number): Promise<{
-        user: {
-            name: string;
-            id: number;
-        };
+    getAllAppointments(req: any): Promise<{
         service: {
-            name: string;
             id: number;
+            name: string;
+            duration: number;
         };
     } & {
         id: number;
-        createdAt: Date;
-        updatedAt: Date;
         userId: number;
         serviceId: number;
         date: Date;
         status: string;
+        createdAt: Date;
+        updatedAt: Date;
+        canceledAt: Date | null;
+        canceledById: number | null;
+        cancellationReason: string | null;
+    }>;
+    getAppointments(clientId: number): Promise<({
+        service: {
+            id: number;
+            name: string;
+        };
+    } & {
+        id: number;
+        userId: number;
+        serviceId: number;
+        date: Date;
+        status: string;
+        createdAt: Date;
+        updatedAt: Date;
+        canceledAt: Date | null;
+        canceledById: number | null;
+        cancellationReason: string | null;
+    })[]>;
+    updateAppointment(id: number, updateData: UpdateAppointmentDto, userId?: number): Promise<{
+        user: {
+            id: number;
+            name: string;
+        };
+        service: {
+            id: number;
+            name: string;
+        };
+    } & {
+        id: number;
+        userId: number;
+        serviceId: number;
+        date: Date;
+        status: string;
+        createdAt: Date;
+        updatedAt: Date;
         canceledAt: Date | null;
         canceledById: number | null;
         cancellationReason: string | null;
@@ -54,12 +77,12 @@ export declare class AppointmentsService {
         canceledBy: number;
     }, userId?: number): Promise<{
         id: number;
-        createdAt: Date;
-        updatedAt: Date;
         userId: number;
         serviceId: number;
         date: Date;
         status: string;
+        createdAt: Date;
+        updatedAt: Date;
         canceledAt: Date | null;
         canceledById: number | null;
         cancellationReason: string | null;

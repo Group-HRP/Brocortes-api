@@ -50,15 +50,25 @@ export class AppointmentsController {
 
   @Get()
   @Roles('admin', 'client')
-  async getAllAppointments() {
+  async getAllAppointments(@Req() req) {
     try {
-      const appointments = await this.appointmentsService.getAllAppointments();
+      const appointments =
+        await this.appointmentsService.getAllAppointments(req);
       return {
         statusCode: HttpStatus.OK,
         message: 'Agendamentos encontrados com sucesso',
         data: appointments,
       };
     } catch (error) {}
+  }
+
+  @Get(':clientId')
+  @Roles('admin', 'client')
+  async getAppointments(@Param('clientId', ParseIntPipe) clientId: number) {
+    const appointments =
+      await this.appointmentsService.getAppointments(clientId);
+
+    return appointments;
   }
 
   @Patch(':id')
