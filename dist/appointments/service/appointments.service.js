@@ -33,14 +33,29 @@ let AppointmentsService = class AppointmentsService {
             throw new common_1.HttpException(error.message || 'Erro ao criar agendamento', error.status || common_1.HttpStatus.BAD_REQUEST);
         }
     }
-    async getAllAppointments() {
-        try {
-            const appointments = await this.prisma.appointment.findMany();
-            return appointments;
+    async getAllAppointments(req) {
+        const user = req.user.id;
+        const appointments = await this.prisma.appointment.findFirst({
+            where: {
+                userId: user,
+            },
+            include: {
+                service: { select: { id: true, name: true, duration: true } },
+            },
+        });
+        if (!appointments) {
+            throw new common_1.NotFoundException('Nenhum agendamento encontrado');
         }
-        catch (error) {
-            throw new common_1.HttpException(error.message || 'Erro ao buscar agendamentos', error.status || common_1.HttpStatus.BAD_REQUEST);
-        }
+        return appointments;
+    }
+    async getAppointments(clientId) {
+        const appointments = await this.prisma.appointment.findMany({
+            where: { userId: clientId },
+            include: {
+                service: { select: { id: true, name: true } },
+            },
+        });
+        return appointments;
     }
     async updateAppointment(id, updateData, userId) {
         try {

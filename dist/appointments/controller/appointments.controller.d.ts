@@ -13,22 +13,45 @@ export declare class AppointmentsController {
         message: string;
         data: AppointmentResponseDto;
     }>;
-    getAllAppointments(): Promise<{
+    getAllAppointments(req: any): Promise<{
         statusCode: HttpStatus;
         message: string;
         data: {
+            service: {
+                id: number;
+                name: string;
+                duration: number;
+            };
+        } & {
             id: number;
-            createdAt: Date;
-            updatedAt: Date;
             userId: number;
             serviceId: number;
             date: Date;
             status: string;
+            createdAt: Date;
+            updatedAt: Date;
             canceledAt: Date | null;
             canceledById: number | null;
             cancellationReason: string | null;
-        }[];
+        };
     } | undefined>;
+    getAppointments(clientId: number): Promise<({
+        service: {
+            id: number;
+            name: string;
+        };
+    } & {
+        id: number;
+        userId: number;
+        serviceId: number;
+        date: Date;
+        status: string;
+        createdAt: Date;
+        updatedAt: Date;
+        canceledAt: Date | null;
+        canceledById: number | null;
+        cancellationReason: string | null;
+    })[]>;
     updateAppointment(id: number, updateData: UpdateAppointmentDto, req: any): Promise<{
         statusCode: HttpStatus;
         message: string;

@@ -56,10 +56,15 @@ let AuthService = class AuthService {
         if (!isValidPassword) {
             throw new common_1.UnauthorizedException('Email ou senha incorreta');
         }
-        return { id: user.id, email: user.email, role: user.role };
+        return { id: user.id, email: user.email, role: user.role, name: user.name };
     }
     async login(user) {
-        const payload = { sub: user.id, email: user.email, role: user.role };
+        const payload = {
+            sub: user.id,
+            email: user.email,
+            role: user.role,
+            name: user.name,
+        };
         return {
             access_token: this.jwtService.sign(payload),
             payload,
