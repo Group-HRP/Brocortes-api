@@ -65,11 +65,11 @@ export class AuthService {
       throw new UnauthorizedException('Email ou senha incorreta');
     }
 
-    return { id: user.id, email: user.email, role: user.role };
+    return { id: user.id, email: user.email, role: user.role, name: user.name };
   }
 
-  async login(user: { id: number; email: string; role: string }) {
-    const payload = { sub: user.id, email: user.email, role: user.role };
+  async login(user: { id: number; email: string; role: string, name: string }) {
+    const payload = { sub: user.id, email: user.email, role: user.role, name: user.name };
     return {
       access_token: this.jwtService.sign(payload),
       payload,
