@@ -21,6 +21,7 @@ export declare class AppointmentsController {
                 id: number;
                 name: string;
                 duration: number;
+                price: number;
             };
         } & {
             id: number;
