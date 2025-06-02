@@ -40,6 +40,8 @@ export declare class AppointmentsController {
         service: {
             id: number;
             name: string;
+            duration: number;
+            price: number;
         };
     } & {
         id: number;

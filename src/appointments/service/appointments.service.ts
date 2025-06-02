@@ -11,7 +11,7 @@ import { UpdateAppointmentDto } from '../DTO/update.appointments.dto';
 
 @Injectable()
 export class AppointmentsService {
-  constructor(private prisma: PrismaClient) {}
+  constructor(private prisma: PrismaClient) { }
   async createAppointment(createAppointmentsDto: CreateAppointmentDto) {
     try {
       const appointments = await this.prisma.appointment.create({
@@ -51,15 +51,32 @@ export class AppointmentsService {
     return appointments;
   }
 
-  async getAppointments(clientId: number) {
-    const appointments = await this.prisma.appointment.findMany({
-      where: { userId: clientId },
-      include: {
-        service: { select: { id: true, name: true } },
+async getAppointments(clientId: number) {
+  const appointments = await this.prisma.appointment.findMany({
+    where: {
+      userId: clientId,
+      status: {
+        in: ['completed', 'canceled']
+      }
+    },
+    include: {
+      service: { 
+        select: { 
+          id: true, 
+          name: true, 
+          duration: true, 
+          price: true 
+        } 
       },
-    });
-    return appointments;
+    },
+  });
+
+  if (!appointments || appointments.length === 0) {
+    throw new NotFoundException('Nenhum agendamento encontrado');
   }
+
+  return appointments;
+}
 
   async updateAppointment(
     id: number,

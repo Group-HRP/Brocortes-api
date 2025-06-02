@@ -50,11 +50,26 @@ let AppointmentsService = class AppointmentsService {
     }
     async getAppointments(clientId) {
         const appointments = await this.prisma.appointment.findMany({
-            where: { userId: clientId },
+            where: {
+                userId: clientId,
+                status: {
+                    in: ['completed', 'canceled']
+                }
+            },
             include: {
-                service: { select: { id: true, name: true } },
+                service: {
+                    select: {
+                        id: true,
+                        name: true,
+                        duration: true,
+                        price: true
+                    }
+                },
             },
         });
+        if (!appointments || appointments.length === 0) {
+            throw new common_1.NotFoundException('Nenhum agendamento encontrado');
+        }
         return appointments;
     }
     async updateAppointment(id, updateData, userId) {
