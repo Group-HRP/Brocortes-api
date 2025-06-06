@@ -35,13 +35,17 @@ export class AppointmentsService {
   async getAllAppointments(req) {
     const user = req.user.id;
 
-    const appointments = await this.prisma.appointment.findFirst({
+    const appointments = await this.prisma.appointment.findMany({
       where: {
         userId: user,
       },
       include: {
         service: { select: { id: true, name: true, duration: true, price: true } },
       },
+
+      orderBy: {
+        createdAt: 'desc',
+      }
     });
 
     if (!appointments) {
@@ -51,32 +55,36 @@ export class AppointmentsService {
     return appointments;
   }
 
-async getAppointments(clientId: number) {
-  const appointments = await this.prisma.appointment.findMany({
-    where: {
-      userId: clientId,
-      status: {
-        in: ['completed', 'canceled']
-      }
-    },
-    include: {
-      service: { 
-        select: { 
-          id: true, 
-          name: true, 
-          duration: true, 
-          price: true 
-        } 
+  async getAppointments(clientId: number) {
+    const appointments = await this.prisma.appointment.findMany({
+      where: {
+        userId: clientId,
+        status: {
+          in: ['completed', 'canceled']
+        }
       },
-    },
-  });
+      include: {
+        service: {
+          select: {
+            id: true,
+            name: true,
+            duration: true,
+            price: true
+          }
+        },
+      },
 
-  if (!appointments || appointments.length === 0) {
-    throw new NotFoundException('Nenhum agendamento encontrado');
+      orderBy: {
+        createdAt: "desc",
+      }
+    });
+
+    if (!appointments || appointments.length === 0) {
+      throw new NotFoundException('Nenhum agendamento encontrado');
+    }
+
+    return appointments;
   }
-
-  return appointments;
-}
 
   async updateAppointment(
     id: number,

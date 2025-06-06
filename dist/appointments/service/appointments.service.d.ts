@@ -16,7 +16,7 @@ export declare class AppointmentsService {
         canceledById: number | null;
         cancellationReason: string | null;
     }>;
-    getAllAppointments(req: any): Promise<{
+    getAllAppointments(req: any): Promise<({
         service: {
             id: number;
             name: string;
@@ -34,7 +34,7 @@ export declare class AppointmentsService {
         canceledAt: Date | null;
         canceledById: number | null;
         cancellationReason: string | null;
-    }>;
+    })[]>;
     getAppointments(clientId: number): Promise<({
         service: {
             id: number;

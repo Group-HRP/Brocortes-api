@@ -35,13 +35,16 @@ let AppointmentsService = class AppointmentsService {
     }
     async getAllAppointments(req) {
         const user = req.user.id;
-        const appointments = await this.prisma.appointment.findFirst({
+        const appointments = await this.prisma.appointment.findMany({
             where: {
                 userId: user,
             },
             include: {
                 service: { select: { id: true, name: true, duration: true, price: true } },
             },
+            orderBy: {
+                createdAt: 'desc',
+            }
         });
         if (!appointments) {
             throw new common_1.NotFoundException('Nenhum agendamento encontrado');
@@ -66,6 +69,9 @@ let AppointmentsService = class AppointmentsService {
                     }
                 },
             },
+            orderBy: {
+                createdAt: "desc",
+            }
         });
         if (!appointments || appointments.length === 0) {
             throw new common_1.NotFoundException('Nenhum agendamento encontrado');

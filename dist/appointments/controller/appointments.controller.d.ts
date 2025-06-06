@@ -16,7 +16,7 @@ export declare class AppointmentsController {
     getAllAppointments(req: any): Promise<{
         statusCode: HttpStatus;
         message: string;
-        data: {
+        data: ({
             service: {
                 id: number;
                 name: string;
@@ -34,7 +34,7 @@ export declare class AppointmentsController {
             canceledAt: Date | null;
             canceledById: number | null;
             cancellationReason: string | null;
-        };
+        })[];
     } | undefined>;
     getAppointments(clientId: number): Promise<({
         service: {
