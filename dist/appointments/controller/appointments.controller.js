@@ -51,6 +51,10 @@ let AppointmentsController = class AppointmentsController {
         }
         catch (error) { }
     }
+    async getAppointmentUnique(appointmentId) {
+        const appointment = await this.appointmentsService.getAppointmentUnique(appointmentId);
+        return appointment;
+    }
     async getAppointments(clientId) {
         const appointments = await this.appointmentsService.getAppointments(clientId);
         return appointments;
@@ -105,7 +109,15 @@ __decorate([
     __metadata("design:returntype", Promise)
 ], AppointmentsController.prototype, "getAllAppointments", null);
 __decorate([
-    (0, common_1.Get)(':clientId'),
+    (0, common_1.Get)(':appointmentId'),
+    (0, roles_decorator_1.Roles)('admin', 'client'),
+    __param(0, (0, common_1.Param)('appointmentId', common_1.ParseIntPipe)),
+    __metadata("design:type", Function),
+    __metadata("design:paramtypes", [Number]),
+    __metadata("design:returntype", Promise)
+], AppointmentsController.prototype, "getAppointmentUnique", null);
+__decorate([
+    (0, common_1.Get)('/historic-appointment/:clientId'),
     (0, roles_decorator_1.Roles)('admin', 'client'),
     __param(0, (0, common_1.Param)('clientId', common_1.ParseIntPipe)),
     __metadata("design:type", Function),

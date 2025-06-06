@@ -35,6 +35,25 @@ export declare class AppointmentsService {
         canceledById: number | null;
         cancellationReason: string | null;
     })[]>;
+    getAppointmentUnique(appointmentId: number): Promise<{
+        service: {
+            id: number;
+            name: string;
+            duration: number;
+            price: number;
+        };
+    } & {
+        id: number;
+        userId: number;
+        serviceId: number;
+        date: Date;
+        status: string;
+        createdAt: Date;
+        updatedAt: Date;
+        canceledAt: Date | null;
+        canceledById: number | null;
+        cancellationReason: string | null;
+    }>;
     getAppointments(clientId: number): Promise<({
         service: {
             id: number;

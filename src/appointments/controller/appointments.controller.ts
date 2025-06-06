@@ -62,7 +62,15 @@ export class AppointmentsController {
     } catch (error) { }
   }
 
-  @Get(':clientId')
+  @Get(':appointmentId')
+  @Roles('admin', 'client')
+  async getAppointmentUnique(@Param('appointmentId', ParseIntPipe) appointmentId: number) {
+    const appointment = await this.appointmentsService.getAppointmentUnique(appointmentId)
+
+    return appointment;
+  }
+
+  @Get('/historic-appointment/:clientId')
   @Roles('admin', 'client')
   async getAppointments(@Param('clientId', ParseIntPipe) clientId: number) {
     const appointments =

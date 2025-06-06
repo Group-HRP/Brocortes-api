@@ -51,6 +51,24 @@ let AppointmentsService = class AppointmentsService {
         }
         return appointments;
     }
+    async getAppointmentUnique(appointmentId) {
+        const appointment = await this.prisma.appointment.findUnique({
+            where: { id: appointmentId },
+            include: {
+                service: {
+                    select: {
+                        id: true,
+                        name: true,
+                        duration: true,
+                        price: true
+                    },
+                },
+            }
+        });
+        if (!appointment)
+            throw new common_1.NotFoundException('Serviço não encontrado' + appointmentId);
+        return appointment;
+    }
     async getAppointments(clientId) {
         const appointments = await this.prisma.appointment.findMany({
             where: {
