@@ -1,9 +1,21 @@
 {
   "version": 2,
   "builds": [
-    { "src": "dist/main.js", "use": "@vercel/node" }
+    {
+      "src": "src/main.ts",
+      "use": "@vercel/node"
+    }
   ],
   "routes": [
-    { "src": "/(.*)", "dest": "dist/main.js" }
+    {
+      "src": "/(.*)",
+      "headers": {
+        "Access-Control-Allow-Origin": "http://localhost:8081/, exp://192.168.15.9:8081, exp://192.168.0.116:8081",
+        "Access-Control-Allow-Methods": "GET, POST, PUT, DELETE, PATCH, OPTIONS",
+        "Access-Control-Allow-Headers": "Content-Type, Authorization",
+        "Access-Control-Allow-Credentials": "true"
+      },
+      "dest": "src/main.ts"
+    }
   ]
 }
