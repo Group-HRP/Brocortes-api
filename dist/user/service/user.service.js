@@ -14,7 +14,6 @@ const common_1 = require("@nestjs/common");
 const client_1 = require("@prisma/client");
 const bcrypt_1 = require("bcrypt");
 let UserService = class UserService {
-    prismaService;
     constructor(prismaService) {
         this.prismaService = prismaService;
     }
@@ -81,7 +80,7 @@ let UserService = class UserService {
             if (!user) {
                 throw new common_1.HttpException('Usuário não encontrado', common_1.HttpStatus.NOT_FOUND);
             }
-            if (deleteUserDto?.password) {
+            if (deleteUserDto === null || deleteUserDto === void 0 ? void 0 : deleteUserDto.password) {
                 const isPasswordValid = await (0, bcrypt_1.compare)(deleteUserDto.password, user.password);
                 if (!isPasswordValid) {
                     throw new common_1.HttpException('Senha incorreta', common_1.HttpStatus.UNAUTHORIZED);

@@ -19,12 +19,6 @@ var NotificationType;
     NotificationType["PUSH"] = "push";
 })(NotificationType || (exports.NotificationType = NotificationType = {}));
 class CreateNotificationDto {
-    userId;
-    email;
-    subject;
-    message;
-    type;
-    html;
 }
 exports.CreateNotificationDto = CreateNotificationDto;
 __decorate([

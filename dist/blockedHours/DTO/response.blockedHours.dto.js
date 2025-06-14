@@ -13,10 +13,6 @@ exports.BlockedHoursResponseDto = void 0;
 const swagger_1 = require("@nestjs/swagger");
 const class_transformer_1 = require("class-transformer");
 class BlockedHoursResponseDto {
-    id;
-    date;
-    reason;
-    createdAt;
     constructor(partial) {
         Object.assign(this, partial);
     }

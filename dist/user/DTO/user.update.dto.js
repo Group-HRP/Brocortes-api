@@ -14,10 +14,6 @@ const class_validator_1 = require("class-validator");
 const user_role_enum_1 = require("../../enums/user.role.enum");
 const is_email_unique_decorator_1 = require("../../decorators/is-email-unique.decorator");
 class UpdateUserDto {
-    name;
-    email;
-    password;
-    role;
 }
 exports.UpdateUserDto = UpdateUserDto;
 __decorate([

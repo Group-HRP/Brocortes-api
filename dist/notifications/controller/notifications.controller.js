@@ -18,7 +18,6 @@ const notifications_service_1 = require("../service/notifications.service");
 const create_notifications_dto_1 = require("../DTO/create.notifications.dto");
 const swagger_1 = require("@nestjs/swagger");
 let NotificationsController = class NotificationsController {
-    notificationsService;
     constructor(notificationsService) {
         this.notificationsService = notificationsService;
     }

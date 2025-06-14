@@ -14,10 +14,6 @@ const swagger_1 = require("@nestjs/swagger");
 const create_working_hour_dto_1 = require("./create-working-hour.dto");
 const class_validator_1 = require("class-validator");
 class UpdateWorkingHourDto extends (0, swagger_1.PartialType)(create_working_hour_dto_1.CreateWorkingHourDto) {
-    dayOfWeek;
-    openingTime;
-    closingTime;
-    isClosed;
 }
 exports.UpdateWorkingHourDto = UpdateWorkingHourDto;
 __decorate([

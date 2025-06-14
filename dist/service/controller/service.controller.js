@@ -23,7 +23,6 @@ const response_service_dto_1 = require("../DTO/response.service.dto");
 const update_service_dto_1 = require("../DTO/update.service.dto");
 const delete_service_dto_1 = require("../DTO/delete.service.dto");
 let ServiceController = class ServiceController {
-    serviceService;
     constructor(serviceService) {
         this.serviceService = serviceService;
     }

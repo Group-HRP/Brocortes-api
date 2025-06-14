@@ -22,7 +22,6 @@ const create_blockedHours_dto_1 = require("../DTO/create.blockedHours.dto");
 const filter_blockedHours_dto_1 = require("../DTO/filter.blockedHours.dto");
 const response_blockedHours_dto_1 = require("../DTO/response.blockedHours.dto");
 let BlockedHoursController = class BlockedHoursController {
-    blockedHoursService;
     constructor(blockedHoursService) {
         this.blockedHoursService = blockedHoursService;
     }

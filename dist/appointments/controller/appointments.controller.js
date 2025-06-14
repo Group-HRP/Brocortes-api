@@ -23,7 +23,6 @@ const update_appointments_dto_1 = require("../DTO/update.appointments.dto");
 const response_appointments_dto_1 = require("../DTO/response.appointments.dto");
 const delete_appointment_dto_1 = require("../DTO/delete.appointment.dto");
 let AppointmentsController = class AppointmentsController {
-    appointmentsService;
     constructor(appointmentsService) {
         this.appointmentsService = appointmentsService;
     }

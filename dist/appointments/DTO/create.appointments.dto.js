@@ -13,10 +13,6 @@ exports.CreateAppointmentDto = void 0;
 const swagger_1 = require("@nestjs/swagger");
 const class_validator_1 = require("class-validator");
 class CreateAppointmentDto {
-    userId;
-    serviceId;
-    date;
-    status;
 }
 exports.CreateAppointmentDto = CreateAppointmentDto;
 __decorate([

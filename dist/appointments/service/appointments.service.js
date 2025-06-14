@@ -13,7 +13,6 @@ exports.AppointmentsService = void 0;
 const common_1 = require("@nestjs/common");
 const client_1 = require("@prisma/client");
 let AppointmentsService = class AppointmentsService {
-    prisma;
     constructor(prisma) {
         this.prisma = prisma;
     }
@@ -40,11 +39,13 @@ let AppointmentsService = class AppointmentsService {
                 userId: user,
             },
             include: {
-                service: { select: { id: true, name: true, duration: true, price: true } },
+                service: {
+                    select: { id: true, name: true, duration: true, price: true },
+                },
             },
             orderBy: {
                 createdAt: 'desc',
-            }
+            },
         });
         if (!appointments) {
             throw new common_1.NotFoundException('Nenhum agendamento encontrado');
@@ -60,10 +61,10 @@ let AppointmentsService = class AppointmentsService {
                         id: true,
                         name: true,
                         duration: true,
-                        price: true
+                        price: true,
                     },
                 },
-            }
+            },
         });
         if (!appointment)
             throw new common_1.NotFoundException('Serviço não encontrado' + appointmentId);
@@ -74,8 +75,8 @@ let AppointmentsService = class AppointmentsService {
             where: {
                 userId: clientId,
                 status: {
-                    in: ['completed', 'canceled']
-                }
+                    in: ['completed', 'canceled'],
+                },
             },
             include: {
                 service: {
@@ -83,13 +84,13 @@ let AppointmentsService = class AppointmentsService {
                         id: true,
                         name: true,
                         duration: true,
-                        price: true
-                    }
+                        price: true,
+                    },
                 },
             },
             orderBy: {
-                createdAt: "desc",
-            }
+                createdAt: 'desc',
+            },
         });
         if (!appointments || appointments.length === 0) {
             throw new common_1.NotFoundException('Nenhum agendamento encontrado');
@@ -109,10 +110,7 @@ let AppointmentsService = class AppointmentsService {
             }
             const updated = await this.prisma.appointment.update({
                 where: { id },
-                data: {
-                    ...updateData,
-                    updatedAt: new Date(),
-                },
+                data: Object.assign(Object.assign({}, updateData), { updatedAt: new Date() }),
                 include: {
                     service: { select: { id: true, name: true } },
                     user: { select: { id: true, name: true } },

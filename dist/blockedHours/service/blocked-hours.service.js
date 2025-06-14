@@ -13,7 +13,6 @@ exports.BlockedHoursService = void 0;
 const common_1 = require("@nestjs/common");
 const client_1 = require("@prisma/client");
 let BlockedHoursService = class BlockedHoursService {
-    prisma;
     constructor(prisma) {
         this.prisma = prisma;
     }

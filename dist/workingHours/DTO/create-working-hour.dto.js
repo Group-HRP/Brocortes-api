@@ -12,10 +12,6 @@ Object.defineProperty(exports, "__esModule", { value: true });
 exports.CreateWorkingHourDto = void 0;
 const class_validator_1 = require("class-validator");
 class CreateWorkingHourDto {
-    dayOfWeek;
-    openingTime;
-    closingTime;
-    isClosed;
 }
 exports.CreateWorkingHourDto = CreateWorkingHourDto;
 __decorate([

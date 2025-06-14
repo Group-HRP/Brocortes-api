@@ -14,7 +14,6 @@ const common_1 = require("@nestjs/common");
 const client_1 = require("@prisma/client");
 const date_fns_1 = require("date-fns");
 let WorkingHoursService = class WorkingHoursService {
-    prisma;
     constructor(prisma) {
         this.prisma = prisma;
     }

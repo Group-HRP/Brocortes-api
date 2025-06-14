@@ -23,7 +23,6 @@ const user_update_response_dto_1 = require("../DTO/user.update.response.dto");
 const user_delete_response_dto_1 = require("../DTO/user.delete.response.dto");
 const user_delete_dto_1 = require("../DTO/user.delete.dto");
 let UserController = class UserController {
-    userService;
     constructor(userService) {
         this.userService = userService;
     }

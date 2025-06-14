@@ -18,7 +18,6 @@ const auth_service_1 = require("../service/auth.service");
 const auth_register_dto_1 = require("../DTO/auth.register.dto");
 const auth_login_dto_1 = require("../DTO/auth.login.dto");
 let AuthController = class AuthController {
-    authService;
     constructor(authService) {
         this.authService = authService;
     }

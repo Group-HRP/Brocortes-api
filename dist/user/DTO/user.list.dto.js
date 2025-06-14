@@ -13,7 +13,6 @@ exports.ListUsersDto = void 0;
 const class_validator_1 = require("class-validator");
 const is_admin_decorator_1 = require("../../decorators/is-admin.decorator");
 class ListUsersDto {
-    role;
 }
 exports.ListUsersDto = ListUsersDto;
 __decorate([

@@ -12,9 +12,6 @@ Object.defineProperty(exports, "__esModule", { value: true });
 exports.DeleteUserResponseDto = void 0;
 const class_transformer_1 = require("class-transformer");
 class DeleteUserResponseDto {
-    success;
-    message;
-    deletedUserId;
     constructor(partial) {
         Object.assign(this, partial);
     }

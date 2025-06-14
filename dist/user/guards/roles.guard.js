@@ -14,7 +14,6 @@ const common_1 = require("@nestjs/common");
 const core_1 = require("@nestjs/core");
 const roles_decorator_1 = require("../../decorators/roles.decorator");
 let RolesGuard = class RolesGuard {
-    reflector;
     constructor(reflector) {
         this.reflector = reflector;
     }
@@ -24,7 +23,7 @@ let RolesGuard = class RolesGuard {
             return true;
         }
         const { user } = context.switchToHttp().getRequest();
-        return requiredRoles.some((role) => user.role?.includes(role));
+        return requiredRoles.some((role) => { var _a; return (_a = user.role) === null || _a === void 0 ? void 0 : _a.includes(role); });
     }
 };
 exports.RolesGuard = RolesGuard;

@@ -13,8 +13,6 @@ exports.DeleteUserDto = void 0;
 const class_validator_1 = require("class-validator");
 const confirm_deletion_decorator_1 = require("../../decorators/confirm-deletion.decorator");
 class DeleteUserDto {
-    confirmation;
-    password;
 }
 exports.DeleteUserDto = DeleteUserDto;
 __decorate([

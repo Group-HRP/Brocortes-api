@@ -15,8 +15,6 @@ const nodemailer = require("nodemailer");
 const create_notifications_dto_1 = require("../DTO/create.notifications.dto");
 const client_1 = require("@prisma/client");
 let NotificationsService = class NotificationsService {
-    prisma;
-    transporter;
     constructor(prisma) {
         this.prisma = prisma;
         this.transporter = nodemailer.createTransport({

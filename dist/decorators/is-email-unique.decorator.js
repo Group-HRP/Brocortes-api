@@ -15,7 +15,6 @@ const class_validator_1 = require("class-validator");
 const user_service_1 = require("../user/service/user.service");
 const common_1 = require("@nestjs/common");
 let IsEmailUniqueConstraint = class IsEmailUniqueConstraint {
-    userService;
     constructor(userService) {
         this.userService = userService;
     }

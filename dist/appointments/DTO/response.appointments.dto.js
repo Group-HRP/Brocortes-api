@@ -12,13 +12,6 @@ Object.defineProperty(exports, "__esModule", { value: true });
 exports.AppointmentResponseDto = void 0;
 const class_transformer_1 = require("class-transformer");
 class AppointmentResponseDto {
-    id;
-    userId;
-    serviceId;
-    date;
-    status;
-    user;
-    service;
     constructor(partial) {
         Object.assign(this, partial);
     }

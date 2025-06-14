@@ -21,7 +21,6 @@ const passport_1 = require("@nestjs/passport");
 const roles_guard_1 = require("../../user/guards/roles.guard");
 const roles_decorator_1 = require("../../decorators/roles.decorator");
 let WorkingHoursController = class WorkingHoursController {
-    workingHoursService;
     constructor(workingHoursService) {
         this.workingHoursService = workingHoursService;
     }

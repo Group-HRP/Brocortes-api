@@ -13,8 +13,6 @@ exports.UpdateBlockedHoursDto = void 0;
 const swagger_1 = require("@nestjs/swagger");
 const class_validator_1 = require("class-validator");
 class UpdateBlockedHoursDto {
-    date;
-    reason;
 }
 exports.UpdateBlockedHoursDto = UpdateBlockedHoursDto;
 __decorate([

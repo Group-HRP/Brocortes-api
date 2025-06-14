@@ -26,7 +26,7 @@ import { DeleteAppointmentResponseDto } from '../DTO/response.delete.appointment
 @Controller('appointments')
 @UseGuards(AuthGuard('jwt'), RolesGuard)
 export class AppointmentsController {
-  constructor(private appointmentsService: AppointmentsService) { }
+  constructor(private appointmentsService: AppointmentsService) {}
 
   @Post()
   @Roles('admin', 'client')
@@ -59,13 +59,16 @@ export class AppointmentsController {
         message: 'Agendamentos encontrados com sucesso',
         data: appointments,
       };
-    } catch (error) { }
+    } catch (error) {}
   }
 
   @Get(':appointmentId')
   @Roles('admin', 'client')
-  async getAppointmentUnique(@Param('appointmentId', ParseIntPipe) appointmentId: number) {
-    const appointment = await this.appointmentsService.getAppointmentUnique(appointmentId)
+  async getAppointmentUnique(
+    @Param('appointmentId', ParseIntPipe) appointmentId: number,
+  ) {
+    const appointment =
+      await this.appointmentsService.getAppointmentUnique(appointmentId);
 
     return appointment;
   }

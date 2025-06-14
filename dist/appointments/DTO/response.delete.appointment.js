@@ -13,10 +13,6 @@ exports.DeleteAppointmentResponseDto = void 0;
 const swagger_1 = require("@nestjs/swagger");
 const class_transformer_1 = require("class-transformer");
 class DeleteAppointmentResponseDto {
-    success;
-    message;
-    appointmentId;
-    canceledAt;
 }
 exports.DeleteAppointmentResponseDto = DeleteAppointmentResponseDto;
 __decorate([

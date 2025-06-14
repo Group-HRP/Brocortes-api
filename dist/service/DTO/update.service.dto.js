@@ -12,10 +12,6 @@ Object.defineProperty(exports, "__esModule", { value: true });
 exports.UpdateServiceDto = void 0;
 const class_validator_1 = require("class-validator");
 class UpdateServiceDto {
-    name;
-    description;
-    duration;
-    price;
 }
 exports.UpdateServiceDto = UpdateServiceDto;
 __decorate([

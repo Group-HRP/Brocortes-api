@@ -12,11 +12,6 @@ Object.defineProperty(exports, "__esModule", { value: true });
 exports.UpdateUserResponseDto = void 0;
 const class_transformer_1 = require("class-transformer");
 let UpdateUserResponseDto = class UpdateUserResponseDto {
-    id;
-    name;
-    email;
-    role;
-    updatedAt;
     constructor(partial) {
         Object.assign(this, partial);
     }

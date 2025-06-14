@@ -12,7 +12,7 @@ let AdminGuard = class AdminGuard {
     canActivate(context) {
         const request = context.switchToHttp().getRequest();
         const user = request.user;
-        if (user?.role !== 'admin') {
+        if ((user === null || user === void 0 ? void 0 : user.role) !== 'admin') {
             throw new common_1.ForbiddenException('Apenas administradores podem acessar este recurso');
         }
         return true;

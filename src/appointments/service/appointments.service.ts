@@ -11,7 +11,7 @@ import { UpdateAppointmentDto } from '../DTO/update.appointments.dto';
 
 @Injectable()
 export class AppointmentsService {
-  constructor(private prisma: PrismaClient) { }
+  constructor(private prisma: PrismaClient) {}
   async createAppointment(createAppointmentsDto: CreateAppointmentDto) {
     try {
       const appointments = await this.prisma.appointment.create({
@@ -40,12 +40,14 @@ export class AppointmentsService {
         userId: user,
       },
       include: {
-        service: { select: { id: true, name: true, duration: true, price: true } },
+        service: {
+          select: { id: true, name: true, duration: true, price: true },
+        },
       },
 
       orderBy: {
         createdAt: 'desc',
-      }
+      },
     });
 
     if (!appointments) {
@@ -64,15 +66,16 @@ export class AppointmentsService {
             id: true,
             name: true,
             duration: true,
-            price: true
+            price: true,
           },
         },
-      }
-    })
+      },
+    });
 
-    if(!appointment) throw new NotFoundException('Serviço não encontrado' + appointmentId)
-      
-    return appointment
+    if (!appointment)
+      throw new NotFoundException('Serviço não encontrado' + appointmentId);
+
+    return appointment;
   }
 
   async getAppointments(clientId: number) {
@@ -80,8 +83,8 @@ export class AppointmentsService {
       where: {
         userId: clientId,
         status: {
-          in: ['completed', 'canceled']
-        }
+          in: ['completed', 'canceled'],
+        },
       },
       include: {
         service: {
@@ -89,14 +92,14 @@ export class AppointmentsService {
             id: true,
             name: true,
             duration: true,
-            price: true
-          }
+            price: true,
+          },
         },
       },
 
       orderBy: {
-        createdAt: "desc",
-      }
+        createdAt: 'desc',
+      },
     });
 
     if (!appointments || appointments.length === 0) {

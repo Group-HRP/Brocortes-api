@@ -14,8 +14,6 @@ const swagger_1 = require("@nestjs/swagger");
 const create_category_dto_1 = require("./create-category.dto");
 const class_validator_1 = require("class-validator");
 class UpdateCategoryDto extends (0, swagger_1.PartialType)(create_category_dto_1.CreateCategoryDto) {
-    name;
-    serviceId;
 }
 exports.UpdateCategoryDto = UpdateCategoryDto;
 __decorate([

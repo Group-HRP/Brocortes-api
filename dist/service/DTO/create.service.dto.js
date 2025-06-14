@@ -12,10 +12,6 @@ Object.defineProperty(exports, "__esModule", { value: true });
 exports.CreateServiceDto = void 0;
 const class_validator_1 = require("class-validator");
 class CreateServiceDto {
-    name;
-    description;
-    duration;
-    price;
 }
 exports.CreateServiceDto = CreateServiceDto;
 __decorate([

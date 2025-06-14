@@ -12,14 +12,6 @@ Object.defineProperty(exports, "__esModule", { value: true });
 exports.ServiceResponseDto = void 0;
 const class_transformer_1 = require("class-transformer");
 class ServiceResponseDto {
-    id;
-    name;
-    description;
-    price;
-    duration;
-    createdAt;
-    updatedAt;
-    company;
     constructor(partial) {
         Object.assign(this, partial);
     }
@@ -39,7 +31,7 @@ __decorate([
 ], ServiceResponseDto.prototype, "description", void 0);
 __decorate([
     (0, class_transformer_1.Expose)(),
-    (0, class_transformer_1.Transform)(({ value }) => value?.toNumber?.() || value),
+    (0, class_transformer_1.Transform)(({ value }) => { var _a; return ((_a = value === null || value === void 0 ? void 0 : value.toNumber) === null || _a === void 0 ? void 0 : _a.call(value)) || value; }),
     __metadata("design:type", Number)
 ], ServiceResponseDto.prototype, "price", void 0);
 __decorate([

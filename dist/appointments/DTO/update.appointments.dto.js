@@ -14,9 +14,6 @@ const swagger_1 = require("@nestjs/swagger");
 const class_validator_1 = require("class-validator");
 const appointments_status_enum_1 = require("../../enums/appointments.status.enum");
 class UpdateAppointmentDto {
-    serviceId;
-    date;
-    status;
 }
 exports.UpdateAppointmentDto = UpdateAppointmentDto;
 __decorate([
