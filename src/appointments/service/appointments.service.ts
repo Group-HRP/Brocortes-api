@@ -79,6 +79,7 @@ export class AppointmentsService {
   }
 
   async getAppointments(clientId: number) {
+    try {
     const appointments = await this.prisma.appointment.findMany({
       where: {
         userId: clientId,
