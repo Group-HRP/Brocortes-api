@@ -9,8 +9,6 @@ import { AppointmentsModule } from './appointments/appointments.module';
 import { BlockedHoursModule } from './blockedHours/blocked-hours.module';
 import { NotificationsController } from './notifications/controller/notifications.controller';
 import { NotificationsService } from './notifications/service/notifications.service';
-import { CategoryModule } from './category/category.module';
-import { WorkingHoursModule } from './workingHours/working-hours.module';
 
 @Module({
   imports: [
@@ -22,8 +20,6 @@ import { WorkingHoursModule } from './workingHours/working-hours.module';
     ServiceModule,
     AppointmentsModule,
     BlockedHoursModule,
-    CategoryModule,
-    WorkingHoursModule,
   ],
   controllers: [NotificationsController],
   providers: [NotificationsService],

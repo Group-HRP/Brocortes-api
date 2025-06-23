@@ -102,11 +102,13 @@ export class AppointmentsService {
       },
     });
 
-    if (!appointments || appointments.length === 0) {
-      throw new NotFoundException('Nenhum agendamento encontrado');
+      return appointments;
+    } catch (error) {
+      throw new HttpException(
+        error.message || 'Erro ao buscar agendamentos',
+        error.status || HttpStatus.BAD_REQUEST,
+      );
     }
-
-    return appointments;
   }
 
   async updateAppointment(

@@ -78,6 +78,8 @@ export class ServiceService {
           description: true,
           duration: true,
           price: true,
+          createdAt: true,
+          updatedAt: true,
         },
       });
       return services;

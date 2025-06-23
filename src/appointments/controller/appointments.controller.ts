@@ -50,10 +50,9 @@ export class AppointmentsController {
 
   @Get()
   @Roles('admin', 'client')
-  async getAllAppointments(@Req() req) {
+  async getAllAppointments() {
     try {
-      const appointments =
-        await this.appointmentsService.getAllAppointments(req);
+      const appointments = await this.appointmentsService.getAllAppointments();
       return {
         statusCode: HttpStatus.OK,
         message: 'Agendamentos encontrados com sucesso',
@@ -80,6 +79,7 @@ export class AppointmentsController {
       await this.appointmentsService.getAppointments(clientId);
 
     return appointments;
+
   }
 
   @Patch(':id')
