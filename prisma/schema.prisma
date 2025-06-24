@@ -15,15 +15,16 @@ datasource db {
 }
 
 model User {
-  id           Int            @id @default(autoincrement())
-  name         String
-  email        String         @unique
-  password     String
-  role         String         @default("client")
-  createdAt    DateTime       @default(now())
-  updatedAt    DateTime       @updatedAt
-  appointment  Appointment[]
-  notification Notification[]
+  id                 Int                  @id @default(autoincrement())
+  name               String
+  email              String               @unique
+  password           String
+  role               String               @default("client")
+  createdAt          DateTime             @default(now())
+  updatedAt          DateTime             @updatedAt
+  appointment        Appointment[]
+  notification       Notification[]
+  PasswordResetToken PasswordResetToken[]
 }
 
 model Service {
@@ -81,6 +82,19 @@ model WorkingHours {
   id          Int     @id @default(autoincrement())
   dayOfWeek   String
   openingTime String
-  closingTime String
+  closingTime String 
   isClosed    Boolean @default(false)
+}
+
+model PasswordResetToken {
+  id        String   @id @default(uuid())
+  email     String
+  emailUser User     @relation(fields: [email], references: [email])
+  token     String
+  createdAt DateTime @default(now())
+  expiresAt DateTime
+  used      Boolean  @default(false)
+
+  @@index([email])
+  @@index([token])
 }
