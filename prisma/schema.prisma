@@ -25,6 +25,7 @@ model User {
   appointment        Appointment[]
   notification       Notification[]
   PasswordResetToken PasswordResetToken[]
+  VerificationCode   VerificationCode[]
 }
 
 model Service {
@@ -82,18 +83,30 @@ model WorkingHours {
   id          Int     @id @default(autoincrement())
   dayOfWeek   String
   openingTime String
-  closingTime String 
+  closingTime String
   isClosed    Boolean @default(false)
+}
+
+model VerificationCode {
+  id        String   @id @default(uuid())
+  email     String
+  code      String
+  createdAt DateTime @default(now())
+
+  emailUser User @relation(fields: [email], references: [email])
+
+  @@index([email])
 }
 
 model PasswordResetToken {
   id        String   @id @default(uuid())
   email     String
-  emailUser User     @relation(fields: [email], references: [email])
   token     String
   createdAt DateTime @default(now())
   expiresAt DateTime
   used      Boolean  @default(false)
+
+  emailUser User @relation(fields: [email], references: [email])
 
   @@index([email])
   @@index([token])

@@ -11,6 +11,7 @@ import { NotificationsController } from './notifications/controller/notification
 import { NotificationsService } from './notifications/service/notifications.service';
 import { CategoryModule } from './category/category.module';
 import { WorkingHoursModule } from './workingHours/working-hours.module';
+import { PasswordResetModule } from './password-reset/password-reset.module';
 
 @Module({
   imports: [
@@ -24,6 +25,7 @@ import { WorkingHoursModule } from './workingHours/working-hours.module';
     BlockedHoursModule,
     CategoryModule,
     WorkingHoursModule,
+    PasswordResetModule,
   ],
   controllers: [NotificationsController],
   providers: [NotificationsService],

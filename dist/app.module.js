@@ -20,6 +20,7 @@ const notifications_controller_1 = require("./notifications/controller/notificat
 const notifications_service_1 = require("./notifications/service/notifications.service");
 const category_module_1 = require("./category/category.module");
 const working_hours_module_1 = require("./workingHours/working-hours.module");
+const password_reset_module_1 = require("./password-reset/password-reset.module");
 let AppModule = class AppModule {
 };
 exports.AppModule = AppModule;
@@ -36,6 +37,7 @@ exports.AppModule = AppModule = __decorate([
             blocked_hours_module_1.BlockedHoursModule,
             category_module_1.CategoryModule,
             working_hours_module_1.WorkingHoursModule,
+            password_reset_module_1.PasswordResetModule,
         ],
         controllers: [notifications_controller_1.NotificationsController],
         providers: [notifications_service_1.NotificationsService],
