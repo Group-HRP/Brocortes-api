@@ -19,11 +19,13 @@ export class PasswordResetController {
   }
 
   @Post('validate')
+  @Roles('admin', 'client')
   async validateCoding(@Body() validateCondig: ValidateCoding) {
     return this.passwordResetService.validateCoding(validateCondig);
   }
 
   @Post('reset')
+  @Roles('admin', 'client')
   resetPassword(@Body() resetPasswordDto: ResetPasswordDto ) {
     return this.passwordResetService.resetPassword(resetPasswordDto);
   }
