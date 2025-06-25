@@ -47,6 +47,7 @@ __decorate([
 ], PasswordResetController.prototype, "sendCodingEmail", null);
 __decorate([
     (0, common_1.Post)('validate'),
+    (0, roles_decorator_1.Roles)('admin', 'client'),
     __param(0, (0, common_1.Body)()),
     __metadata("design:type", Function),
     __metadata("design:paramtypes", [validate_coding_dto_1.ValidateCoding]),
@@ -54,6 +55,7 @@ __decorate([
 ], PasswordResetController.prototype, "validateCoding", null);
 __decorate([
     (0, common_1.Post)('reset'),
+    (0, roles_decorator_1.Roles)('admin', 'client'),
     __param(0, (0, common_1.Body)()),
     __metadata("design:type", Function),
     __metadata("design:paramtypes", [reset_password_dto_1.ResetPasswordDto]),

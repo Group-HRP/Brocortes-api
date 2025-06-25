@@ -8,24 +8,20 @@ import { ValidateCoding } from '../DTO/validate-coding.dto';
 import { ResetPasswordDto } from '../DTO/reset-password.dto';
 
 @Controller('password-reset')
-@UseGuards(AuthGuard('jwt'), RolesGuard)
 export class PasswordResetController {
   constructor(private readonly passwordResetService: PasswordResetService) {}
 
   @Post('send')
-  @Roles('admin', 'client')
   async sendCodingEmail(@Body() sendCodingEmail: SendCodingEmail) {
     return this.passwordResetService.sendCodingEmail(sendCodingEmail);
   }
 
   @Post('validate')
-  @Roles('admin', 'client')
   async validateCoding(@Body() validateCondig: ValidateCoding) {
     return this.passwordResetService.validateCoding(validateCondig);
   }
 
   @Post('reset')
-  @Roles('admin', 'client')
   resetPassword(@Body() resetPasswordDto: ResetPasswordDto ) {
     return this.passwordResetService.resetPassword(resetPasswordDto);
   }
