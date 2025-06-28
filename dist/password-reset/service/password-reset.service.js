@@ -25,20 +25,31 @@ let PasswordResetService = class PasswordResetService {
             where: { email }
         });
         if (!existEmail) {
-            throw new common_1.NotFoundException("Email inválido ou inesistente.");
+            throw new common_1.NotFoundException("Email inválido ou inexistente.");
         }
+        const now = new Date();
         const existingToken = await this.prisma.passwordResetToken.findFirst({
             where: {
                 email,
                 used: false,
                 expiresAt: {
-                    gt: new Date(),
-                }
-            }
+                    gt: now,
+                },
+            },
         });
         if (existingToken) {
+            const renewedExpireAt = new Date(now.getTime() + 5 * 60 * 1000);
+            await this.prisma.passwordResetToken.update({
+                where: {
+                    id: existingToken.id,
+                },
+                data: {
+                    expiresAt: renewedExpireAt,
+                },
+            });
+            await (0, reset_password_1.default)(existingToken.token, email);
             return {
-                message: 'Um código já foi enviado recentemente. Aguarde alguns minutos para solicitar outro.',
+                message: 'Código reenviado. Você poderá solicitar um novo em 5 minutos.',
             };
         }
         await this.prisma.passwordResetToken.deleteMany({
@@ -46,13 +57,12 @@ let PasswordResetService = class PasswordResetService {
                 email,
                 OR: [
                     { used: true },
-                    { expiresAt: { lt: new Date() } }
+                    { expiresAt: { lt: now } }
                 ]
             }
         });
         const generateCode = Math.floor(1000 + Math.random() * 90000).toString();
-        const now = new Date();
-        const expireAt = new Date(now.getTime() + 10 * 60 * 500);
+        const expireAt = new Date(now.getTime() + 5 * 60 * 1000);
         await (0, reset_password_1.default)(generateCode, email);
         console.log("[token gerado]", generateCode);
         await this.prisma.passwordResetToken.create({
@@ -60,7 +70,7 @@ let PasswordResetService = class PasswordResetService {
                 email: email,
                 expiresAt: expireAt,
                 token: generateCode,
-            }
+            },
         });
         return {
             message: 'Se o e-mail estiver correto, enviamos um código de recuperação que expira em 5 minutos.',
