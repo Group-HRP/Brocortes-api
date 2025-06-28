@@ -12,6 +12,8 @@ Object.defineProperty(exports, "__esModule", { value: true });
 exports.AppointmentsService = void 0;
 const common_1 = require("@nestjs/common");
 const client_1 = require("@prisma/client");
+const date_fns_1 = require("date-fns");
+const locale_1 = require("date-fns/locale");
 let AppointmentsService = class AppointmentsService {
     prisma;
     constructor(prisma) {
@@ -35,18 +37,52 @@ let AppointmentsService = class AppointmentsService {
     }
     async getAllAppointments(req) {
         const user = req.user.id;
-        const appointments = await this.prisma.appointment.findMany({
+        const userRole = req.user.role;
+        let appointments;
+        if (userRole === 'admin') {
+            appointments = await this.prisma.appointment.findMany({
+                where: {
+                    status: 'scheduled',
+                },
+                include: {
+                    service: {
+                        select: { id: true, name: true, duration: true, price: true },
+                    },
+                    user: {
+                        select: { id: true, name: true },
+                    },
+                },
+                orderBy: {
+                    date: 'asc',
+                },
+            });
+            if (!appointments || appointments.length === 0) {
+                throw new common_1.NotFoundException('Nenhum agendamento encontrado');
+            }
+            const grouped = appointments.reduce((acc, appointment) => {
+                const dateKey = (0, date_fns_1.format)(appointment.date, 'dd/MM/yyyy', { locale: locale_1.ptBR });
+                if (!acc[dateKey]) {
+                    acc[dateKey] = [];
+                }
+                acc[dateKey].push(appointment);
+                return acc;
+            }, {});
+            return grouped;
+        }
+        appointments = await this.prisma.appointment.findMany({
             where: {
                 userId: user,
             },
             include: {
-                service: { select: { id: true, name: true, duration: true, price: true } },
+                service: {
+                    select: { id: true, name: true, duration: true, price: true },
+                },
             },
             orderBy: {
                 createdAt: 'desc',
-            }
+            },
         });
-        if (!appointments) {
+        if (!appointments || appointments.length === 0) {
             throw new common_1.NotFoundException('Nenhum agendamento encontrado');
         }
         return appointments;

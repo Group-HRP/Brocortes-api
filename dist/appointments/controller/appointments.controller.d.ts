@@ -16,60 +16,42 @@ export declare class AppointmentsController {
     getAllAppointments(req: any): Promise<{
         statusCode: HttpStatus;
         message: string;
-        data: ({
-            service: {
-                name: string;
-                id: number;
-                duration: number;
-                price: number;
-            };
-        } & {
-            id: number;
-            createdAt: Date;
-            updatedAt: Date;
-            userId: number;
-            serviceId: number;
-            date: Date;
-            status: string;
-            canceledAt: Date | null;
-            canceledById: number | null;
-            cancellationReason: string | null;
-        })[];
+        data: any;
     } | undefined>;
     getAppointmentUnique(appointmentId: number): Promise<{
         service: {
-            name: string;
             id: number;
+            name: string;
             duration: number;
             price: number;
         };
     } & {
         id: number;
-        createdAt: Date;
-        updatedAt: Date;
         userId: number;
         serviceId: number;
         date: Date;
         status: string;
+        createdAt: Date;
+        updatedAt: Date;
         canceledAt: Date | null;
         canceledById: number | null;
         cancellationReason: string | null;
     }>;
     getAppointments(clientId: number): Promise<({
         service: {
-            name: string;
             id: number;
+            name: string;
             duration: number;
             price: number;
         };
     } & {
         id: number;
-        createdAt: Date;
-        updatedAt: Date;
         userId: number;
         serviceId: number;
         date: Date;
         status: string;
+        createdAt: Date;
+        updatedAt: Date;
         canceledAt: Date | null;
         canceledById: number | null;
         cancellationReason: string | null;

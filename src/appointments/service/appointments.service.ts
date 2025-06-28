@@ -8,6 +8,8 @@ import {
 import { PrismaClient } from '@prisma/client';
 import { CreateAppointmentDto } from '../DTO/create.appointments.dto';
 import { UpdateAppointmentDto } from '../DTO/update.appointments.dto';
+import { format } from 'date-fns';
+import { ptBR } from 'date-fns/locale';
 
 @Injectable()
 export class AppointmentsService {
@@ -34,26 +36,65 @@ export class AppointmentsService {
 
   async getAllAppointments(req) {
     const user = req.user.id;
+    const userRole = req.user.role;
 
-    const appointments = await this.prisma.appointment.findMany({
+    let appointments;
+
+    if (userRole === 'admin') {
+      appointments = await this.prisma.appointment.findMany({
+        where: {
+          status: 'scheduled',
+        },
+        include: {
+          service: {
+            select: { id: true, name: true, duration: true, price: true },
+          },
+          user: {
+            select: { id: true, name: true },
+          },
+        },
+        orderBy: {
+          date: 'asc',
+        },
+      });
+
+      if (!appointments || appointments.length === 0) {
+        throw new NotFoundException('Nenhum agendamento encontrado');
+      }
+
+      const grouped = appointments.reduce((acc, appointment) => {
+        const dateKey = format(appointment.date, 'dd/MM/yyyy', { locale: ptBR });
+        if (!acc[dateKey]) {
+          acc[dateKey] = [];
+        }
+        acc[dateKey].push(appointment);
+        return acc;
+      }, {});
+
+      return grouped;
+    }
+
+    appointments = await this.prisma.appointment.findMany({
       where: {
         userId: user,
       },
       include: {
-        service: { select: { id: true, name: true, duration: true, price: true } },
+        service: {
+          select: { id: true, name: true, duration: true, price: true },
+        },
       },
-
       orderBy: {
         createdAt: 'desc',
-      }
+      },
     });
 
-    if (!appointments) {
+    if (!appointments || appointments.length === 0) {
       throw new NotFoundException('Nenhum agendamento encontrado');
     }
 
     return appointments;
   }
+
 
   async getAppointmentUnique(appointmentId: number) {
     const appointment = await this.prisma.appointment.findUnique({
@@ -70,8 +111,8 @@ export class AppointmentsService {
       }
     })
 
-    if(!appointment) throw new NotFoundException('Serviço não encontrado' + appointmentId)
-      
+    if (!appointment) throw new NotFoundException('Serviço não encontrado' + appointmentId)
+
     return appointment
   }
 
