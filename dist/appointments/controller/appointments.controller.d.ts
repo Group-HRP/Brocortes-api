@@ -20,38 +20,38 @@ export declare class AppointmentsController {
     } | undefined>;
     getAppointmentUnique(appointmentId: number): Promise<{
         service: {
-            id: number;
             name: string;
+            id: number;
             duration: number;
             price: number;
         };
     } & {
         id: number;
+        createdAt: Date;
+        updatedAt: Date;
         userId: number;
         serviceId: number;
         date: Date;
         status: string;
-        createdAt: Date;
-        updatedAt: Date;
         canceledAt: Date | null;
         canceledById: number | null;
         cancellationReason: string | null;
     }>;
     getAppointments(clientId: number): Promise<({
         service: {
-            id: number;
             name: string;
+            id: number;
             duration: number;
             price: number;
         };
     } & {
         id: number;
+        createdAt: Date;
+        updatedAt: Date;
         userId: number;
         serviceId: number;
         date: Date;
         status: string;
-        createdAt: Date;
-        updatedAt: Date;
         canceledAt: Date | null;
         canceledById: number | null;
         cancellationReason: string | null;
