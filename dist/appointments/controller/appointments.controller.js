@@ -51,26 +51,21 @@ let AppointmentsController = class AppointmentsController {
         }
         catch (error) { }
     }
+    async getAllHistoricAppointments() {
+        const appointments = await this.appointmentsService.getAllHistoricAppointments();
+        return appointments;
+    }
+    async getHistoricAppointments(id, req) {
+        const appointments = await this.appointmentsService.getHistoricAppointments(id, req);
+        return appointments;
+    }
     async getAppointmentUnique(appointmentId) {
         const appointment = await this.appointmentsService.getAppointmentUnique(appointmentId);
         return appointment;
     }
-    async getAppointments(clientId) {
-        const appointments = await this.appointmentsService.getAppointments(clientId);
-        return appointments;
-    }
     async updateAppointment(id, updateData, req) {
-        if (req.user.role === 'client') {
-            updateData = {
-                status: updateData.status,
-            };
-        }
-        const result = await this.appointmentsService.updateAppointment(id, updateData, req.user.role === 'client' ? req.user.id : undefined);
-        return {
-            statusCode: common_1.HttpStatus.OK,
-            message: 'Atualizado com sucesso',
-            data: new response_appointments_dto_1.AppointmentResponseDto(result),
-        };
+        const appointment = await this.appointmentsService.updateAppointment(id, updateData, req);
+        return appointment;
     }
     async deleteAppointment(id, deleteAppointment, req) {
         if (!deleteAppointment.confirm) {
@@ -109,6 +104,22 @@ __decorate([
     __metadata("design:returntype", Promise)
 ], AppointmentsController.prototype, "getAllAppointments", null);
 __decorate([
+    (0, common_1.Get)('/historic-appointment'),
+    (0, roles_decorator_1.Roles)('admin'),
+    __metadata("design:type", Function),
+    __metadata("design:paramtypes", []),
+    __metadata("design:returntype", Promise)
+], AppointmentsController.prototype, "getAllHistoricAppointments", null);
+__decorate([
+    (0, common_1.Get)('/historic-appointment/:id'),
+    (0, roles_decorator_1.Roles)('admin', 'client'),
+    __param(0, (0, common_1.Param)('id', common_1.ParseIntPipe)),
+    __param(1, (0, common_1.Req)()),
+    __metadata("design:type", Function),
+    __metadata("design:paramtypes", [Number, Object]),
+    __metadata("design:returntype", Promise)
+], AppointmentsController.prototype, "getHistoricAppointments", null);
+__decorate([
     (0, common_1.Get)(':appointmentId'),
     (0, roles_decorator_1.Roles)('admin', 'client'),
     __param(0, (0, common_1.Param)('appointmentId', common_1.ParseIntPipe)),
@@ -116,14 +127,6 @@ __decorate([
     __metadata("design:paramtypes", [Number]),
     __metadata("design:returntype", Promise)
 ], AppointmentsController.prototype, "getAppointmentUnique", null);
-__decorate([
-    (0, common_1.Get)('/historic-appointment/:clientId'),
-    (0, roles_decorator_1.Roles)('admin', 'client'),
-    __param(0, (0, common_1.Param)('clientId', common_1.ParseIntPipe)),
-    __metadata("design:type", Function),
-    __metadata("design:paramtypes", [Number]),
-    __metadata("design:returntype", Promise)
-], AppointmentsController.prototype, "getAppointments", null);
 __decorate([
     (0, common_1.Patch)(':id'),
     (0, roles_decorator_1.Roles)('admin', 'client'),

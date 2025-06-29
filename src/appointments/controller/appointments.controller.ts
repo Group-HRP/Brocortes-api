@@ -62,6 +62,24 @@ export class AppointmentsController {
     } catch (error) { }
   }
 
+  @Get('/historic-appointment')
+  @Roles('admin',)
+  async getAllHistoricAppointments() {
+    const appointments =
+      await this.appointmentsService.getAllHistoricAppointments();
+
+    return appointments;
+  }
+
+  @Get('/historic-appointment/:id')
+  @Roles('admin', 'client')
+  async getHistoricAppointments(@Param('id', ParseIntPipe) id: number, @Req() req) {
+    const appointments =
+      await this.appointmentsService.getHistoricAppointments(id, req);
+
+    return appointments;
+  }
+
   @Get(':appointmentId')
   @Roles('admin', 'client')
   async getAppointmentUnique(@Param('appointmentId', ParseIntPipe) appointmentId: number) {
@@ -70,14 +88,6 @@ export class AppointmentsController {
     return appointment;
   }
 
-  @Get('/historic-appointment/:clientId')
-  @Roles('admin', 'client')
-  async getAppointments(@Param('clientId', ParseIntPipe) clientId: number) {
-    const appointments =
-      await this.appointmentsService.getAppointments(clientId);
-
-    return appointments;
-  }
 
   @Patch(':id')
   @Roles('admin', 'client')
@@ -86,23 +96,10 @@ export class AppointmentsController {
     @Body() updateData: UpdateAppointmentDto,
     @Req() req,
   ) {
-    if (req.user.role === 'client') {
-      updateData = {
-        status: updateData.status,
-      } as UpdateAppointmentDto;
-    }
 
-    const result = await this.appointmentsService.updateAppointment(
-      id,
-      updateData,
-      req.user.role === 'client' ? req.user.id : undefined,
-    );
+    const appointment = await this.appointmentsService.updateAppointment(id, updateData, req);
 
-    return {
-      statusCode: HttpStatus.OK,
-      message: 'Atualizado com sucesso',
-      data: new AppointmentResponseDto(result),
-    };
+    return appointment;
   }
 
   @Delete(':id')

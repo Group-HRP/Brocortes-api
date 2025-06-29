@@ -18,48 +18,68 @@ export declare class AppointmentsController {
         message: string;
         data: any;
     } | undefined>;
-    getAppointmentUnique(appointmentId: number): Promise<{
+    getAllHistoricAppointments(): Promise<({
         service: {
-            name: string;
             id: number;
+            name: string;
             duration: number;
             price: number;
         };
     } & {
         id: number;
-        createdAt: Date;
-        updatedAt: Date;
         userId: number;
         serviceId: number;
         date: Date;
         status: string;
-        canceledAt: Date | null;
-        canceledById: number | null;
-        cancellationReason: string | null;
-    }>;
-    getAppointments(clientId: number): Promise<({
-        service: {
-            name: string;
-            id: number;
-            duration: number;
-            price: number;
-        };
-    } & {
-        id: number;
         createdAt: Date;
         updatedAt: Date;
-        userId: number;
-        serviceId: number;
-        date: Date;
-        status: string;
         canceledAt: Date | null;
         canceledById: number | null;
         cancellationReason: string | null;
     })[]>;
+    getHistoricAppointments(id: number, req: any): Promise<any>;
+    getAppointmentUnique(appointmentId: number): Promise<{
+        user: {
+            name: string;
+        };
+        service: {
+            id: number;
+            name: string;
+            duration: number;
+            price: number;
+        };
+    } & {
+        id: number;
+        userId: number;
+        serviceId: number;
+        date: Date;
+        status: string;
+        createdAt: Date;
+        updatedAt: Date;
+        canceledAt: Date | null;
+        canceledById: number | null;
+        cancellationReason: string | null;
+    }>;
     updateAppointment(id: number, updateData: UpdateAppointmentDto, req: any): Promise<{
-        statusCode: HttpStatus;
-        message: string;
-        data: AppointmentResponseDto;
+        user: {
+            id: number;
+            name: string;
+        };
+        service: {
+            id: number;
+            name: string;
+        };
+    } & {
+        id: number;
+        userId: number;
+        serviceId: number;
+        date: Date;
+        status: string;
+        createdAt: Date;
+        updatedAt: Date;
+        canceledAt: Date | null;
+        canceledById: number | null;
+        cancellationReason: string | null;
     }>;
     deleteAppointment(id: number, deleteAppointment: DeleteAppointmentDto, req: any): Promise<DeleteAppointmentResponseDto>;
 }

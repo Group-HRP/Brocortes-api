@@ -17,6 +17,9 @@ class UpdateAppointmentDto {
     serviceId;
     date;
     status;
+    canceledAt;
+    canceledById;
+    cancellationReason;
 }
 exports.UpdateAppointmentDto = UpdateAppointmentDto;
 __decorate([
@@ -25,29 +28,59 @@ __decorate([
         description: 'ID do serviço (apenas admin)',
         required: false,
     }),
-    (0, class_validator_1.IsInt)(),
     (0, class_validator_1.IsOptional)(),
+    (0, class_validator_1.IsInt)(),
     __metadata("design:type", Number)
 ], UpdateAppointmentDto.prototype, "serviceId", void 0);
 __decorate([
     (0, swagger_1.ApiProperty)({
         example: '2023-12-15T15:00:00Z',
-        description: 'Nova data (apenas admin)',
+        description: 'Nova data do agendamento (apenas admin)',
         required: false,
     }),
-    (0, class_validator_1.IsDateString)(),
     (0, class_validator_1.IsOptional)(),
+    (0, class_validator_1.IsDateString)(),
     __metadata("design:type", Date)
 ], UpdateAppointmentDto.prototype, "date", void 0);
 __decorate([
     (0, swagger_1.ApiProperty)({
         example: 'completed',
-        description: 'Novo status',
+        description: 'Status do agendamento',
         enum: appointments_status_enum_1.AppointmentStatus,
         required: false,
     }),
-    (0, class_validator_1.IsEnum)(appointments_status_enum_1.AppointmentStatus),
     (0, class_validator_1.IsOptional)(),
+    (0, class_validator_1.IsEnum)(appointments_status_enum_1.AppointmentStatus),
     __metadata("design:type", String)
 ], UpdateAppointmentDto.prototype, "status", void 0);
+__decorate([
+    (0, swagger_1.ApiProperty)({
+        example: '2025-06-28T14:00:00Z',
+        description: 'Data de cancelamento',
+        required: false,
+    }),
+    (0, class_validator_1.IsOptional)(),
+    (0, class_validator_1.IsDateString)(),
+    __metadata("design:type", Date)
+], UpdateAppointmentDto.prototype, "canceledAt", void 0);
+__decorate([
+    (0, swagger_1.ApiProperty)({
+        example: 1,
+        description: 'ID do usuário que cancelou',
+        required: false,
+    }),
+    (0, class_validator_1.IsOptional)(),
+    (0, class_validator_1.IsInt)(),
+    __metadata("design:type", Number)
+], UpdateAppointmentDto.prototype, "canceledById", void 0);
+__decorate([
+    (0, swagger_1.ApiProperty)({
+        example: 'Cliente não compareceu',
+        description: 'Motivo do cancelamento',
+        required: false,
+    }),
+    (0, class_validator_1.IsOptional)(),
+    (0, class_validator_1.IsString)(),
+    __metadata("design:type", String)
+], UpdateAppointmentDto.prototype, "cancellationReason", void 0);
 //# sourceMappingURL=update.appointments.dto.js.map

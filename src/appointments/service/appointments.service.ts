@@ -62,16 +62,7 @@ export class AppointmentsService {
         throw new NotFoundException('Nenhum agendamento encontrado');
       }
 
-      const grouped = appointments.reduce((acc, appointment) => {
-        const dateKey = format(appointment.date, 'dd/MM/yyyy', { locale: ptBR });
-        if (!acc[dateKey]) {
-          acc[dateKey] = [];
-        }
-        acc[dateKey].push(appointment);
-        return acc;
-      }, {});
-
-      return grouped;
+      return appointments;
     }
 
     appointments = await this.prisma.appointment.findMany({
@@ -108,6 +99,11 @@ export class AppointmentsService {
             price: true
           },
         },
+        user: {
+          select: {
+            name: true,
+          }
+        },
       }
     })
 
@@ -116,10 +112,81 @@ export class AppointmentsService {
     return appointment
   }
 
-  async getAppointments(clientId: number) {
+  async getHistoricAppointments(id: number, req) {
+    const userId = req.user.id;
+    const userRole = req.user.role;
+    let appointments;
+
+    if (userRole === 'client') {
+      appointments = await this.prisma.appointment.findMany({
+        where: {
+          userId: userId,
+          id: id,
+          status: {
+            in: ['completed', 'canceled']
+          }
+        },
+        include: {
+          service: {
+            select: {
+              id: true,
+              name: true,
+              duration: true,
+              price: true
+            }
+          },
+        },
+
+        orderBy: {
+          createdAt: "desc",
+        }
+      });
+
+      if (!appointments || appointments.length === 0) {
+        throw new NotFoundException('Nenhum agendamento encontrado');
+      }
+
+      return appointments;
+    }
+
+    appointments = await this.prisma.appointment.findMany({
+      where: {
+        id: id,
+        status: {
+          in: ['completed', 'canceled']
+        }
+      },
+      include: {
+        service: {
+          select: {
+            id: true,
+            name: true,
+            duration: true,
+            price: true
+          },
+        },
+        user: {
+          select: {
+            name: true,
+          }
+        },
+      },
+
+      orderBy: {
+        createdAt: "desc",
+      }
+    });
+
+    if (!appointments || appointments.length === 0) {
+      throw new NotFoundException('Nenhum agendamento encontrado');
+    }
+
+    return appointments;
+  }
+
+  async getAllHistoricAppointments() {
     const appointments = await this.prisma.appointment.findMany({
       where: {
-        userId: clientId,
         status: {
           in: ['completed', 'canceled']
         }
@@ -150,9 +217,12 @@ export class AppointmentsService {
   async updateAppointment(
     id: number,
     updateData: UpdateAppointmentDto,
-    userId?: number,
+    req,
   ) {
     try {
+      const userId = req.user?.id;
+      const userRole = req.user?.role;
+
       const existing = await this.prisma.appointment.findUnique({
         where: { id },
       });
@@ -161,7 +231,7 @@ export class AppointmentsService {
         throw new NotFoundException('Agendamento não encontrado');
       }
 
-      if (userId && existing.userId !== userId) {
+      if (userId && existing.userId !== userId && userRole !== 'admin') {
         throw new ForbiddenException('Ação não permitida');
       }
 
@@ -169,6 +239,9 @@ export class AppointmentsService {
         where: { id },
         data: {
           ...updateData,
+          canceledById: updateData.canceledById
+            ? Number(updateData.canceledById)
+            : null,
           updatedAt: new Date(),
         },
         include: {
