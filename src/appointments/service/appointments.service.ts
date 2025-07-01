@@ -13,7 +13,7 @@ import { ptBR } from 'date-fns/locale';
 
 @Injectable()
 export class AppointmentsService {
-  constructor(private prisma: PrismaClient) { }
+  constructor(private prisma: PrismaClient) {}
   async createAppointment(createAppointmentsDto: CreateAppointmentDto) {
     try {
       const appointments = await this.prisma.appointment.create({
@@ -86,7 +86,6 @@ export class AppointmentsService {
     return appointments;
   }
 
-
   async getAppointmentUnique(appointmentId: number) {
     const appointment = await this.prisma.appointment.findUnique({
       where: { id: appointmentId },
@@ -96,20 +95,21 @@ export class AppointmentsService {
             id: true,
             name: true,
             duration: true,
-            price: true
+            price: true,
           },
         },
         user: {
           select: {
             name: true,
-          }
+          },
         },
-      }
-    })
+      },
+    });
 
-    if (!appointment) throw new NotFoundException('Serviço não encontrado' + appointmentId)
+    if (!appointment)
+      throw new NotFoundException('Serviço não encontrado' + appointmentId);
 
-    return appointment
+    return appointment;
   }
 
   async getHistoricAppointments(id: number, req) {
@@ -123,8 +123,8 @@ export class AppointmentsService {
           userId: userId,
           id: id,
           status: {
-            in: ['completed', 'canceled']
-          }
+            in: ['completed', 'canceled'],
+          },
         },
         include: {
           service: {
@@ -132,14 +132,14 @@ export class AppointmentsService {
               id: true,
               name: true,
               duration: true,
-              price: true
-            }
+              price: true,
+            },
           },
         },
 
         orderBy: {
-          createdAt: "desc",
-        }
+          createdAt: 'desc',
+        },
       });
 
       if (!appointments || appointments.length === 0) {
@@ -153,8 +153,8 @@ export class AppointmentsService {
       where: {
         id: id,
         status: {
-          in: ['completed', 'canceled']
-        }
+          in: ['completed', 'canceled'],
+        },
       },
       include: {
         service: {
@@ -162,19 +162,19 @@ export class AppointmentsService {
             id: true,
             name: true,
             duration: true,
-            price: true
+            price: true,
           },
         },
         user: {
           select: {
             name: true,
-          }
+          },
         },
       },
 
       orderBy: {
-        createdAt: "desc",
-      }
+        createdAt: 'desc',
+      },
     });
 
     if (!appointments || appointments.length === 0) {
@@ -188,8 +188,8 @@ export class AppointmentsService {
     const appointments = await this.prisma.appointment.findMany({
       where: {
         status: {
-          in: ['completed', 'canceled']
-        }
+          in: ['completed', 'canceled'],
+        },
       },
       include: {
         service: {
@@ -197,14 +197,14 @@ export class AppointmentsService {
             id: true,
             name: true,
             duration: true,
-            price: true
-          }
+            price: true,
+          },
         },
       },
 
       orderBy: {
-        createdAt: "desc",
-      }
+        createdAt: 'desc',
+      },
     });
 
     if (!appointments || appointments.length === 0) {
@@ -214,11 +214,7 @@ export class AppointmentsService {
     return appointments;
   }
 
-  async updateAppointment(
-    id: number,
-    updateData: UpdateAppointmentDto,
-    req,
-  ) {
+  async updateAppointment(id: number, updateData: UpdateAppointmentDto, req) {
     try {
       const userId = req.user?.id;
       const userRole = req.user?.role;

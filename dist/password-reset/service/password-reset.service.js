@@ -22,10 +22,10 @@ let PasswordResetService = class PasswordResetService {
     async sendCodingEmail(sendCodingEmail) {
         const email = sendCodingEmail.email;
         const existEmail = await this.prisma.user.findUnique({
-            where: { email }
+            where: { email },
         });
         if (!existEmail) {
-            throw new common_1.NotFoundException("Email inválido ou inexistente.");
+            throw new common_1.NotFoundException('Email inválido ou inexistente.');
         }
         const now = new Date();
         const existingToken = await this.prisma.passwordResetToken.findFirst({
@@ -55,16 +55,13 @@ let PasswordResetService = class PasswordResetService {
         await this.prisma.passwordResetToken.deleteMany({
             where: {
                 email,
-                OR: [
-                    { used: true },
-                    { expiresAt: { lt: now } }
-                ]
-            }
+                OR: [{ used: true }, { expiresAt: { lt: now } }],
+            },
         });
         const generateCode = Math.floor(1000 + Math.random() * 90000).toString();
         const expireAt = new Date(now.getTime() + 5 * 60 * 1000);
         await (0, reset_password_1.default)(generateCode, email);
-        console.log("[token gerado]", generateCode);
+        console.log('[token gerado]', generateCode);
         await this.prisma.passwordResetToken.create({
             data: {
                 email: email,
@@ -106,7 +103,7 @@ let PasswordResetService = class PasswordResetService {
             where: { email },
         });
         if (!existUser) {
-            throw new common_1.NotFoundException("Usuário não encontrado");
+            throw new common_1.NotFoundException('Usuário não encontrado');
         }
         const validateToken = await this.prisma.passwordResetToken.findFirst({
             where: {
@@ -118,14 +115,14 @@ let PasswordResetService = class PasswordResetService {
             },
         });
         if (!validateToken) {
-            throw new common_1.BadRequestException("Não foi possível recuperar sua senha");
+            throw new common_1.BadRequestException('Não foi possível recuperar sua senha');
         }
         const hashedPassword = await bcrypt.hash(newPassword, 10);
         await this.prisma.user.update({
             where: { email },
             data: {
                 password: hashedPassword,
-            }
+            },
         });
         await this.prisma.passwordResetToken.update({
             where: { id: validateToken.id },

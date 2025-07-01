@@ -86,15 +86,15 @@ let AppointmentsService = class AppointmentsService {
                         id: true,
                         name: true,
                         duration: true,
-                        price: true
+                        price: true,
                     },
                 },
                 user: {
                     select: {
                         name: true,
-                    }
+                    },
                 },
-            }
+            },
         });
         if (!appointment)
             throw new common_1.NotFoundException('Serviço não encontrado' + appointmentId);
@@ -110,8 +110,8 @@ let AppointmentsService = class AppointmentsService {
                     userId: userId,
                     id: id,
                     status: {
-                        in: ['completed', 'canceled']
-                    }
+                        in: ['completed', 'canceled'],
+                    },
                 },
                 include: {
                     service: {
@@ -119,13 +119,13 @@ let AppointmentsService = class AppointmentsService {
                             id: true,
                             name: true,
                             duration: true,
-                            price: true
-                        }
+                            price: true,
+                        },
                     },
                 },
                 orderBy: {
-                    createdAt: "desc",
-                }
+                    createdAt: 'desc',
+                },
             });
             if (!appointments || appointments.length === 0) {
                 throw new common_1.NotFoundException('Nenhum agendamento encontrado');
@@ -136,8 +136,8 @@ let AppointmentsService = class AppointmentsService {
             where: {
                 id: id,
                 status: {
-                    in: ['completed', 'canceled']
-                }
+                    in: ['completed', 'canceled'],
+                },
             },
             include: {
                 service: {
@@ -145,18 +145,18 @@ let AppointmentsService = class AppointmentsService {
                         id: true,
                         name: true,
                         duration: true,
-                        price: true
+                        price: true,
                     },
                 },
                 user: {
                     select: {
                         name: true,
-                    }
+                    },
                 },
             },
             orderBy: {
-                createdAt: "desc",
-            }
+                createdAt: 'desc',
+            },
         });
         if (!appointments || appointments.length === 0) {
             throw new common_1.NotFoundException('Nenhum agendamento encontrado');
@@ -167,8 +167,8 @@ let AppointmentsService = class AppointmentsService {
         const appointments = await this.prisma.appointment.findMany({
             where: {
                 status: {
-                    in: ['completed', 'canceled']
-                }
+                    in: ['completed', 'canceled'],
+                },
             },
             include: {
                 service: {
@@ -176,13 +176,13 @@ let AppointmentsService = class AppointmentsService {
                         id: true,
                         name: true,
                         duration: true,
-                        price: true
-                    }
+                        price: true,
+                    },
                 },
             },
             orderBy: {
-                createdAt: "desc",
-            }
+                createdAt: 'desc',
+            },
         });
         if (!appointments || appointments.length === 0) {
             throw new common_1.NotFoundException('Nenhum agendamento encontrado');

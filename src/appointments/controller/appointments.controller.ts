@@ -26,7 +26,7 @@ import { DeleteAppointmentResponseDto } from '../DTO/response.delete.appointment
 @Controller('appointments')
 @UseGuards(AuthGuard('jwt'), RolesGuard)
 export class AppointmentsController {
-  constructor(private appointmentsService: AppointmentsService) { }
+  constructor(private appointmentsService: AppointmentsService) {}
 
   @Post()
   @Roles('admin', 'client')
@@ -59,11 +59,11 @@ export class AppointmentsController {
         message: 'Agendamentos encontrados com sucesso',
         data: appointments,
       };
-    } catch (error) { }
+    } catch (error) {}
   }
 
   @Get('/historic-appointment')
-  @Roles('admin',)
+  @Roles('admin')
   async getAllHistoricAppointments() {
     const appointments =
       await this.appointmentsService.getAllHistoricAppointments();
@@ -73,21 +73,28 @@ export class AppointmentsController {
 
   @Get('/historic-appointment/:id')
   @Roles('admin', 'client')
-  async getHistoricAppointments(@Param('id', ParseIntPipe) id: number, @Req() req) {
-    const appointments =
-      await this.appointmentsService.getHistoricAppointments(id, req);
+  async getHistoricAppointments(
+    @Param('id', ParseIntPipe) id: number,
+    @Req() req,
+  ) {
+    const appointments = await this.appointmentsService.getHistoricAppointments(
+      id,
+      req,
+    );
 
     return appointments;
   }
 
   @Get(':appointmentId')
   @Roles('admin', 'client')
-  async getAppointmentUnique(@Param('appointmentId', ParseIntPipe) appointmentId: number) {
-    const appointment = await this.appointmentsService.getAppointmentUnique(appointmentId)
+  async getAppointmentUnique(
+    @Param('appointmentId', ParseIntPipe) appointmentId: number,
+  ) {
+    const appointment =
+      await this.appointmentsService.getAppointmentUnique(appointmentId);
 
     return appointment;
   }
-
 
   @Patch(':id')
   @Roles('admin', 'client')
@@ -96,8 +103,11 @@ export class AppointmentsController {
     @Body() updateData: UpdateAppointmentDto,
     @Req() req,
   ) {
-
-    const appointment = await this.appointmentsService.updateAppointment(id, updateData, req);
+    const appointment = await this.appointmentsService.updateAppointment(
+      id,
+      updateData,
+      req,
+    );
 
     return appointment;
   }

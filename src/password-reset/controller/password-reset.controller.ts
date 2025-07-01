@@ -1,4 +1,13 @@
-import { Controller, Get, Post, Body, Patch, Param, Delete, UseGuards } from '@nestjs/common';
+import {
+  Controller,
+  Get,
+  Post,
+  Body,
+  Patch,
+  Param,
+  Delete,
+  UseGuards,
+} from '@nestjs/common';
 import { PasswordResetService } from '../service/password-reset.service';
 import { SendCodingEmail } from '../DTO/send-coding-email.dto';
 import { Roles } from 'src/decorators/roles.decorator';
@@ -22,7 +31,7 @@ export class PasswordResetController {
   }
 
   @Post('reset')
-  resetPassword(@Body() resetPasswordDto: ResetPasswordDto ) {
+  resetPassword(@Body() resetPasswordDto: ResetPasswordDto) {
     return this.passwordResetService.resetPassword(resetPasswordDto);
   }
 }
