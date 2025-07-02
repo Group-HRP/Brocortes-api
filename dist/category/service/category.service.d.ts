@@ -5,61 +5,59 @@ export declare class CategoryService {
     private prisma;
     constructor(prisma: PrismaClient);
     serviceExisting(serviceId: number): Promise<{
-        name: string;
         id: number;
-        createdAt: Date;
-        updatedAt: Date;
+        name: string;
         description: string | null;
         duration: number;
         price: number;
+        createdAt: Date;
+        updatedAt: Date;
     }>;
     create(createCategoryDto: CreateCategoryDto): Promise<{
-        name: string;
         id: number;
+        name: string;
         createdAt: Date;
         atualizedAt: Date;
     }>;
     findAll(): Promise<{
-        name: string;
         id: number;
-        createdAt: Date;
-        atualizedAt: Date;
+        name: string;
     }[]>;
     findOne(id: number): Promise<{
-        name: string;
-        id: number;
         service: {
-            name: string;
             id: number;
-            createdAt: Date;
-            updatedAt: Date;
+            name: string;
             description: string | null;
             duration: number;
             price: number;
+            createdAt: Date;
+            updatedAt: Date;
         }[];
+        id: number;
+        name: string;
     }>;
     update(id: number, updateCategoryDto: UpdateCategoryDto): Promise<{
-        name: string;
-        id: number;
         service: {
-            name: string;
             id: number;
-            createdAt: Date;
-            updatedAt: Date;
+            name: string;
             description: string | null;
             duration: number;
             price: number;
+            createdAt: Date;
+            updatedAt: Date;
         }[];
+        id: number;
+        name: string;
     }>;
     remove(id: number): Promise<{
-        name: string;
         id: number;
+        name: string;
         createdAt: Date;
         atualizedAt: Date;
     }>;
     removeService(id: number, serviceId: number): Promise<{
-        name: string;
         id: number;
+        name: string;
         createdAt: Date;
         atualizedAt: Date;
     }>;

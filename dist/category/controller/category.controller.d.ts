@@ -5,52 +5,50 @@ export declare class CategoryController {
     private readonly categoryService;
     constructor(categoryService: CategoryService);
     create(createCategoryDto: CreateCategoryDto): Promise<{
-        name: string;
         id: number;
+        name: string;
         createdAt: Date;
         atualizedAt: Date;
     }>;
     findAll(): Promise<{
-        name: string;
         id: number;
-        createdAt: Date;
-        atualizedAt: Date;
+        name: string;
     }[]>;
     findOne(id: string): Promise<{
-        name: string;
-        id: number;
         service: {
-            name: string;
             id: number;
-            createdAt: Date;
-            updatedAt: Date;
+            name: string;
             description: string | null;
             duration: number;
             price: number;
+            createdAt: Date;
+            updatedAt: Date;
         }[];
+        id: number;
+        name: string;
     }>;
     update(id: string, updateCategoryDto: UpdateCategoryDto): Promise<{
-        name: string;
-        id: number;
         service: {
-            name: string;
             id: number;
-            createdAt: Date;
-            updatedAt: Date;
+            name: string;
             description: string | null;
             duration: number;
             price: number;
+            createdAt: Date;
+            updatedAt: Date;
         }[];
+        id: number;
+        name: string;
     }>;
     remove(id: string): Promise<{
-        name: string;
         id: number;
+        name: string;
         createdAt: Date;
         atualizedAt: Date;
     }>;
     removeService(id: string, serviceId: string): Promise<{
-        name: string;
         id: number;
+        name: string;
         createdAt: Date;
         atualizedAt: Date;
     }>;

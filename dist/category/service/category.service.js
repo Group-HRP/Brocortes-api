@@ -33,7 +33,15 @@ let CategoryService = class CategoryService {
         return category;
     }
     async findAll() {
-        return this.prisma.category.findMany();
+        return this.prisma.category.findMany({
+            select: {
+                id: true,
+                name: true,
+            },
+            orderBy: {
+                createdAt: 'desc',
+            }
+        });
     }
     async findOne(id) {
         const categoryList = await this.prisma.category.findUnique({

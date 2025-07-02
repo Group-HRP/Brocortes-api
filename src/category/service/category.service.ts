@@ -32,7 +32,15 @@ export class CategoryService {
   }
 
   async findAll() {
-    return this.prisma.category.findMany();
+    return this.prisma.category.findMany({
+      select: {
+        id: true,
+        name: true,
+      },
+      orderBy: {
+        createdAt: 'desc',
+      }
+    });
   }
 
   async findOne(id: number) {
@@ -41,7 +49,12 @@ export class CategoryService {
       select: {
         id: true,
         name: true,
-        service: true,
+        service: {
+          select: {
+            id: true,
+            name: true
+          }
+        },
       },
     });
 
