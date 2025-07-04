@@ -62,6 +62,12 @@ export class ServiceController {
     };
   }
 
+  @Get("/category/:categoryId")
+  @Roles('admin')
+  async findOneServiceNotCategory(@Param('categoryId') categoryId: number) {
+    const service = await this.serviceService.findOneServiceNotCategory(categoryId);
+  }
+
   @Patch(':id')
   @Roles('admin')
   async update(

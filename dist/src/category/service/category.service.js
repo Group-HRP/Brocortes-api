@@ -27,8 +27,22 @@ let CategoryService = class CategoryService {
         return service;
     }
     async create(createCategoryDto) {
+        const { name, serviceIds } = createCategoryDto;
+        const services = await this.prisma.service.findMany({
+            where: {
+                id: { in: serviceIds },
+            },
+        });
+        if (services.length !== serviceIds.length) {
+            throw new common_1.BadRequestException('Um ou mais serviços não existem');
+        }
         const category = await this.prisma.category.create({
-            data: createCategoryDto,
+            data: {
+                name,
+                service: {
+                    connect: serviceIds.map((id) => ({ id }))
+                }
+            },
         });
         return category;
     }

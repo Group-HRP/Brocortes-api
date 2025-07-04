@@ -55,6 +55,9 @@ let ServiceController = class ServiceController {
             data: services.map((services) => new response_service_dto_1.ServiceResponseDto(services)),
         };
     }
+    async findOneServiceNotCategory(categoryId) {
+        const service = await this.serviceService.findOneServiceNotCategory(categoryId);
+    }
     async update(id, updateServiceDto) {
         try {
             const updatedService = await this.serviceService.update(id, updateServiceDto);
@@ -111,6 +114,14 @@ __decorate([
     __metadata("design:paramtypes", []),
     __metadata("design:returntype", Promise)
 ], ServiceController.prototype, "findAll", null);
+__decorate([
+    (0, common_1.Get)("/category/:categoryId"),
+    (0, roles_decorator_1.Roles)('admin'),
+    __param(0, (0, common_1.Param)('categoryId')),
+    __metadata("design:type", Function),
+    __metadata("design:paramtypes", [Number]),
+    __metadata("design:returntype", Promise)
+], ServiceController.prototype, "findOneServiceNotCategory", null);
 __decorate([
     (0, common_1.Patch)(':id'),
     (0, roles_decorator_1.Roles)('admin'),

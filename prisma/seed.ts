@@ -26,7 +26,7 @@ async function main() {
     data: {
       name: 'Pedro Ramos',
       email: 'pedro@example.com',
-      password: '123456', // Lembre-se de hashear em produção
+      password: '123456', 
       role: 'admin',
     },
   });

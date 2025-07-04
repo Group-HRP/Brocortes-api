@@ -11,7 +11,7 @@ import { DeleteServiceOptionsDto } from '../DTO/delete.service.dto';
 
 @Injectable()
 export class ServiceService {
-  constructor(private prisma: PrismaClient) {}
+  constructor(private prisma: PrismaClient) { }
 
   async create(createServiceDto: CreateServiceDto) {
     try {
@@ -87,6 +87,26 @@ export class ServiceService {
         error.status || HttpStatus.INTERNAL_SERVER_ERROR,
       );
     }
+  }
+
+  async findOneServiceNotCategory(categoryId: number) {
+    const existCategory = await this.prisma.category.findUnique({
+      where: { id: categoryId },
+    })
+
+    if(!existCategory) {
+      throw new NotFoundException("Categoria no existe");
+    }
+
+    const service = await this.prisma.service.findMany({
+      where: {categories: {
+        none: {
+          id: categoryId,
+        }
+      }}
+    })
+
+    return service;
   }
 
   async update(id: number, updateServiceDto: UpdateServiceDto) {

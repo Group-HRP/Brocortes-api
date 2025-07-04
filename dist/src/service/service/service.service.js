@@ -73,6 +73,22 @@ let ServiceService = class ServiceService {
             throw new common_1.HttpException(error.message || 'Falha ao listar serviços', error.status || common_1.HttpStatus.INTERNAL_SERVER_ERROR);
         }
     }
+    async findOneServiceNotCategory(categoryId) {
+        const existCategory = await this.prisma.category.findUnique({
+            where: { id: categoryId },
+        });
+        if (!existCategory) {
+            throw new common_1.NotFoundException("Categoria no existe");
+        }
+        const service = await this.prisma.service.findMany({
+            where: { categories: {
+                    none: {
+                        id: categoryId,
+                    }
+                } }
+        });
+        return service;
+    }
     async update(id, updateServiceDto) {
         try {
             const service = await this.prisma.service.update({

@@ -9,7 +9,7 @@ import { PrismaClient } from '@prisma/client';
 
 @Injectable()
 export class CategoryService {
-  constructor(private prisma: PrismaClient) {}
+  constructor(private prisma: PrismaClient) { }
 
   async serviceExisting(serviceId: number) {
     const service = await this.prisma.service.findUnique({
@@ -24,8 +24,25 @@ export class CategoryService {
   }
 
   async create(createCategoryDto: CreateCategoryDto) {
+    const { name, serviceIds } = createCategoryDto;
+
+    const services = await this.prisma.service.findMany({
+      where: {
+        id: { in: serviceIds },
+      },
+    });
+
+    if (services.length !== serviceIds.length) {
+      throw new BadRequestException('Um ou mais serviços não existem');
+    }
+
     const category = await this.prisma.category.create({
-      data: createCategoryDto,
+      data: {
+        name,
+        service: {
+          connect: serviceIds.map((id) => ({ id }))
+        }
+      },
     });
 
     return category;
