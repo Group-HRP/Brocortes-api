@@ -13,9 +13,10 @@ exports.UpdateCategoryDto = void 0;
 const swagger_1 = require("@nestjs/swagger");
 const create_category_dto_1 = require("./create-category.dto");
 const class_validator_1 = require("class-validator");
+const class_transformer_1 = require("class-transformer");
 class UpdateCategoryDto extends (0, swagger_1.PartialType)(create_category_dto_1.CreateCategoryDto) {
     name;
-    serviceId;
+    serviceIds;
 }
 exports.UpdateCategoryDto = UpdateCategoryDto;
 __decorate([
@@ -24,9 +25,10 @@ __decorate([
     __metadata("design:type", String)
 ], UpdateCategoryDto.prototype, "name", void 0);
 __decorate([
-    (0, class_validator_1.IsNumber)(),
-    (0, class_validator_1.IsPositive)(),
-    (0, class_validator_1.IsInt)(),
-    __metadata("design:type", Number)
-], UpdateCategoryDto.prototype, "serviceId", void 0);
+    (0, class_validator_1.IsArray)(),
+    (0, class_validator_1.ArrayNotEmpty)(),
+    (0, class_validator_1.IsInt)({ each: true }),
+    (0, class_transformer_1.Type)(() => Number),
+    __metadata("design:type", Array)
+], UpdateCategoryDto.prototype, "serviceIds", void 0);
 //# sourceMappingURL=update-category.dto.js.map

@@ -57,6 +57,7 @@ let ServiceController = class ServiceController {
     }
     async findOneServiceNotCategory(categoryId) {
         const service = await this.serviceService.findOneServiceNotCategory(categoryId);
+        return service;
     }
     async update(id, updateServiceDto) {
         try {

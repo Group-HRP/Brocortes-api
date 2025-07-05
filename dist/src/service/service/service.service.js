@@ -75,17 +75,23 @@ let ServiceService = class ServiceService {
     }
     async findOneServiceNotCategory(categoryId) {
         const existCategory = await this.prisma.category.findUnique({
-            where: { id: categoryId },
+            where: { id: Number(categoryId) },
         });
         if (!existCategory) {
             throw new common_1.NotFoundException("Categoria no existe");
         }
         const service = await this.prisma.service.findMany({
-            where: { categories: {
+            where: {
+                categories: {
                     none: {
-                        id: categoryId,
+                        id: Number(categoryId),
                     }
-                } }
+                }
+            },
+            select: {
+                id: true,
+                name: true,
+            }
         });
         return service;
     }

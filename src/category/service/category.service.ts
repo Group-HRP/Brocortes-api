@@ -86,25 +86,31 @@ export class CategoryService {
     const categoryExisting = await this.findOne(id);
 
     if (!categoryExisting) {
-      throw new NotFoundException('categoria nao encontrada');
+      throw new NotFoundException('Categoria não encontrada');
     }
 
-    if (updateCategoryDto.serviceId === undefined) {
-      throw new BadRequestException('servico nao informado');
+    if (!updateCategoryDto.serviceIds || updateCategoryDto.serviceIds.length === 0) {
+      throw new BadRequestException('Serviços não informados');
     }
-    const serviceExisting = await this.serviceExisting(
-      updateCategoryDto.serviceId,
-    );
+
+    const serviceExisting = await this.prisma.service.findMany({
+      where: {
+        id: {
+          in: updateCategoryDto.serviceIds,
+        },
+      },
+    });
 
     if (!serviceExisting) {
-      throw new NotFoundException('Servico nao encontrado');
+      throw new NotFoundException('Um ou mais serviços não encontrados');
     }
+
     const categoryUpdate = await this.prisma.category.update({
       where: { id: id },
       data: {
         name: updateCategoryDto.name,
         service: {
-          connect: { id: updateCategoryDto.serviceId },
+          set: updateCategoryDto.serviceIds.map((id) => ({ id })),
         },
       },
       select: {
@@ -116,6 +122,7 @@ export class CategoryService {
 
     return categoryUpdate;
   }
+
 
   async remove(id: number) {
     const categoryExisting = await this.findOne(id);

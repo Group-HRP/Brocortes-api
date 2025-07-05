@@ -7,10 +7,10 @@ export declare class CategoryService {
     serviceExisting(serviceId: number): Promise<{
         id: number;
         name: string;
+        createdAt: Date;
         description: string | null;
         duration: number;
         price: number;
-        createdAt: Date;
         updatedAt: Date;
     }>;
     create(createCategoryDto: CreateCategoryDto): Promise<{
@@ -24,25 +24,25 @@ export declare class CategoryService {
         name: string;
     }[]>;
     findOne(id: number): Promise<{
+        id: number;
+        name: string;
         service: {
             id: number;
             name: string;
         }[];
-        id: number;
-        name: string;
     }>;
     update(id: number, updateCategoryDto: UpdateCategoryDto): Promise<{
+        id: number;
+        name: string;
         service: {
             id: number;
             name: string;
+            createdAt: Date;
             description: string | null;
             duration: number;
             price: number;
-            createdAt: Date;
             updatedAt: Date;
         }[];
-        id: number;
-        name: string;
     }>;
     remove(id: number): Promise<{
         id: number;

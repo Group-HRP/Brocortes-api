@@ -8,11 +8,11 @@ export declare class ServiceService {
     create(createServiceDto: CreateServiceDto): Promise<{
         id: number;
         name: string;
+        createdAt: Date;
+        updatedAt: Date;
         description: string | null;
         duration: number;
         price: number;
-        createdAt: Date;
-        updatedAt: Date;
     }>;
     findAll(): Promise<{
         id: number;
@@ -24,28 +24,23 @@ export declare class ServiceService {
     findOneServiceNotCategory(categoryId: number): Promise<{
         id: number;
         name: string;
-        description: string | null;
-        duration: number;
-        price: number;
-        createdAt: Date;
-        updatedAt: Date;
     }[]>;
     update(id: number, updateServiceDto: UpdateServiceDto): Promise<{
         id: number;
         name: string;
+        createdAt: Date;
+        updatedAt: Date;
         description: string | null;
         duration: number;
         price: number;
-        createdAt: Date;
-        updatedAt: Date;
     }>;
     remove(id: number, deleteServiceOptionsDto: DeleteServiceOptionsDto): Promise<{
         id: number;
         name: string;
+        createdAt: Date;
+        updatedAt: Date;
         description: string | null;
         duration: number;
         price: number;
-        createdAt: Date;
-        updatedAt: Date;
     }>;
 }
