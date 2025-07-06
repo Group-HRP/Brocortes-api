@@ -14,6 +14,16 @@ export declare class ServiceService {
         duration: number;
         price: number;
     }>;
+    findOne(serviceId: number): Promise<{
+        id: number;
+        name: string;
+        duration: number;
+        price: number;
+        categories: {
+            id: number;
+            name: string;
+        }[];
+    }>;
     findAll(): Promise<{
         id: number;
         name: string;

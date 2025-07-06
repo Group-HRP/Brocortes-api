@@ -49,7 +49,7 @@ export class AppointmentsController {
   }
 
   @Get()
-  @Roles('admin', 'client')
+  @Roles('admin', 'client', 'professional')
   async getAllAppointments(@Req() req) {
     try {
       const appointments =
@@ -63,7 +63,7 @@ export class AppointmentsController {
   }
 
   @Get('/historic-appointment')
-  @Roles('admin')
+  @Roles('admin', 'professional')
   async getAllHistoricAppointments() {
     const appointments =
       await this.appointmentsService.getAllHistoricAppointments();
@@ -72,7 +72,7 @@ export class AppointmentsController {
   }
 
   @Get('/historic-appointment/:id')
-  @Roles('admin', 'client')
+  @Roles('admin', 'client', 'professional')
   async getHistoricAppointments(
     @Param('id', ParseIntPipe) id: number,
     @Req() req,

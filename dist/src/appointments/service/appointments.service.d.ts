@@ -8,8 +8,8 @@ export declare class AppointmentsService {
         id: number;
         createdAt: Date;
         updatedAt: Date;
-        userId: number;
         serviceId: number;
+        userId: number;
         date: Date;
         status: string;
         canceledAt: Date | null;
@@ -31,8 +31,8 @@ export declare class AppointmentsService {
         id: number;
         createdAt: Date;
         updatedAt: Date;
-        userId: number;
         serviceId: number;
+        userId: number;
         date: Date;
         status: string;
         canceledAt: Date | null;
@@ -51,8 +51,8 @@ export declare class AppointmentsService {
         id: number;
         createdAt: Date;
         updatedAt: Date;
-        userId: number;
         serviceId: number;
+        userId: number;
         date: Date;
         status: string;
         canceledAt: Date | null;
@@ -72,8 +72,8 @@ export declare class AppointmentsService {
         id: number;
         createdAt: Date;
         updatedAt: Date;
-        userId: number;
         serviceId: number;
+        userId: number;
         date: Date;
         status: string;
         canceledAt: Date | null;
@@ -87,8 +87,8 @@ export declare class AppointmentsService {
         id: number;
         createdAt: Date;
         updatedAt: Date;
-        userId: number;
         serviceId: number;
+        userId: number;
         date: Date;
         status: string;
         canceledAt: Date | null;

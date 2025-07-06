@@ -1,4 +1,7 @@
+import { Type } from 'class-transformer';
 import {
+  ArrayNotEmpty,
+  IsArray,
   IsInt,
   IsNumber,
   IsOptional,
@@ -24,4 +27,11 @@ export class UpdateServiceDto {
   @IsPositive()
   @IsOptional()
   price?: number;
+
+  @IsArray()
+  @ArrayNotEmpty()
+  @IsOptional()
+  @IsInt({ each: true })
+  @Type(() => Number)
+  categoryIds?: number[];
 }

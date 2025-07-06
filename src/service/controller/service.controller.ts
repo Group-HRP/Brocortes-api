@@ -62,6 +62,14 @@ export class ServiceController {
     };
   }
 
+  @Get(":serviceId")
+  @Roles('admin')
+  async findOne(@Param('serviceId') serviceId: number) {
+    const service = await this.serviceService.findOne(serviceId);
+
+    return service;
+  }
+
   @Get("/category/:categoryId")
   @Roles('admin')
   async findOneServiceNotCategory(@Param('categoryId') categoryId: number) {

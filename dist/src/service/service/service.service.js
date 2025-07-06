@@ -56,6 +56,27 @@ let ServiceService = class ServiceService {
             }, common_1.HttpStatus.INTERNAL_SERVER_ERROR);
         }
     }
+    async findOne(serviceId) {
+        const existingService = await this.prisma.service.findUnique({
+            where: { id: Number(serviceId) },
+            select: {
+                id: true,
+                name: true,
+                duration: true,
+                price: true,
+                categories: {
+                    select: {
+                        id: true,
+                        name: true,
+                    }
+                }
+            },
+        });
+        if (!existingService) {
+            throw new common_1.NotFoundException("Servico nao existe");
+        }
+        return existingService;
+    }
     async findAll() {
         try {
             const services = await this.prisma.service.findMany({
@@ -66,6 +87,9 @@ let ServiceService = class ServiceService {
                     duration: true,
                     price: true,
                 },
+                orderBy: {
+                    createdAt: 'desc',
+                }
             });
             return services;
         }
@@ -99,7 +123,15 @@ let ServiceService = class ServiceService {
         try {
             const service = await this.prisma.service.update({
                 where: { id: Number(id) },
-                data: updateServiceDto,
+                data: {
+                    name: updateServiceDto.name,
+                    description: updateServiceDto.description,
+                    duration: updateServiceDto.duration,
+                    price: updateServiceDto.price,
+                    categories: {
+                        connect: updateServiceDto.categoryIds?.map((id) => ({ id }))
+                    }
+                },
             });
             return service;
         }

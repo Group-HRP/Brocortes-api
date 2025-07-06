@@ -97,7 +97,7 @@ __decorate([
 ], AppointmentsController.prototype, "createAppointment", null);
 __decorate([
     (0, common_1.Get)(),
-    (0, roles_decorator_1.Roles)('admin', 'client'),
+    (0, roles_decorator_1.Roles)('admin', 'client', 'professional'),
     __param(0, (0, common_1.Req)()),
     __metadata("design:type", Function),
     __metadata("design:paramtypes", [Object]),
@@ -105,14 +105,14 @@ __decorate([
 ], AppointmentsController.prototype, "getAllAppointments", null);
 __decorate([
     (0, common_1.Get)('/historic-appointment'),
-    (0, roles_decorator_1.Roles)('admin'),
+    (0, roles_decorator_1.Roles)('admin', 'professional'),
     __metadata("design:type", Function),
     __metadata("design:paramtypes", []),
     __metadata("design:returntype", Promise)
 ], AppointmentsController.prototype, "getAllHistoricAppointments", null);
 __decorate([
     (0, common_1.Get)('/historic-appointment/:id'),
-    (0, roles_decorator_1.Roles)('admin', 'client'),
+    (0, roles_decorator_1.Roles)('admin', 'client', 'professional'),
     __param(0, (0, common_1.Param)('id', common_1.ParseIntPipe)),
     __param(1, (0, common_1.Req)()),
     __metadata("design:type", Function),

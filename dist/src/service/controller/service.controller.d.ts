@@ -25,6 +25,16 @@ export declare class ServiceController {
         message: string;
         data: ServiceResponseDto[];
     }>;
+    findOne(serviceId: number): Promise<{
+        id: number;
+        name: string;
+        duration: number;
+        price: number;
+        categories: {
+            id: number;
+            name: string;
+        }[];
+    }>;
     findOneServiceNotCategory(categoryId: number): Promise<{
         id: number;
         name: string;

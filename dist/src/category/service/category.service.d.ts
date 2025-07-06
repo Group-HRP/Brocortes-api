@@ -4,14 +4,14 @@ import { PrismaClient } from '@prisma/client';
 export declare class CategoryService {
     private prisma;
     constructor(prisma: PrismaClient);
-    serviceExisting(serviceId: number): Promise<{
+    serviceExisting(serviceObj: any): Promise<{
         id: number;
         name: string;
         createdAt: Date;
+        updatedAt: Date;
         description: string | null;
         duration: number;
         price: number;
-        updatedAt: Date;
     }>;
     create(createCategoryDto: CreateCategoryDto): Promise<{
         id: number;
@@ -38,10 +38,10 @@ export declare class CategoryService {
             id: number;
             name: string;
             createdAt: Date;
+            updatedAt: Date;
             description: string | null;
             duration: number;
             price: number;
-            updatedAt: Date;
         }[];
     }>;
     remove(id: number): Promise<{
@@ -50,7 +50,7 @@ export declare class CategoryService {
         createdAt: Date;
         atualizedAt: Date;
     }>;
-    removeService(id: number, serviceId: number): Promise<{
+    removeService(id: number, serviceObj: any): Promise<{
         id: number;
         name: string;
         createdAt: Date;

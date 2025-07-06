@@ -41,7 +41,7 @@ let CategoryController = class CategoryController {
         return this.categoryService.remove(+id);
     }
     async removeService(id, serviceId) {
-        return this.categoryService.removeService(+id, +serviceId);
+        return this.categoryService.removeService(id, serviceId);
     }
 };
 exports.CategoryController = CategoryController;
@@ -91,7 +91,7 @@ __decorate([
     __param(0, (0, common_1.Param)('id')),
     __param(1, (0, common_1.Body)()),
     __metadata("design:type", Function),
-    __metadata("design:paramtypes", [String, String]),
+    __metadata("design:paramtypes", [Number, Object]),
     __metadata("design:returntype", Promise)
 ], CategoryController.prototype, "removeService", null);
 exports.CategoryController = CategoryController = __decorate([

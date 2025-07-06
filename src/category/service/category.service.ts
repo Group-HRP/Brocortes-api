@@ -11,13 +11,16 @@ import { PrismaClient } from '@prisma/client';
 export class CategoryService {
   constructor(private prisma: PrismaClient) { }
 
-  async serviceExisting(serviceId: number) {
+  async serviceExisting(serviceObj: any) {
+    console.log("Id do servico", serviceObj?.serviceId)
     const service = await this.prisma.service.findUnique({
-      where: { id: serviceId },
+      where: {
+        id: Number(serviceObj?.serviceId)
+      },
     });
 
     if (!service) {
-      throw new NotFoundException('Servico nâo encontrado');
+      throw new NotFoundException('Serviço não encontrado');
     }
 
     return service;
@@ -62,7 +65,7 @@ export class CategoryService {
 
   async findOne(id: number) {
     const categoryList = await this.prisma.category.findUnique({
-      where: { id: id },
+      where: { id: Number(id) },
       select: {
         id: true,
         name: true,
@@ -134,16 +137,24 @@ export class CategoryService {
     return categoryDelete;
   }
 
-  async removeService(id: number, serviceId: number) {
+  async removeService(id: number, serviceObj: any) {
     const categoryExisting = await this.findOne(id);
 
-    const serviceExisting = await this.serviceExisting(serviceId);
+    if (!categoryExisting) {
+      throw new BadRequestException("Categoria não encontrada")
+    }
+
+    const serviceExisting = await this.serviceExisting(serviceObj);
+
+    if (!serviceExisting) {
+      throw new BadRequestException("Serviço não encotrado")
+    }
 
     const serviceDelete = await this.prisma.category.update({
-      where: { id: serviceId },
+      where: { id: Number(id) },
       data: {
         service: {
-          disconnect: { id: serviceId },
+          disconnect: { id: serviceObj?.serviceId },
         },
       },
     });

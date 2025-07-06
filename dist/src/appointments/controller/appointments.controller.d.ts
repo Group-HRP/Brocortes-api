@@ -27,12 +27,12 @@ export declare class AppointmentsController {
         };
     } & {
         id: number;
-        createdAt: Date;
-        updatedAt: Date;
         userId: number;
         serviceId: number;
         date: Date;
         status: string;
+        createdAt: Date;
+        updatedAt: Date;
         canceledAt: Date | null;
         canceledById: number | null;
         cancellationReason: string | null;
@@ -50,12 +50,12 @@ export declare class AppointmentsController {
         };
     } & {
         id: number;
-        createdAt: Date;
-        updatedAt: Date;
         userId: number;
         serviceId: number;
         date: Date;
         status: string;
+        createdAt: Date;
+        updatedAt: Date;
         canceledAt: Date | null;
         canceledById: number | null;
         cancellationReason: string | null;
@@ -71,12 +71,12 @@ export declare class AppointmentsController {
         };
     } & {
         id: number;
-        createdAt: Date;
-        updatedAt: Date;
         userId: number;
         serviceId: number;
         date: Date;
         status: string;
+        createdAt: Date;
+        updatedAt: Date;
         canceledAt: Date | null;
         canceledById: number | null;
         cancellationReason: string | null;

@@ -55,6 +55,10 @@ let ServiceController = class ServiceController {
             data: services.map((services) => new response_service_dto_1.ServiceResponseDto(services)),
         };
     }
+    async findOne(serviceId) {
+        const service = await this.serviceService.findOne(serviceId);
+        return service;
+    }
     async findOneServiceNotCategory(categoryId) {
         const service = await this.serviceService.findOneServiceNotCategory(categoryId);
         return service;
@@ -115,6 +119,14 @@ __decorate([
     __metadata("design:paramtypes", []),
     __metadata("design:returntype", Promise)
 ], ServiceController.prototype, "findAll", null);
+__decorate([
+    (0, common_1.Get)(":serviceId"),
+    (0, roles_decorator_1.Roles)('admin'),
+    __param(0, (0, common_1.Param)('serviceId')),
+    __metadata("design:type", Function),
+    __metadata("design:paramtypes", [Number]),
+    __metadata("design:returntype", Promise)
+], ServiceController.prototype, "findOne", null);
 __decorate([
     (0, common_1.Get)("/category/:categoryId"),
     (0, roles_decorator_1.Roles)('admin'),

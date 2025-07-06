@@ -56,7 +56,7 @@ export class CategoryController {
 
   @Patch('service/:id')
   @Roles('admin')
-  async removeService(@Param('id') id: string, @Body() serviceId: string) {
-    return this.categoryService.removeService(+id, +serviceId);
+  async removeService(@Param('id') id: number, @Body() serviceId: object) {
+    return this.categoryService.removeService(id, serviceId);
   }
 }

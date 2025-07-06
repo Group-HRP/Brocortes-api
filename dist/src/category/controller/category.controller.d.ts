@@ -29,10 +29,10 @@ export declare class CategoryController {
             id: number;
             name: string;
             createdAt: Date;
+            updatedAt: Date;
             description: string | null;
             duration: number;
             price: number;
-            updatedAt: Date;
         }[];
     }>;
     remove(id: string): Promise<{
@@ -41,7 +41,7 @@ export declare class CategoryController {
         createdAt: Date;
         atualizedAt: Date;
     }>;
-    removeService(id: string, serviceId: string): Promise<{
+    removeService(id: number, serviceId: object): Promise<{
         id: number;
         name: string;
         createdAt: Date;
