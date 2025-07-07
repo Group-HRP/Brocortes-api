@@ -14,13 +14,13 @@ export declare class NotificationsController {
     getByUser(userId: number): Promise<{
         statusCode: HttpStatus;
         data: {
+            message: string;
             user: {
-                id: number;
                 name: string;
                 email: string;
+                id: number;
             };
             id: number;
-            message: string;
             type: string;
             sentAt: Date;
         }[];

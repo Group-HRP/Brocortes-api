@@ -22,8 +22,8 @@ export declare class AppointmentsService {
             name: string;
         };
         service: {
-            id: number;
             name: string;
+            id: number;
             duration: number;
             price: number;
         };
@@ -42,8 +42,8 @@ export declare class AppointmentsService {
     getHistoricAppointments(id: number, req: any): Promise<any>;
     getAllHistoricAppointments(): Promise<({
         service: {
-            id: number;
             name: string;
+            id: number;
             duration: number;
             price: number;
         };
@@ -61,12 +61,12 @@ export declare class AppointmentsService {
     })[]>;
     updateAppointment(id: number, updateData: UpdateAppointmentDto, req: any): Promise<{
         user: {
-            id: number;
             name: string;
+            id: number;
         };
         service: {
-            id: number;
             name: string;
+            id: number;
         };
     } & {
         id: number;

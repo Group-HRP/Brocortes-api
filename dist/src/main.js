@@ -9,6 +9,7 @@ async function bootstrap() {
             'http://localhost:8081',
             'exp://192.168.15.9:8081',
             'exp://192.168.0.110:8081',
+            'exp://192.168.15.5:8081',
         ],
         methods: ['GET', 'POST', 'PATCH', 'DELETE'],
         allowedHeaders: ['Content-Type', 'Authorization'],

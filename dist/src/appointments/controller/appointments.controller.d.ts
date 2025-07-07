@@ -20,19 +20,19 @@ export declare class AppointmentsController {
     } | undefined>;
     getAllHistoricAppointments(): Promise<({
         service: {
-            id: number;
             name: string;
+            id: number;
             duration: number;
             price: number;
         };
     } & {
         id: number;
-        userId: number;
-        serviceId: number;
-        date: Date;
-        status: string;
         createdAt: Date;
         updatedAt: Date;
+        serviceId: number;
+        userId: number;
+        date: Date;
+        status: string;
         canceledAt: Date | null;
         canceledById: number | null;
         cancellationReason: string | null;
@@ -43,40 +43,40 @@ export declare class AppointmentsController {
             name: string;
         };
         service: {
-            id: number;
             name: string;
+            id: number;
             duration: number;
             price: number;
         };
     } & {
         id: number;
-        userId: number;
-        serviceId: number;
-        date: Date;
-        status: string;
         createdAt: Date;
         updatedAt: Date;
+        serviceId: number;
+        userId: number;
+        date: Date;
+        status: string;
         canceledAt: Date | null;
         canceledById: number | null;
         cancellationReason: string | null;
     }>;
     updateAppointment(id: number, updateData: UpdateAppointmentDto, req: any): Promise<{
         user: {
-            id: number;
             name: string;
+            id: number;
         };
         service: {
-            id: number;
             name: string;
+            id: number;
         };
     } & {
         id: number;
-        userId: number;
-        serviceId: number;
-        date: Date;
-        status: string;
         createdAt: Date;
         updatedAt: Date;
+        serviceId: number;
+        userId: number;
+        date: Date;
+        status: string;
         canceledAt: Date | null;
         canceledById: number | null;
         cancellationReason: string | null;

@@ -11,8 +11,8 @@ export declare class ServiceController {
         statusCode: HttpStatus;
         message: string;
         data: {
-            id: number;
             name: string;
+            id: number;
             createdAt: Date;
             updatedAt: Date;
             description: string | null;
@@ -26,25 +26,25 @@ export declare class ServiceController {
         data: ServiceResponseDto[];
     }>;
     findOne(serviceId: number): Promise<{
-        id: number;
         name: string;
+        id: number;
         duration: number;
         price: number;
         categories: {
-            id: number;
             name: string;
+            id: number;
         }[];
     }>;
     findOneServiceNotCategory(categoryId: number): Promise<{
-        id: number;
         name: string;
+        id: number;
     }[]>;
     update(id: number, updateServiceDto: UpdateServiceDto): Promise<{
         statusCode: HttpStatus;
         message: string;
         data: {
-            id: number;
             name: string;
+            id: number;
             createdAt: Date;
             updatedAt: Date;
             description: string | null;

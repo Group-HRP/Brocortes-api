@@ -14,13 +14,13 @@ export declare class NotificationsService {
         error: any;
     }>;
     getByUser(userId: number): Promise<{
+        message: string;
         user: {
-            id: number;
             name: string;
             email: string;
+            id: number;
         };
         id: number;
-        message: string;
         type: string;
         sentAt: Date;
     }[]>;
