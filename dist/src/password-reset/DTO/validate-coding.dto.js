@@ -10,12 +10,14 @@ var __metadata = (this && this.__metadata) || function (k, v) {
 };
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.ValidateCoding = void 0;
+const swagger_1 = require("@nestjs/swagger");
 const class_validator_1 = require("class-validator");
 class ValidateCoding {
     token;
 }
 exports.ValidateCoding = ValidateCoding;
 __decorate([
+    (0, swagger_1.ApiProperty)({ example: "12345", description: "Codigo de 5 digitos enviado para o email do user" }),
     (0, class_validator_1.IsNotEmpty)(),
     (0, class_validator_1.IsString)(),
     (0, class_validator_1.Length)(4, 4, { message: 'O código deve ter exatamente 4 caracteres.' }),

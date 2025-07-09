@@ -18,6 +18,7 @@ const password_reset_service_1 = require("../service/password-reset.service");
 const send_coding_email_dto_1 = require("../DTO/send-coding-email.dto");
 const validate_coding_dto_1 = require("../DTO/validate-coding.dto");
 const reset_password_dto_1 = require("../DTO/reset-password.dto");
+const swagger_1 = require("@nestjs/swagger");
 let PasswordResetController = class PasswordResetController {
     passwordResetService;
     constructor(passwordResetService) {
@@ -36,6 +37,7 @@ let PasswordResetController = class PasswordResetController {
 exports.PasswordResetController = PasswordResetController;
 __decorate([
     (0, common_1.Post)('send'),
+    (0, swagger_1.ApiOperation)({ summary: "Envia codigo para email do user" }),
     __param(0, (0, common_1.Body)()),
     __metadata("design:type", Function),
     __metadata("design:paramtypes", [send_coding_email_dto_1.SendCodingEmail]),
@@ -43,6 +45,7 @@ __decorate([
 ], PasswordResetController.prototype, "sendCodingEmail", null);
 __decorate([
     (0, common_1.Post)('validate'),
+    (0, swagger_1.ApiOperation)({ summary: "Valida codigo enviado para o email do user" }),
     __param(0, (0, common_1.Body)()),
     __metadata("design:type", Function),
     __metadata("design:paramtypes", [validate_coding_dto_1.ValidateCoding]),
@@ -50,6 +53,7 @@ __decorate([
 ], PasswordResetController.prototype, "validateCoding", null);
 __decorate([
     (0, common_1.Post)('reset'),
+    (0, swagger_1.ApiOperation)({ summary: "Reseta a senha do user" }),
     __param(0, (0, common_1.Body)()),
     __metadata("design:type", Function),
     __metadata("design:paramtypes", [reset_password_dto_1.ResetPasswordDto]),
