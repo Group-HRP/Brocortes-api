@@ -22,51 +22,18 @@ let NotificationsController = class NotificationsController {
     constructor(notificationsService) {
         this.notificationsService = notificationsService;
     }
-    async createNotification(createNotificationDto) {
-        const result = await this.notificationsService.createAndSendNotification(createNotificationDto);
-        return {
-            statusCode: common_1.HttpStatus.CREATED,
-            success: result.success,
-            notificationId: result.notificationId,
-            message: result.success
-                ? 'Notificação registrada e enviada com sucesso'
-                : 'Notificação registrada mas falhou ao enviar',
-            error: result.error || undefined,
-        };
-    }
-    async getByUser(userId) {
-        const notifications = await this.notificationsService.getByUser(userId);
-        return {
-            statusCode: common_1.HttpStatus.OK,
-            data: notifications,
-        };
+    async registerToken(body) {
+        const resgisterToken = await this.notificationsService.registerToken(body);
     }
 };
 exports.NotificationsController = NotificationsController;
 __decorate([
-    (0, common_1.Post)(),
-    (0, swagger_1.ApiOperation)({ summary: 'Criar e enviar notificação' }),
-    (0, swagger_1.ApiResponse)({
-        status: common_1.HttpStatus.CREATED,
-        description: 'Notificação criada e enviada com sucesso',
-    }),
-    (0, swagger_1.ApiResponse)({
-        status: common_1.HttpStatus.BAD_REQUEST,
-        description: 'Dados inválidos',
-    }),
+    (0, common_1.Post)('register-token'),
     __param(0, (0, common_1.Body)()),
     __metadata("design:type", Function),
     __metadata("design:paramtypes", [create_notifications_dto_1.CreateNotificationDto]),
     __metadata("design:returntype", Promise)
-], NotificationsController.prototype, "createNotification", null);
-__decorate([
-    (0, common_1.Get)(':userId'),
-    (0, swagger_1.ApiOperation)({ summary: 'Listar notificações por usuário' }),
-    __param(0, (0, common_1.Param)('userId', common_1.ParseIntPipe)),
-    __metadata("design:type", Function),
-    __metadata("design:paramtypes", [Number]),
-    __metadata("design:returntype", Promise)
-], NotificationsController.prototype, "getByUser", null);
+], NotificationsController.prototype, "registerToken", null);
 exports.NotificationsController = NotificationsController = __decorate([
     (0, swagger_1.ApiTags)('Notifications'),
     (0, common_1.Controller)('notifications'),

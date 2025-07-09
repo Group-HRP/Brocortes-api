@@ -20,19 +20,19 @@ export declare class AppointmentsController {
     } | undefined>;
     getAllHistoricAppointments(): Promise<({
         service: {
-            name: string;
             id: number;
+            name: string;
             duration: number;
             price: number;
         };
     } & {
         id: number;
-        createdAt: Date;
-        updatedAt: Date;
-        serviceId: number;
         userId: number;
+        serviceId: number;
         date: Date;
         status: string;
+        createdAt: Date;
+        updatedAt: Date;
         canceledAt: Date | null;
         canceledById: number | null;
         cancellationReason: string | null;
@@ -43,40 +43,40 @@ export declare class AppointmentsController {
             name: string;
         };
         service: {
-            name: string;
             id: number;
+            name: string;
             duration: number;
             price: number;
         };
     } & {
         id: number;
-        createdAt: Date;
-        updatedAt: Date;
-        serviceId: number;
         userId: number;
+        serviceId: number;
         date: Date;
         status: string;
+        createdAt: Date;
+        updatedAt: Date;
         canceledAt: Date | null;
         canceledById: number | null;
         cancellationReason: string | null;
     }>;
     updateAppointment(id: number, updateData: UpdateAppointmentDto, req: any): Promise<{
         user: {
-            name: string;
             id: number;
+            name: string;
         };
         service: {
-            name: string;
             id: number;
+            name: string;
         };
     } & {
         id: number;
-        createdAt: Date;
-        updatedAt: Date;
-        serviceId: number;
         userId: number;
+        serviceId: number;
         date: Date;
         status: string;
+        createdAt: Date;
+        updatedAt: Date;
         canceledAt: Date | null;
         canceledById: number | null;
         cancellationReason: string | null;

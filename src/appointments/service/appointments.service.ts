@@ -8,12 +8,11 @@ import {
 import { PrismaClient } from '@prisma/client';
 import { CreateAppointmentDto } from '../DTO/create.appointments.dto';
 import { UpdateAppointmentDto } from '../DTO/update.appointments.dto';
-import { format } from 'date-fns';
-import { ptBR } from 'date-fns/locale';
+import { NotificationsService } from 'src/notifications/service/notifications.service';
 
 @Injectable()
 export class AppointmentsService {
-  constructor(private prisma: PrismaClient) {}
+  constructor(private prisma: PrismaClient, private notificationsService: NotificationsService) { }
   async createAppointment(createAppointmentsDto: CreateAppointmentDto) {
     try {
       const appointments = await this.prisma.appointment.create({
@@ -24,6 +23,36 @@ export class AppointmentsService {
           serviceId: createAppointmentsDto.serviceId,
         },
       });
+
+      const usersToNotify = await this.prisma.user.findMany({
+        where: {
+          role: { in: ['professional', 'admin'] },
+          PushToken: {
+            some: {},
+          },
+        },
+        include: {
+          PushToken: true,
+        },
+      });
+
+      for (const user of usersToNotify) {
+        for (const pushToken of user.PushToken) {
+          await this.notificationsService.sendPushNotification(
+            pushToken.token,
+            'Novo agendamento criado',
+            `Um cliente acabou de agendar um horário.`,
+          );
+
+          await this.prisma.notification.create({
+            data: {
+              userId: user.id,
+              message: 'Um novo agendamento foi criado por um cliente.',
+              type: 'appointment',
+            },
+          });
+        }
+      }
 
       return appointments;
     } catch (error) {
@@ -214,50 +243,105 @@ export class AppointmentsService {
     return appointments;
   }
 
-  async updateAppointment(id: number, updateData: UpdateAppointmentDto, req) {
-    try {
-      const userId = req.user?.id;
-      const userRole = req.user?.role;
+async updateAppointment(id: number, updateData: UpdateAppointmentDto, req) {
+  try {
+    const userId = req.user?.id;
+    const userRole = req.user?.role;
 
-      const existing = await this.prisma.appointment.findUnique({
-        where: { id },
-      });
+    const existing = await this.prisma.appointment.findUnique({
+      where: { id },
+      include: {
+        user: true,
+        service: true,
+      },
+    });
 
-      if (!existing) {
-        throw new NotFoundException('Agendamento não encontrado');
-      }
-
-      if (userId && existing.userId !== userId && userRole !== 'admin') {
-        throw new ForbiddenException('Ação não permitida');
-      }
-
-      const updated = await this.prisma.appointment.update({
-        where: { id },
-        data: {
-          ...updateData,
-          canceledById: updateData.canceledById
-            ? Number(updateData.canceledById)
-            : null,
-          updatedAt: new Date(),
-        },
-        include: {
-          service: { select: { id: true, name: true } },
-          user: { select: { id: true, name: true } },
-        },
-      });
-
-      return updated;
-    } catch (error) {
-      if (error.code === 'P2025') {
-        throw new NotFoundException('Registro não encontrado');
-      }
-
-      throw new HttpException(
-        error.message || 'Falha na atualização',
-        HttpStatus.BAD_REQUEST,
-      );
+    if (!existing) {
+      throw new NotFoundException('Agendamento não encontrado');
     }
+
+    if (userId && existing.userId !== userId && userRole !== 'admin') {
+      throw new ForbiddenException('Ação não permitida');
+    }
+
+    const updated = await this.prisma.appointment.update({
+      where: { id },
+      data: {
+        ...updateData,
+        canceledById: updateData.canceledById
+          ? Number(updateData.canceledById)
+          : null,
+        updatedAt: new Date(),
+      },
+      include: {
+        service: { select: { id: true, name: true } },
+        user: { select: { id: true, name: true } },
+      },
+    });
+
+    if (updateData.status === 'canceled') {
+      const [clientTokens, professionalUsers] = await Promise.all([
+        this.prisma.pushToken.findMany({
+          where: { userId: existing.userId },
+        }),
+
+        this.prisma.user.findMany({
+          where: {
+            role: { in: ['professional', 'admin'] },
+            PushToken: { some: {} },
+          },
+          include: { PushToken: true },
+        }),
+      ]);
+
+      for (const token of clientTokens) {
+        await this.notificationsService.sendPushNotification(
+          token.token,
+          'Seu agendamento foi cancelado',
+          `O agendamento do serviço "${existing.service.name}" foi cancelado.`,
+        );
+
+        await this.prisma.notification.create({
+          data: {
+            userId: existing.userId,
+            message: `Seu agendamento do serviço "${existing.service.name}" foi cancelado.`,
+            type: 'appointment-canceled',
+          },
+        });
+      }
+
+      for (const prof of professionalUsers) {
+        for (const token of prof.PushToken) {
+          await this.notificationsService.sendPushNotification(
+            token.token,
+            'Agendamento cancelado',
+            `Um cliente cancelou o agendamento do serviço "${existing.service.name}".`,
+          );
+
+          await this.prisma.notification.create({
+            data: {
+              userId: prof.id,
+              message: `O cliente ${existing.user.name} cancelou o serviço "${existing.service.name}".`,
+              type: 'appointment-canceled',
+            },
+          });
+        }
+      }
+    }
+
+    return updated;
+  } catch (error) {
+    if (error.code === 'P2025') {
+      throw new NotFoundException('Registro não encontrado');
+    }
+
+    throw new HttpException(
+      error.message || 'Falha na atualização',
+      HttpStatus.BAD_REQUEST,
+    );
   }
+}
+
 
   async deleteAppointment(
     id: number,

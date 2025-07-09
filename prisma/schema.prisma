@@ -26,6 +26,7 @@ model User {
   notification       Notification[]
   PasswordResetToken PasswordResetToken[]
   VerificationCode   VerificationCode[]
+  PushToken          PushToken[]
 }
 
 model Service {
@@ -69,6 +70,14 @@ model Notification {
   message String
   type    String
   sentAt  DateTime @default(now())
+}
+
+model PushToken {
+  id        Int      @id @default(autoincrement())
+  token     String   @unique
+  userId    Int
+  user      User     @relation(fields: [userId], references: [id])
+  createdAt DateTime @default(now())
 }
 
 model Category {

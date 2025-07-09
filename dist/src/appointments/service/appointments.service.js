@@ -12,10 +12,13 @@ Object.defineProperty(exports, "__esModule", { value: true });
 exports.AppointmentsService = void 0;
 const common_1 = require("@nestjs/common");
 const client_1 = require("@prisma/client");
+const notifications_service_1 = require("../../notifications/service/notifications.service");
 let AppointmentsService = class AppointmentsService {
     prisma;
-    constructor(prisma) {
+    notificationsService;
+    constructor(prisma, notificationsService) {
         this.prisma = prisma;
+        this.notificationsService = notificationsService;
     }
     async createAppointment(createAppointmentsDto) {
         try {
@@ -27,6 +30,29 @@ let AppointmentsService = class AppointmentsService {
                     serviceId: createAppointmentsDto.serviceId,
                 },
             });
+            const usersToNotify = await this.prisma.user.findMany({
+                where: {
+                    role: { in: ['professional', 'admin'] },
+                    PushToken: {
+                        some: {},
+                    },
+                },
+                include: {
+                    PushToken: true,
+                },
+            });
+            for (const user of usersToNotify) {
+                for (const pushToken of user.PushToken) {
+                    await this.notificationsService.sendPushNotification(pushToken.token, 'Novo agendamento criado', `Um cliente acabou de agendar um horário.`);
+                    await this.prisma.notification.create({
+                        data: {
+                            userId: user.id,
+                            message: 'Um novo agendamento foi criado por um cliente.',
+                            type: 'appointment',
+                        },
+                    });
+                }
+            }
             return appointments;
         }
         catch (error) {
@@ -195,6 +221,10 @@ let AppointmentsService = class AppointmentsService {
             const userRole = req.user?.role;
             const existing = await this.prisma.appointment.findUnique({
                 where: { id },
+                include: {
+                    user: true,
+                    service: true,
+                },
             });
             if (!existing) {
                 throw new common_1.NotFoundException('Agendamento não encontrado');
@@ -216,6 +246,42 @@ let AppointmentsService = class AppointmentsService {
                     user: { select: { id: true, name: true } },
                 },
             });
+            if (updateData.status === 'canceled') {
+                const [clientTokens, professionalUsers] = await Promise.all([
+                    this.prisma.pushToken.findMany({
+                        where: { userId: existing.userId },
+                    }),
+                    this.prisma.user.findMany({
+                        where: {
+                            role: { in: ['professional', 'admin'] },
+                            PushToken: { some: {} },
+                        },
+                        include: { PushToken: true },
+                    }),
+                ]);
+                for (const token of clientTokens) {
+                    await this.notificationsService.sendPushNotification(token.token, 'Seu agendamento foi cancelado', `O agendamento do serviço "${existing.service.name}" foi cancelado.`);
+                    await this.prisma.notification.create({
+                        data: {
+                            userId: existing.userId,
+                            message: `Seu agendamento do serviço "${existing.service.name}" foi cancelado.`,
+                            type: 'appointment-canceled',
+                        },
+                    });
+                }
+                for (const prof of professionalUsers) {
+                    for (const token of prof.PushToken) {
+                        await this.notificationsService.sendPushNotification(token.token, 'Agendamento cancelado', `Um cliente cancelou o agendamento do serviço "${existing.service.name}".`);
+                        await this.prisma.notification.create({
+                            data: {
+                                userId: prof.id,
+                                message: `O cliente ${existing.user.name} cancelou o serviço "${existing.service.name}".`,
+                                type: 'appointment-canceled',
+                            },
+                        });
+                    }
+                }
+            }
             return updated;
         }
         catch (error) {
@@ -249,6 +315,6 @@ let AppointmentsService = class AppointmentsService {
 exports.AppointmentsService = AppointmentsService;
 exports.AppointmentsService = AppointmentsService = __decorate([
     (0, common_1.Injectable)(),
-    __metadata("design:paramtypes", [client_1.PrismaClient])
+    __metadata("design:paramtypes", [client_1.PrismaClient, notifications_service_1.NotificationsService])
 ], AppointmentsService);
 //# sourceMappingURL=appointments.service.js.map

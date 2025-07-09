@@ -1,87 +1,50 @@
 import { Injectable } from '@nestjs/common';
-import * as nodemailer from 'nodemailer';
-import { NotificationType } from '../DTO/create.notifications.dto';
 import { CreateNotificationDto } from '../DTO/create.notifications.dto';
 import { PrismaClient } from '@prisma/client';
+import axios from 'axios';
 
 @Injectable()
 export class NotificationsService {
-  private transporter;
 
-  constructor(private prisma: PrismaClient) {
-    this.transporter = nodemailer.createTransport({
-      host: process.env.SMTP_HOST,
-      port: parseInt(process.env.SMTP_PORT || '587'),
-      secure: process.env.SMTP_SECURE === 'true',
-      auth: {
-        user: process.env.SMTP_USER,
-        pass: process.env.SMTP_PASSWORD,
-      },
-    });
+  constructor(private prisma: PrismaClient) { }
+
+  async sendPushNotification(expoToken: string, title: string, message: string) {
+    const body = {
+      to: expoToken,
+      title,
+      body: message,
+      sound: 'default',
+    };
+
+    try {
+      const response = await axios.post('https://exp.host/--/api/v2/push/send', body, {
+        headers: {
+          'Content-Type': 'application/json',
+        },
+      });
+      return response.data;
+    } catch (error) {
+      console.log("Erro ao enviar notificacao", error.response?.data || error.message)
+      throw error;
+    }
   }
 
-  async createAndSendNotification(
-    createNotificationDto: CreateNotificationDto,
-  ) {
-    const notification = await this.prisma.notification.create({
-      data: {
-        userId: createNotificationDto.userId,
-        message: createNotificationDto.message,
-        type: createNotificationDto.type,
-      },
+  async registerToken(body: CreateNotificationDto) {
+    const { token, userId } = body;
+
+    const existingToken = await this.prisma.pushToken.findFirst({
+      where: { token },
     });
 
-    if (createNotificationDto.type === NotificationType.EMAIL) {
-      try {
-        await this.transporter.sendMail({
-          from: `"${process.env.SMTP_FROM_NAME}" <${process.env.SMTP_FROM_EMAIL}>`,
-          to: createNotificationDto.email,
-          subject: createNotificationDto.subject,
-          text: createNotificationDto.message,
-          html: createNotificationDto.html,
-        });
-
-        await this.prisma.notification.update({
-          where: { id: notification.id },
-          data: { sentAt: new Date() },
-        });
-
-        return {
-          success: true,
-          notificationId: notification.id,
-        };
-      } catch (error) {
-        return {
-          success: false,
-          notificationId: notification.id,
-          error: error.message,
-        };
-      }
+    if (!existingToken) {
+      await this.prisma.pushToken.create({
+        data: {
+          token,
+          userId,
+        }
+      })
     }
 
-    return {
-      success: true,
-      notificationId: notification.id,
-    };
-  }
-
-  async getByUser(userId: number) {
-    return this.prisma.notification.findMany({
-      where: { userId },
-      orderBy: { sentAt: 'desc' },
-      select: {
-        id: true,
-        message: true,
-        type: true,
-        sentAt: true,
-        user: {
-          select: {
-            id: true,
-            name: true,
-            email: true,
-          },
-        },
-      },
-    });
+    return { message: 'Token registrado com sucesso!'}
   }
 }

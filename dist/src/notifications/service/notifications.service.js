@@ -11,81 +11,47 @@ var __metadata = (this && this.__metadata) || function (k, v) {
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.NotificationsService = void 0;
 const common_1 = require("@nestjs/common");
-const nodemailer = require("nodemailer");
-const create_notifications_dto_1 = require("../DTO/create.notifications.dto");
 const client_1 = require("@prisma/client");
+const axios_1 = require("axios");
 let NotificationsService = class NotificationsService {
     prisma;
-    transporter;
     constructor(prisma) {
         this.prisma = prisma;
-        this.transporter = nodemailer.createTransport({
-            host: process.env.SMTP_HOST,
-            port: parseInt(process.env.SMTP_PORT || '587'),
-            secure: process.env.SMTP_SECURE === 'true',
-            auth: {
-                user: process.env.SMTP_USER,
-                pass: process.env.SMTP_PASSWORD,
-            },
-        });
     }
-    async createAndSendNotification(createNotificationDto) {
-        const notification = await this.prisma.notification.create({
-            data: {
-                userId: createNotificationDto.userId,
-                message: createNotificationDto.message,
-                type: createNotificationDto.type,
-            },
-        });
-        if (createNotificationDto.type === create_notifications_dto_1.NotificationType.EMAIL) {
-            try {
-                await this.transporter.sendMail({
-                    from: `"${process.env.SMTP_FROM_NAME}" <${process.env.SMTP_FROM_EMAIL}>`,
-                    to: createNotificationDto.email,
-                    subject: createNotificationDto.subject,
-                    text: createNotificationDto.message,
-                    html: createNotificationDto.html,
-                });
-                await this.prisma.notification.update({
-                    where: { id: notification.id },
-                    data: { sentAt: new Date() },
-                });
-                return {
-                    success: true,
-                    notificationId: notification.id,
-                };
-            }
-            catch (error) {
-                return {
-                    success: false,
-                    notificationId: notification.id,
-                    error: error.message,
-                };
-            }
-        }
-        return {
-            success: true,
-            notificationId: notification.id,
+    async sendPushNotification(expoToken, title, message) {
+        const body = {
+            to: expoToken,
+            title,
+            body: message,
+            sound: 'default',
         };
-    }
-    async getByUser(userId) {
-        return this.prisma.notification.findMany({
-            where: { userId },
-            orderBy: { sentAt: 'desc' },
-            select: {
-                id: true,
-                message: true,
-                type: true,
-                sentAt: true,
-                user: {
-                    select: {
-                        id: true,
-                        name: true,
-                        email: true,
-                    },
+        try {
+            const response = await axios_1.default.post('https://exp.host/--/api/v2/push/send', body, {
+                headers: {
+                    'Content-Type': 'application/json',
                 },
-            },
+            });
+            return response.data;
+        }
+        catch (error) {
+            console.log("Erro ao enviar notificacao", error.response?.data || error.message);
+            throw error;
+        }
+    }
+    async registerToken(body) {
+        const { token, userId } = body;
+        const existingToken = await this.prisma.pushToken.findFirst({
+            where: { token },
         });
+        if (!existingToken) {
+            await this.prisma.pushToken.create({
+                data: {
+                    token,
+                    userId,
+                }
+            });
+        }
+        return { message: 'Token registrado com sucesso!' };
     }
 };
 exports.NotificationsService = NotificationsService;
