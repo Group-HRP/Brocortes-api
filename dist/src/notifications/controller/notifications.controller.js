@@ -17,6 +17,7 @@ const common_1 = require("@nestjs/common");
 const notifications_service_1 = require("../service/notifications.service");
 const create_notifications_dto_1 = require("../DTO/create.notifications.dto");
 const swagger_1 = require("@nestjs/swagger");
+const passport_1 = require("@nestjs/passport");
 let NotificationsController = class NotificationsController {
     notificationsService;
     constructor(notificationsService) {
@@ -29,6 +30,7 @@ let NotificationsController = class NotificationsController {
 exports.NotificationsController = NotificationsController;
 __decorate([
     (0, common_1.Post)('register-token'),
+    (0, swagger_1.ApiOperation)({ summary: "Notificacao push" }),
     __param(0, (0, common_1.Body)()),
     __metadata("design:type", Function),
     __metadata("design:paramtypes", [create_notifications_dto_1.CreateNotificationDto]),
@@ -36,7 +38,9 @@ __decorate([
 ], NotificationsController.prototype, "registerToken", null);
 exports.NotificationsController = NotificationsController = __decorate([
     (0, swagger_1.ApiTags)('Notifications'),
+    (0, swagger_1.ApiBearerAuth)(),
     (0, common_1.Controller)('notifications'),
+    (0, common_1.UseGuards)((0, passport_1.AuthGuard)('jwt')),
     __metadata("design:paramtypes", [notifications_service_1.NotificationsService])
 ], NotificationsController);
 //# sourceMappingURL=notifications.controller.js.map

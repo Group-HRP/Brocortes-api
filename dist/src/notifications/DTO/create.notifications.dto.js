@@ -10,6 +10,7 @@ var __metadata = (this && this.__metadata) || function (k, v) {
 };
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.CreateNotificationDto = void 0;
+const swagger_1 = require("@nestjs/swagger");
 const class_validator_1 = require("class-validator");
 class CreateNotificationDto {
     token;
@@ -17,11 +18,13 @@ class CreateNotificationDto {
 }
 exports.CreateNotificationDto = CreateNotificationDto;
 __decorate([
+    (0, swagger_1.ApiProperty)({ example: "Token expo", description: "Token do expo" }),
     (0, class_validator_1.IsString)(),
     (0, class_validator_1.IsNotEmpty)(),
     __metadata("design:type", String)
 ], CreateNotificationDto.prototype, "token", void 0);
 __decorate([
+    (0, swagger_1.ApiProperty)({ example: 12, description: "Id do user" }),
     (0, class_validator_1.IsInt)(),
     (0, class_validator_1.IsNotEmpty)(),
     __metadata("design:type", Number)
