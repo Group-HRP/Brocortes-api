@@ -22,13 +22,16 @@ import { UpdateAppointmentDto } from '../DTO/update.appointments.dto';
 import { AppointmentResponseDto } from '../DTO/response.appointments.dto';
 import { DeleteAppointmentDto } from '../DTO/delete.appointment.dto';
 import { DeleteAppointmentResponseDto } from '../DTO/response.delete.appointment';
+import { ApiBearerAuth, ApiOperation, ApiResponse } from '@nestjs/swagger';
 
+@ApiBearerAuth()
 @Controller('appointments')
 @UseGuards(AuthGuard('jwt'), RolesGuard)
 export class AppointmentsController {
-  constructor(private appointmentsService: AppointmentsService) {}
+  constructor(private appointmentsService: AppointmentsService) { }
 
   @Post()
+  @ApiOperation({ summary: "Cria um agemdamento" })
   @Roles('admin', 'client')
   async createAppointment(@Body() createAppointmentsDto: CreateAppointmentDto) {
     try {
@@ -49,6 +52,7 @@ export class AppointmentsController {
   }
 
   @Get()
+  @ApiOperation({ summary: "Lista todos os agendametos para o usuario" })
   @Roles('admin', 'client', 'professional')
   async getAllAppointments(@Req() req) {
     try {
@@ -59,10 +63,11 @@ export class AppointmentsController {
         message: 'Agendamentos encontrados com sucesso',
         data: appointments,
       };
-    } catch (error) {}
+    } catch (error) { }
   }
 
   @Get('/historic-appointment')
+  @ApiOperation({ summary: "Lista todo o historico de agendameto para o professional e o admin" })
   @Roles('admin', 'professional')
   async getAllHistoricAppointments() {
     const appointments =
@@ -72,6 +77,7 @@ export class AppointmentsController {
   }
 
   @Get('/historic-appointment/:id')
+  @ApiOperation({ summary: "Lista um historico especifico" })
   @Roles('admin', 'client', 'professional')
   async getHistoricAppointments(
     @Param('id', ParseIntPipe) id: number,
@@ -86,6 +92,7 @@ export class AppointmentsController {
   }
 
   @Get(':appointmentId')
+  @ApiOperation({ summary: "Lista um agemdamento especifico" })
   @Roles('admin', 'client')
   async getAppointmentUnique(
     @Param('appointmentId', ParseIntPipe) appointmentId: number,
@@ -97,6 +104,7 @@ export class AppointmentsController {
   }
 
   @Patch(':id')
+  @ApiOperation({ summary: "Atualiza um agemdamento" })
   @Roles('admin', 'client')
   async updateAppointment(
     @Param('id', ParseIntPipe) id: number,
@@ -113,6 +121,7 @@ export class AppointmentsController {
   }
 
   @Delete(':id')
+  @ApiOperation({ summary: "Deleta um agemdamento" })
   @Roles('admin')
   async deleteAppointment(
     @Param('id', ParseIntPipe) id: number,

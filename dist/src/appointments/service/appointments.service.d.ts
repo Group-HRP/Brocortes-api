@@ -7,11 +7,11 @@ export declare class AppointmentsService {
     private notificationsService;
     constructor(prisma: PrismaClient, notificationsService: NotificationsService);
     createAppointment(createAppointmentsDto: CreateAppointmentDto): Promise<{
-        id: number;
         userId: number;
         serviceId: number;
         date: Date;
         status: string;
+        id: number;
         createdAt: Date;
         updatedAt: Date;
         canceledAt: Date | null;
@@ -30,11 +30,11 @@ export declare class AppointmentsService {
             price: number;
         };
     } & {
-        id: number;
         userId: number;
         serviceId: number;
         date: Date;
         status: string;
+        id: number;
         createdAt: Date;
         updatedAt: Date;
         canceledAt: Date | null;
@@ -50,11 +50,11 @@ export declare class AppointmentsService {
             price: number;
         };
     } & {
-        id: number;
         userId: number;
         serviceId: number;
         date: Date;
         status: string;
+        id: number;
         createdAt: Date;
         updatedAt: Date;
         canceledAt: Date | null;
@@ -71,11 +71,11 @@ export declare class AppointmentsService {
             name: string;
         };
     } & {
-        id: number;
         userId: number;
         serviceId: number;
         date: Date;
         status: string;
+        id: number;
         createdAt: Date;
         updatedAt: Date;
         canceledAt: Date | null;
@@ -86,11 +86,11 @@ export declare class AppointmentsService {
         cancellationReason?: string;
         canceledBy: number;
     }, userId?: number): Promise<{
-        id: number;
         userId: number;
         serviceId: number;
         date: Date;
         status: string;
+        id: number;
         createdAt: Date;
         updatedAt: Date;
         canceledAt: Date | null;

@@ -6,8 +6,8 @@ export declare class CategoryController {
     constructor(categoryService: CategoryService);
     create(createCategoryDto: CreateCategoryDto): Promise<{
         id: number;
-        name: string;
         createdAt: Date;
+        name: string;
         atualizedAt: Date;
     }>;
     findAll(): Promise<{
@@ -16,35 +16,35 @@ export declare class CategoryController {
     }[]>;
     findOne(id: string): Promise<{
         id: number;
-        name: string;
         service: {
             id: number;
             name: string;
         }[];
+        name: string;
     }>;
     update(id: string, updateCategoryDto: UpdateCategoryDto): Promise<{
         id: number;
-        name: string;
         service: {
+            description: string | null;
             id: number;
-            name: string;
             createdAt: Date;
             updatedAt: Date;
-            description: string | null;
+            name: string;
             duration: number;
             price: number;
         }[];
+        name: string;
     }>;
     remove(id: string): Promise<{
         id: number;
-        name: string;
         createdAt: Date;
+        name: string;
         atualizedAt: Date;
     }>;
     removeService(id: number, serviceId: object): Promise<{
         id: number;
-        name: string;
         createdAt: Date;
+        name: string;
         atualizedAt: Date;
     }>;
 }

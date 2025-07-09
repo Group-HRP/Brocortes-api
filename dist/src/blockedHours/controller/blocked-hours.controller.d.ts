@@ -10,9 +10,9 @@ export declare class BlockedHoursController {
         statusCode: HttpStatus;
         message: string;
         data: {
+            date: Date;
             id: number;
             createdAt: Date;
-            date: Date;
             reason: string;
         };
     }>;
@@ -25,9 +25,9 @@ export declare class BlockedHoursController {
         statusCode: HttpStatus;
         message: string;
         data: {
+            date: Date;
             id: number;
             createdAt: Date;
-            date: Date;
             reason: string;
         };
     }>;
