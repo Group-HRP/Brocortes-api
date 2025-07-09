@@ -113,7 +113,7 @@ export class CategoryService {
       data: {
         name: updateCategoryDto.name,
         service: {
-          set: updateCategoryDto.serviceIds.map((id) => ({ id })),
+          connect: updateCategoryDto.serviceIds.map((id) => ({ id })),
         },
       },
       select: {

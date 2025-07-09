@@ -7,7 +7,6 @@ import {
   Param,
   Delete,
   UseGuards,
-  Options,
 } from '@nestjs/common';
 import { CategoryService } from '../service/category.service';
 import { CreateCategoryDto } from '../DTO/create-category.dto';
@@ -90,7 +89,7 @@ export class CategoryController {
   }
 
   @Patch(':id')
-  @ApiOperation({summary: "Deleta categoria"})
+  @ApiOperation({ summary: "Atualiza categoria" })
   @Roles('admin')
   async update(
     @Param('id') id: string,
@@ -100,12 +99,14 @@ export class CategoryController {
   }
 
   @Delete(':id')
+  @ApiOperation({ summary: "Deleta categoria" })
   @Roles('admin')
   async remove(@Param('id') id: string) {
     return this.categoryService.remove(+id);
   }
 
   @Patch('service/:id')
+  @ApiOperation({ summary: "Deleta servico de dentro da categoria" })
   @ApiResponse({
     status: 200,
     description: 'Detalhes da categoria com serviços aninhados',

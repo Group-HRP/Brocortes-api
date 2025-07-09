@@ -119,7 +119,7 @@ __decorate([
 ], CategoryController.prototype, "findOne", null);
 __decorate([
     (0, common_1.Patch)(':id'),
-    (0, swagger_1.ApiOperation)({ summary: "Deleta categoria" }),
+    (0, swagger_1.ApiOperation)({ summary: "Atualiza categoria" }),
     (0, roles_decorator_1.Roles)('admin'),
     __param(0, (0, common_1.Param)('id')),
     __param(1, (0, common_1.Body)()),
@@ -129,6 +129,7 @@ __decorate([
 ], CategoryController.prototype, "update", null);
 __decorate([
     (0, common_1.Delete)(':id'),
+    (0, swagger_1.ApiOperation)({ summary: "Deleta categoria" }),
     (0, roles_decorator_1.Roles)('admin'),
     __param(0, (0, common_1.Param)('id')),
     __metadata("design:type", Function),
@@ -137,6 +138,7 @@ __decorate([
 ], CategoryController.prototype, "remove", null);
 __decorate([
     (0, common_1.Patch)('service/:id'),
+    (0, swagger_1.ApiOperation)({ summary: "Deleta servico de dentro da categoria" }),
     (0, swagger_1.ApiResponse)({
         status: 200,
         description: 'Detalhes da categoria com serviços aninhados',
