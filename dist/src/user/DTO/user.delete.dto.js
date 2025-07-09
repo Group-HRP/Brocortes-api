@@ -10,6 +10,7 @@ var __metadata = (this && this.__metadata) || function (k, v) {
 };
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.DeleteUserDto = void 0;
+const swagger_1 = require("@nestjs/swagger");
 const class_validator_1 = require("class-validator");
 const confirm_deletion_decorator_1 = require("../../decorators/confirm-deletion.decorator");
 class DeleteUserDto {
@@ -18,10 +19,12 @@ class DeleteUserDto {
 }
 exports.DeleteUserDto = DeleteUserDto;
 __decorate([
+    (0, swagger_1.ApiProperty)({ example: "DELETE", description: "Palavra chave para deletar conta" }),
     (0, confirm_deletion_decorator_1.ConfirmDeletion)({ message: 'Confirme com "DELETE" para prosseguir' }),
     __metadata("design:type", String)
 ], DeleteUserDto.prototype, "confirmation", void 0);
 __decorate([
+    (0, swagger_1.ApiProperty)({ example: "Senha1234@", description: "Senha do user para confirmar", required: false }),
     (0, class_validator_1.IsOptional)(),
     (0, class_validator_1.IsString)(),
     __metadata("design:type", String)

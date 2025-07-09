@@ -17,13 +17,16 @@ import { UpdateUserDto } from '../DTO/user.update.dto';
 import { UpdateUserResponseDto } from '../DTO/user.update.response.dto';
 import { DeleteUserResponseDto } from '../DTO/user.delete.response.dto';
 import { DeleteUserDto } from '../DTO/user.delete.dto';
+import { ApiBearerAuth, ApiOperation } from '@nestjs/swagger';
 
+@ApiBearerAuth()
 @Controller('users')
 @UseGuards(AuthGuard('jwt'))
 export class UserController {
-  constructor(private readonly userService: UserService) {}
+  constructor(private readonly userService: UserService) { }
 
   @Get()
+  @ApiOperation({ summary: "Lista todos os users" })
   @UseGuards(AdminGuard)
   async getAllUsers(): Promise<UserResponseDto[]> {
     const users = await this.userService.getAllUsers();
@@ -31,6 +34,7 @@ export class UserController {
   }
 
   @Put(':id')
+  @ApiOperation({ summary: "Atualiza o user" })
   async updateUser(
     @Param('id') id: number,
     @Body() updateUserDto: UpdateUserDto,
@@ -58,6 +62,7 @@ export class UserController {
   }
 
   @Delete(':id')
+  @ApiOperation({ summary: "Deleta o user" })
   async deleteUser(
     @Param('id') id: number,
     @Body() deleteUserDto: DeleteUserDto,

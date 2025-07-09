@@ -22,6 +22,7 @@ const user_update_dto_1 = require("../DTO/user.update.dto");
 const user_update_response_dto_1 = require("../DTO/user.update.response.dto");
 const user_delete_response_dto_1 = require("../DTO/user.delete.response.dto");
 const user_delete_dto_1 = require("../DTO/user.delete.dto");
+const swagger_1 = require("@nestjs/swagger");
 let UserController = class UserController {
     userService;
     constructor(userService) {
@@ -65,6 +66,7 @@ let UserController = class UserController {
 exports.UserController = UserController;
 __decorate([
     (0, common_1.Get)(),
+    (0, swagger_1.ApiOperation)({ summary: "Lista todos os users" }),
     (0, common_1.UseGuards)(admin_guard_1.AdminGuard),
     __metadata("design:type", Function),
     __metadata("design:paramtypes", []),
@@ -72,6 +74,7 @@ __decorate([
 ], UserController.prototype, "getAllUsers", null);
 __decorate([
     (0, common_1.Put)(':id'),
+    (0, swagger_1.ApiOperation)({ summary: "Atualiza o user" }),
     __param(0, (0, common_1.Param)('id')),
     __param(1, (0, common_1.Body)()),
     __param(2, (0, common_1.Req)()),
@@ -81,6 +84,7 @@ __decorate([
 ], UserController.prototype, "updateUser", null);
 __decorate([
     (0, common_1.Delete)(':id'),
+    (0, swagger_1.ApiOperation)({ summary: "Deleta o user" }),
     __param(0, (0, common_1.Param)('id')),
     __param(1, (0, common_1.Body)()),
     __param(2, (0, common_1.Req)()),
@@ -89,6 +93,7 @@ __decorate([
     __metadata("design:returntype", Promise)
 ], UserController.prototype, "deleteUser", null);
 exports.UserController = UserController = __decorate([
+    (0, swagger_1.ApiBearerAuth)(),
     (0, common_1.Controller)('users'),
     (0, common_1.UseGuards)((0, passport_1.AuthGuard)('jwt')),
     __metadata("design:paramtypes", [user_service_1.UserService])

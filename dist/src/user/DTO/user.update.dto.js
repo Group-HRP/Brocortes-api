@@ -13,32 +13,29 @@ exports.UpdateUserDto = void 0;
 const class_validator_1 = require("class-validator");
 const user_role_enum_1 = require("../../enums/user.role.enum");
 const is_email_unique_decorator_1 = require("../../decorators/is-email-unique.decorator");
+const swagger_1 = require("@nestjs/swagger");
 class UpdateUserDto {
     name;
     email;
-    password;
     role;
 }
 exports.UpdateUserDto = UpdateUserDto;
 __decorate([
+    (0, swagger_1.ApiProperty)({ example: "Hugo Souza", description: "Nome do user" }),
     (0, class_validator_1.IsOptional)(),
     (0, class_validator_1.IsString)(),
     (0, class_validator_1.Length)(2, 100),
     __metadata("design:type", String)
 ], UpdateUserDto.prototype, "name", void 0);
 __decorate([
+    (0, swagger_1.ApiProperty)({ example: "example@email.com", description: "Email do user" }),
     (0, class_validator_1.IsOptional)(),
     (0, class_validator_1.IsEmail)(),
     (0, is_email_unique_decorator_1.IsEmailUnique)({ message: 'Email já está em uso' }),
     __metadata("design:type", String)
 ], UpdateUserDto.prototype, "email", void 0);
 __decorate([
-    (0, class_validator_1.IsOptional)(),
-    (0, class_validator_1.IsString)(),
-    (0, class_validator_1.Length)(6, 100),
-    __metadata("design:type", String)
-], UpdateUserDto.prototype, "password", void 0);
-__decorate([
+    (0, swagger_1.ApiProperty)({ example: "professional", description: "Tipo de conta do user" }),
     (0, class_validator_1.IsOptional)(),
     (0, class_validator_1.IsEnum)(user_role_enum_1.UserRole),
     __metadata("design:type", String)
