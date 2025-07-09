@@ -10,6 +10,7 @@ var __metadata = (this && this.__metadata) || function (k, v) {
 };
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.RegisterDTO = void 0;
+const swagger_1 = require("@nestjs/swagger");
 const class_validator_1 = require("class-validator");
 class RegisterDTO {
     name;
@@ -19,16 +20,19 @@ class RegisterDTO {
 }
 exports.RegisterDTO = RegisterDTO;
 __decorate([
+    (0, swagger_1.ApiProperty)({ example: "Hugo Souza", description: "Nome do user" }),
     (0, class_validator_1.IsString)(),
     (0, class_validator_1.MinLength)(3, { message: 'O nome deve ter pelo menos 3 caracteres.' }),
     (0, class_validator_1.MaxLength)(50, { message: 'O nome deve ter no máximo 50 caracteres.' }),
     __metadata("design:type", String)
 ], RegisterDTO.prototype, "name", void 0);
 __decorate([
+    (0, swagger_1.ApiProperty)({ example: "example@email.com", description: "Email do user" }),
     (0, class_validator_1.IsEmail)({}, { message: 'Email inválido' }),
     __metadata("design:type", String)
 ], RegisterDTO.prototype, "email", void 0);
 __decorate([
+    (0, swagger_1.ApiProperty)({ example: "Senha1234!", description: "Senha do user" }),
     (0, class_validator_1.IsString)(),
     (0, class_validator_1.MinLength)(8, { message: 'A senha dever ter no minimo 8 caracteres.' }),
     (0, class_validator_1.MaxLength)(20, { message: 'A senha dever no máximo 20 caracteres.' }),
@@ -38,6 +42,7 @@ __decorate([
     __metadata("design:type", String)
 ], RegisterDTO.prototype, "password", void 0);
 __decorate([
+    (0, swagger_1.ApiProperty)({ example: "client", description: "Tipo de conta do user" }),
     (0, class_validator_1.IsString)(),
     (0, class_validator_1.IsOptional)(),
     __metadata("design:type", String)

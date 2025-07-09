@@ -20,11 +20,13 @@ class UpdateCategoryDto extends (0, swagger_1.PartialType)(create_category_dto_1
 }
 exports.UpdateCategoryDto = UpdateCategoryDto;
 __decorate([
+    (0, swagger_1.ApiProperty)({ example: "Destaques", description: "Nome da categoria", required: false }),
     (0, class_validator_1.IsString)(),
     (0, class_validator_1.Length)(5, 50),
     __metadata("design:type", String)
 ], UpdateCategoryDto.prototype, "name", void 0);
 __decorate([
+    (0, swagger_1.ApiProperty)({ example: [1, 5, 6], description: "Ids do services" }),
     (0, class_validator_1.IsArray)(),
     (0, class_validator_1.ArrayNotEmpty)(),
     (0, class_validator_1.IsInt)({ each: true }),

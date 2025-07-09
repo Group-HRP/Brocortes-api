@@ -20,6 +20,7 @@ const update_category_dto_1 = require("../DTO/update-category.dto");
 const passport_1 = require("@nestjs/passport");
 const roles_guard_1 = require("../../user/guards/roles.guard");
 const roles_decorator_1 = require("../../decorators/roles.decorator");
+const swagger_1 = require("@nestjs/swagger");
 let CategoryController = class CategoryController {
     categoryService;
     constructor(categoryService) {
@@ -47,6 +48,7 @@ let CategoryController = class CategoryController {
 exports.CategoryController = CategoryController;
 __decorate([
     (0, common_1.Post)(),
+    (0, swagger_1.ApiOperation)({ summary: "Cria uma categoria" }),
     (0, roles_decorator_1.Roles)('admin'),
     __param(0, (0, common_1.Body)()),
     __metadata("design:type", Function),
@@ -55,6 +57,31 @@ __decorate([
 ], CategoryController.prototype, "create", null);
 __decorate([
     (0, common_1.Get)(),
+    (0, swagger_1.ApiOperation)({ summary: "Lista todas as categorias" }),
+    (0, swagger_1.ApiResponse)({
+        status: 200,
+        description: 'Lista todas categorias',
+        schema: {
+            example: [
+                {
+                    id: 4,
+                    name: "Destaques"
+                },
+                {
+                    id: 1,
+                    name: "Corte Masculino"
+                },
+                {
+                    id: 2,
+                    name: "Barba"
+                },
+                {
+                    id: 3,
+                    name: "Sobrancelha"
+                }
+            ]
+        }
+    }),
     (0, roles_decorator_1.Roles)('admin', 'client'),
     __metadata("design:type", Function),
     __metadata("design:paramtypes", []),
@@ -62,6 +89,28 @@ __decorate([
 ], CategoryController.prototype, "findAll", null);
 __decorate([
     (0, common_1.Get)(':id'),
+    (0, swagger_1.ApiOperation)({ summary: "Lista categorias por Id" }),
+    (0, swagger_1.ApiResponse)({
+        status: 200,
+        description: "Lista categorias por Id",
+        schema: {
+            example: {
+                id: 4,
+                name: "Destaques",
+                service: [
+                    {
+                        id: 1,
+                        name: "Corte de cabelo",
+                        description: "Corte de cabelo navalhado",
+                        duration: 40,
+                        price: 30,
+                        createdAt: "2025-05-16T21:53:28.857Z",
+                        updatedAt: "2025-05-16T21:53:28.857Z"
+                    }
+                ]
+            }
+        }
+    }),
     (0, roles_decorator_1.Roles)('admin', 'client'),
     __param(0, (0, common_1.Param)('id')),
     __metadata("design:type", Function),
@@ -70,6 +119,7 @@ __decorate([
 ], CategoryController.prototype, "findOne", null);
 __decorate([
     (0, common_1.Patch)(':id'),
+    (0, swagger_1.ApiOperation)({ summary: "Deleta categoria" }),
     (0, roles_decorator_1.Roles)('admin'),
     __param(0, (0, common_1.Param)('id')),
     __param(1, (0, common_1.Body)()),
@@ -87,6 +137,29 @@ __decorate([
 ], CategoryController.prototype, "remove", null);
 __decorate([
     (0, common_1.Patch)('service/:id'),
+    (0, swagger_1.ApiResponse)({
+        status: 200,
+        description: 'Detalhes da categoria com serviços aninhados',
+        schema: {
+            example: {
+                id: 3,
+                name: "Destaques",
+                createdAt: "2025-05-25T21:14:29.907Z",
+                atualizedAt: "2025-05-25T21:14:29.907Z",
+                service: [
+                    {
+                        id: 1,
+                        name: "Corte de cabelo",
+                        description: "Corte de cabelo navalhado",
+                        duration: 40,
+                        price: 30,
+                        createdAt: "2025-05-16T21:53:28.857Z",
+                        updatedAt: "2025-05-16T21:53:28.857Z"
+                    }
+                ]
+            }
+        }
+    }),
     (0, roles_decorator_1.Roles)('admin'),
     __param(0, (0, common_1.Param)('id')),
     __param(1, (0, common_1.Body)()),
@@ -95,6 +168,7 @@ __decorate([
     __metadata("design:returntype", Promise)
 ], CategoryController.prototype, "removeService", null);
 exports.CategoryController = CategoryController = __decorate([
+    (0, swagger_1.ApiBearerAuth)(),
     (0, common_1.Controller)('category'),
     (0, common_1.UseGuards)((0, passport_1.AuthGuard)('jwt'), roles_guard_1.RolesGuard),
     __metadata("design:paramtypes", [category_service_1.CategoryService])

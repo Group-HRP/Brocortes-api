@@ -100,6 +100,36 @@ __decorate([
 __decorate([
     (0, common_1.Get)(),
     (0, swagger_1.ApiOperation)({ summary: "Lista todos os agendametos para o usuario" }),
+    (0, swagger_1.ApiResponse)({
+        status: 200,
+        schema: {
+            example: {
+                message: "Todos os agendamentos listado",
+                appointment: {
+                    id: 10,
+                    userId: 6,
+                    serviceId: 2,
+                    date: "2025-06-30T09:00:00.000Z",
+                    status: "scheduled",
+                    createdAt: "2025-07-07T01:53:27.972Z",
+                    updatedAt: "2025-07-07T01:53:27.972Z",
+                    canceledAt: null,
+                    canceledById: null,
+                    cancellationReason: null,
+                    service: {
+                        id: 2,
+                        name: "Corte de Cabelo",
+                        duration: 15,
+                        price: 10
+                    },
+                    user: {
+                        id: 6,
+                        name: "ryan"
+                    }
+                },
+            }
+        }
+    }),
     (0, roles_decorator_1.Roles)('admin', 'client', 'professional'),
     __param(0, (0, common_1.Req)()),
     __metadata("design:type", Function),
@@ -109,6 +139,28 @@ __decorate([
 __decorate([
     (0, common_1.Get)('/historic-appointment'),
     (0, swagger_1.ApiOperation)({ summary: "Lista todo o historico de agendameto para o professional e o admin" }),
+    (0, swagger_1.ApiResponse)({
+        status: 200,
+        description: "Lista todo o historico",
+        example: {
+            id: 5,
+            userId: 2,
+            serviceId: 1,
+            date: "2025-06-29T14:30:00.000Z",
+            status: "canceled",
+            createdAt: "2025-06-29T20:19:51.254Z",
+            updatedAt: "2025-06-29T20:38:22.865Z",
+            canceledAt: "2025-06-29T20:38:23.996Z",
+            canceledById: 1,
+            cancellationReason: null,
+            service: {
+                id: 1,
+                name: "Sobrancelha",
+                duration: 15,
+                price: 10
+            }
+        }
+    }),
     (0, roles_decorator_1.Roles)('admin', 'professional'),
     __metadata("design:type", Function),
     __metadata("design:paramtypes", []),
@@ -117,6 +169,33 @@ __decorate([
 __decorate([
     (0, common_1.Get)('/historic-appointment/:id'),
     (0, swagger_1.ApiOperation)({ summary: "Lista um historico especifico" }),
+    (0, swagger_1.ApiResponse)({
+        status: 200,
+        description: "Lista historico por ID",
+        schema: {
+            example: {
+                id: 1,
+                userId: 2,
+                serviceId: 1,
+                date: "2023-12-15T14:30:00.000Z",
+                status: "completed",
+                createdAt: "2025-06-28T19:23:49.550Z",
+                updatedAt: "2025-06-29T21:12:46.266Z",
+                canceledAt: "2025-06-29T15:19:39.833Z",
+                canceledById: null,
+                cancellationReason: null,
+                service: {
+                    id: 1,
+                    name: "Sobrancelha",
+                    duration: 15,
+                    price: 10
+                },
+                user: {
+                    name: "Pedro Paraiso"
+                }
+            },
+        }
+    }),
     (0, roles_decorator_1.Roles)('admin', 'client', 'professional'),
     __param(0, (0, common_1.Param)('id', common_1.ParseIntPipe)),
     __param(1, (0, common_1.Req)()),
@@ -127,6 +206,33 @@ __decorate([
 __decorate([
     (0, common_1.Get)(':appointmentId'),
     (0, swagger_1.ApiOperation)({ summary: "Lista um agemdamento especifico" }),
+    (0, swagger_1.ApiResponse)({
+        status: 200,
+        description: 'Appointment details',
+        schema: {
+            example: {
+                id: 2,
+                userId: 2,
+                serviceId: 1,
+                date: "2025-12-15T14:30:00.000Z",
+                status: "scheduled",
+                createdAt: "2025-06-28T19:24:18.076Z",
+                updatedAt: "2025-06-28T19:24:18.076Z",
+                canceledAt: null,
+                canceledById: null,
+                cancellationReason: null,
+                service: {
+                    id: 1,
+                    name: "Sobrancelha",
+                    duration: 15,
+                    price: 10
+                },
+                user: {
+                    name: "Pedro Paraiso"
+                }
+            }
+        }
+    }),
     (0, roles_decorator_1.Roles)('admin', 'client'),
     __param(0, (0, common_1.Param)('appointmentId', common_1.ParseIntPipe)),
     __metadata("design:type", Function),

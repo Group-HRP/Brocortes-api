@@ -12,18 +12,21 @@ Object.defineProperty(exports, "__esModule", { value: true });
 exports.CreateCategoryDto = void 0;
 const class_validator_1 = require("class-validator");
 const class_transformer_1 = require("class-transformer");
+const swagger_1 = require("@nestjs/swagger");
 class CreateCategoryDto {
     name;
     serviceIds;
 }
 exports.CreateCategoryDto = CreateCategoryDto;
 __decorate([
+    (0, swagger_1.ApiProperty)({ example: "Destaques", description: "Nome da categoria" }),
     (0, class_validator_1.IsString)(),
     (0, class_validator_1.Length)(5, 50),
     (0, class_validator_1.IsNotEmpty)(),
     __metadata("design:type", String)
 ], CreateCategoryDto.prototype, "name", void 0);
 __decorate([
+    (0, swagger_1.ApiProperty)({ example: [1, 2, 5], description: "Array de Ids de servicos" }),
     (0, class_validator_1.IsArray)(),
     (0, class_validator_1.ArrayNotEmpty)(),
     (0, class_validator_1.IsInt)({ each: true }),

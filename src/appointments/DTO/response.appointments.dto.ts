@@ -17,10 +17,10 @@ export class AppointmentResponseDto {
   status: string;
 
   @Expose()
-  user?: { id: number; name: string }; // Se incluir relacionamento
+  user?: { id: number; name: string }; 
 
   @Expose()
-  service?: { id: number; name: string }; // Se incluir relacionamento
+  service?: { id: number; name: string }; 
 
   constructor(partial: Partial<AppointmentResponseDto>) {
     Object.assign(this, partial);

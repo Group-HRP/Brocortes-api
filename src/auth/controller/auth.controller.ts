@@ -9,12 +9,14 @@ import {
 import { AuthService } from '../service/auth.service';
 import { RegisterDTO } from '../DTO/auth.register.dto';
 import { LoginDTO } from '../DTO/auth.login.dto';
+import { ApiOperation } from '@nestjs/swagger';
 
 @Controller('auth')
 export class AuthController {
-  constructor(private authService: AuthService) {}
+  constructor(private authService: AuthService) { }
 
   @Post('register')
+  @ApiOperation({ summary: "Regista um novo user" })
   async registerUser(@Body() registerDTO: RegisterDTO) {
     try {
       const user = await this.authService.registerUser(registerDTO);
@@ -33,6 +35,7 @@ export class AuthController {
   }
 
   @Post('login')
+  @ApiOperation({ summary: "Login do user" })
   async loginUser(@Body() loginDTO: LoginDTO) {
     try {
       const user = await this.authService.validateUser(
