@@ -18,7 +18,7 @@ export declare class AppointmentsController {
         message: string;
         data: any;
     } | undefined>;
-    getAllHistoricAppointments(): Promise<({
+    getAllHistoricAppointments(req: any): Promise<({
         service: {
             id: number;
             name: string;

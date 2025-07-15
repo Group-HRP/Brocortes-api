@@ -52,8 +52,8 @@ let AppointmentsController = class AppointmentsController {
         }
         catch (error) { }
     }
-    async getAllHistoricAppointments() {
-        const appointments = await this.appointmentsService.getAllHistoricAppointments();
+    async getAllHistoricAppointments(req) {
+        const appointments = await this.appointmentsService.getAllHistoricAppointments(req);
         return appointments;
     }
     async getHistoricAppointments(id, req) {
@@ -161,9 +161,10 @@ __decorate([
             }
         }
     }),
-    (0, roles_decorator_1.Roles)('admin', 'professional'),
+    (0, roles_decorator_1.Roles)('admin', 'professional', 'client'),
+    __param(0, (0, common_1.Req)()),
     __metadata("design:type", Function),
-    __metadata("design:paramtypes", []),
+    __metadata("design:paramtypes", [Object]),
     __metadata("design:returntype", Promise)
 ], AppointmentsController.prototype, "getAllHistoricAppointments", null);
 __decorate([

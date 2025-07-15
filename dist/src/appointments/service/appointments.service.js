@@ -88,6 +88,7 @@ let AppointmentsService = class AppointmentsService {
         appointments = await this.prisma.appointment.findMany({
             where: {
                 userId: user,
+                status: 'scheduled',
             },
             include: {
                 service: {
@@ -189,7 +190,28 @@ let AppointmentsService = class AppointmentsService {
         }
         return appointments;
     }
-    async getAllHistoricAppointments() {
+    async getAllHistoricAppointments(req) {
+        const userId = req.user?.id;
+        const userRole = req.user?.role;
+        if (userRole === "client") {
+            const historicAppointment = await this.prisma.appointment.findMany({
+                where: { userId: userId, status: { in: ['completed', 'canceled'] }, },
+                include: {
+                    service: {
+                        select: {
+                            id: true,
+                            name: true,
+                            duration: true,
+                            price: true,
+                        },
+                    },
+                },
+                orderBy: {
+                    updatedAt: 'desc',
+                }
+            });
+            return historicAppointment;
+        }
         const appointments = await this.prisma.appointment.findMany({
             where: {
                 status: {

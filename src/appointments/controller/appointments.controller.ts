@@ -120,10 +120,10 @@ export class AppointmentsController {
       }
     }
   })
-  @Roles('admin', 'professional')
-  async getAllHistoricAppointments() {
+  @Roles('admin', 'professional', 'client')
+  async getAllHistoricAppointments(@Req() req) {
     const appointments =
-      await this.appointmentsService.getAllHistoricAppointments();
+      await this.appointmentsService.getAllHistoricAppointments(req);
 
     return appointments;
   }
