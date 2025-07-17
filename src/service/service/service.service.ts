@@ -136,6 +136,8 @@ export class ServiceService {
       select: {
         id: true,
         name: true,
+        duration: true,
+        price: true,
       }
     })
 
