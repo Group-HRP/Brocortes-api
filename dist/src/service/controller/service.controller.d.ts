@@ -11,13 +11,13 @@ export declare class ServiceController {
         statusCode: HttpStatus;
         message: string;
         data: {
-            description: string | null;
-            name: string;
             id: number;
-            createdAt: Date;
-            updatedAt: Date;
+            name: string;
+            description: string | null;
             duration: number;
             price: number;
+            createdAt: Date;
+            updatedAt: Date;
         };
     }>;
     findAll(): Promise<{
@@ -26,30 +26,32 @@ export declare class ServiceController {
         data: ServiceResponseDto[];
     }>;
     findOne(serviceId: number): Promise<{
-        name: string;
         id: number;
+        name: string;
         duration: number;
         price: number;
         categories: {
-            name: string;
             id: number;
+            name: string;
         }[];
     }>;
     findOneServiceNotCategory(categoryId: number): Promise<{
-        name: string;
         id: number;
+        name: string;
+        duration: number;
+        price: number;
     }[]>;
     update(id: number, updateServiceDto: UpdateServiceDto): Promise<{
         statusCode: HttpStatus;
         message: string;
         data: {
-            description: string | null;
-            name: string;
             id: number;
-            createdAt: Date;
-            updatedAt: Date;
+            name: string;
+            description: string | null;
             duration: number;
             price: number;
+            createdAt: Date;
+            updatedAt: Date;
         };
     }>;
     remove(id: number, deleteServiceOptionsDto: DeleteServiceOptionsDto): Promise<{

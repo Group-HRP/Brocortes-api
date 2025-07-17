@@ -9,6 +9,7 @@ import {
   Patch,
   Param,
   Delete,
+  Put,
 } from '@nestjs/common';
 import { ServiceService } from '../service/service.service';
 import { CreateServiceDto } from '../DTO/create.service.dto';
@@ -77,7 +78,7 @@ export class ServiceController {
     return service;
   }
 
-  @Patch(':id')
+  @Put(':id')
   @Roles('admin')
   async update(
     @Param('id') id: number,

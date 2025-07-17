@@ -8,12 +8,12 @@ export declare class AppointmentsService {
     constructor(prisma: PrismaClient, notificationsService: NotificationsService);
     createAppointment(createAppointmentsDto: CreateAppointmentDto): Promise<{
         id: number;
-        userId: number;
-        serviceId: number;
-        date: Date;
-        status: string;
         createdAt: Date;
         updatedAt: Date;
+        serviceId: number;
+        userId: number;
+        date: Date;
+        status: string;
         canceledAt: Date | null;
         canceledById: number | null;
         cancellationReason: string | null;
@@ -31,12 +31,12 @@ export declare class AppointmentsService {
         };
     } & {
         id: number;
-        userId: number;
-        serviceId: number;
-        date: Date;
-        status: string;
         createdAt: Date;
         updatedAt: Date;
+        serviceId: number;
+        userId: number;
+        date: Date;
+        status: string;
         canceledAt: Date | null;
         canceledById: number | null;
         cancellationReason: string | null;
@@ -51,12 +51,12 @@ export declare class AppointmentsService {
         };
     } & {
         id: number;
-        userId: number;
-        serviceId: number;
-        date: Date;
-        status: string;
         createdAt: Date;
         updatedAt: Date;
+        serviceId: number;
+        userId: number;
+        date: Date;
+        status: string;
         canceledAt: Date | null;
         canceledById: number | null;
         cancellationReason: string | null;
@@ -72,12 +72,12 @@ export declare class AppointmentsService {
         };
     } & {
         id: number;
-        userId: number;
-        serviceId: number;
-        date: Date;
-        status: string;
         createdAt: Date;
         updatedAt: Date;
+        serviceId: number;
+        userId: number;
+        date: Date;
+        status: string;
         canceledAt: Date | null;
         canceledById: number | null;
         cancellationReason: string | null;
@@ -87,12 +87,12 @@ export declare class AppointmentsService {
         canceledBy: number;
     }, userId?: number): Promise<{
         id: number;
-        userId: number;
-        serviceId: number;
-        date: Date;
-        status: string;
         createdAt: Date;
         updatedAt: Date;
+        serviceId: number;
+        userId: number;
+        date: Date;
+        status: string;
         canceledAt: Date | null;
         canceledById: number | null;
         cancellationReason: string | null;

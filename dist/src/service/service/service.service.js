@@ -34,11 +34,18 @@ let ServiceService = class ServiceService {
                 }, common_1.HttpStatus.BAD_REQUEST);
             }
             const service = await this.prisma.service.create({
-                data: createServiceDto,
+                data: {
+                    name: createServiceDto.name,
+                    description: createServiceDto.description,
+                    duration: createServiceDto.duration,
+                    price: Number(createServiceDto.price),
+                    categories: { connect: (createServiceDto.categoryIds || []).map((id) => ({ id })), }
+                },
             });
             return service;
         }
         catch (error) {
+            console.log(error);
             if (error.code === 'P2002') {
                 throw new common_1.HttpException({
                     statusCode: common_1.HttpStatus.CONFLICT,
@@ -115,6 +122,8 @@ let ServiceService = class ServiceService {
             select: {
                 id: true,
                 name: true,
+                duration: true,
+                price: true,
             }
         });
         return service;

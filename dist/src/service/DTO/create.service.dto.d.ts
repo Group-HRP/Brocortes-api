@@ -3,4 +3,5 @@ export declare class CreateServiceDto {
     description?: string;
     duration: number;
     price: number;
+    categoryIds: number[];
 }

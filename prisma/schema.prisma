@@ -38,7 +38,7 @@ model Service {
   createdAt   DateTime      @default(now())
   updatedAt   DateTime      @updatedAt
   appointment Appointment[]
-  categories  Category[]
+  categories  Category[]    @relation("ServiceToCategory")
 }
 
 model Appointment {
@@ -83,7 +83,7 @@ model PushToken {
 model Category {
   id          Int       @id @default(autoincrement())
   name        String    @unique
-  service     Service[]
+  services    Service[] @relation("ServiceToCategory")
   createdAt   DateTime  @default(now())
   atualizedAt DateTime  @updatedAt
 }

@@ -10,12 +10,14 @@ var __metadata = (this && this.__metadata) || function (k, v) {
 };
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.CreateServiceDto = void 0;
+const class_transformer_1 = require("class-transformer");
 const class_validator_1 = require("class-validator");
 class CreateServiceDto {
     name;
     description;
     duration;
     price;
+    categoryIds;
 }
 exports.CreateServiceDto = CreateServiceDto;
 __decorate([
@@ -37,4 +39,12 @@ __decorate([
     (0, class_validator_1.IsPositive)(),
     __metadata("design:type", Number)
 ], CreateServiceDto.prototype, "price", void 0);
+__decorate([
+    (0, class_validator_1.IsArray)(),
+    (0, class_validator_1.ArrayNotEmpty)(),
+    (0, class_validator_1.IsOptional)(),
+    (0, class_validator_1.IsInt)({ each: true }),
+    (0, class_transformer_1.Type)(() => Number),
+    __metadata("design:type", Array)
+], CreateServiceDto.prototype, "categoryIds", void 0);
 //# sourceMappingURL=create.service.dto.js.map

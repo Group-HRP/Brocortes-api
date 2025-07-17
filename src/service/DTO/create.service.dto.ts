@@ -1,9 +1,12 @@
+import { Type } from 'class-transformer';
 import {
   IsInt,
   IsString,
   IsOptional,
   IsNumber,
   IsPositive,
+  IsArray,
+  ArrayNotEmpty,
 } from 'class-validator';
 
 export class CreateServiceDto {
@@ -21,4 +24,11 @@ export class CreateServiceDto {
   @IsNumber()
   @IsPositive()
   price: number;
+
+  @IsArray()
+  @ArrayNotEmpty()
+  @IsOptional()
+  @IsInt({ each: true })
+  @Type(() => Number)
+  categoryIds: number[];
 }

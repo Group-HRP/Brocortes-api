@@ -42,7 +42,7 @@ export class CategoryService {
     const category = await this.prisma.category.create({
       data: {
         name,
-        service: {
+        services: {
           connect: serviceIds.map((id) => ({ id }))
         }
       },
@@ -69,7 +69,7 @@ export class CategoryService {
       select: {
         id: true,
         name: true,
-        service: {
+        services: {
           select: {
             id: true,
             name: true
@@ -112,14 +112,14 @@ export class CategoryService {
       where: { id: id },
       data: {
         name: updateCategoryDto.name,
-        service: {
+        services: {
           connect: updateCategoryDto.serviceIds.map((id) => ({ id })),
         },
       },
       select: {
         id: true,
         name: true,
-        service: true,
+        services: true
       },
     });
 
@@ -153,7 +153,7 @@ export class CategoryService {
     const serviceDelete = await this.prisma.category.update({
       where: { id: Number(id) },
       data: {
-        service: {
+        services: {
           disconnect: { id: serviceObj?.serviceId },
         },
       },

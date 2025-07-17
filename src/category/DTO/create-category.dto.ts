@@ -8,6 +8,7 @@ export class CreateCategoryDto {
   @Length(5, 50)
   @IsNotEmpty()
   name: string;
+  
   @ApiProperty({ example: [1, 2, 5], description: "Array de Ids de servicos" })
   @IsArray()
   @ArrayNotEmpty()

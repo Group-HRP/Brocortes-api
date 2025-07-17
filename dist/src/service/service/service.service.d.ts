@@ -6,51 +6,53 @@ export declare class ServiceService {
     private prisma;
     constructor(prisma: PrismaClient);
     create(createServiceDto: CreateServiceDto): Promise<{
-        description: string | null;
-        name: string;
         id: number;
-        createdAt: Date;
-        updatedAt: Date;
+        name: string;
+        description: string | null;
         duration: number;
         price: number;
+        createdAt: Date;
+        updatedAt: Date;
     }>;
     findOne(serviceId: number): Promise<{
-        name: string;
         id: number;
+        name: string;
         duration: number;
         price: number;
         categories: {
-            name: string;
             id: number;
+            name: string;
         }[];
     }>;
     findAll(): Promise<{
-        description: string | null;
-        name: string;
         id: number;
+        name: string;
+        description: string | null;
         duration: number;
         price: number;
     }[]>;
     findOneServiceNotCategory(categoryId: number): Promise<{
-        name: string;
         id: number;
+        name: string;
+        duration: number;
+        price: number;
     }[]>;
     update(id: number, updateServiceDto: UpdateServiceDto): Promise<{
-        description: string | null;
-        name: string;
         id: number;
-        createdAt: Date;
-        updatedAt: Date;
+        name: string;
+        description: string | null;
         duration: number;
         price: number;
+        createdAt: Date;
+        updatedAt: Date;
     }>;
     remove(id: number, deleteServiceOptionsDto: DeleteServiceOptionsDto): Promise<{
-        description: string | null;
-        name: string;
         id: number;
-        createdAt: Date;
-        updatedAt: Date;
+        name: string;
+        description: string | null;
         duration: number;
         price: number;
+        createdAt: Date;
+        updatedAt: Date;
     }>;
 }
