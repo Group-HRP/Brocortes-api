@@ -20,8 +20,8 @@ export declare class AppointmentsController {
     } | undefined>;
     getAllHistoricAppointments(req: any): Promise<({
         service: {
-            id: number;
             name: string;
+            id: number;
             duration: number;
             price: number;
         };
@@ -43,8 +43,8 @@ export declare class AppointmentsController {
             name: string;
         };
         service: {
-            id: number;
             name: string;
+            id: number;
             duration: number;
             price: number;
         };
@@ -62,12 +62,12 @@ export declare class AppointmentsController {
     }>;
     updateAppointment(id: number, updateData: UpdateAppointmentDto, req: any): Promise<{
         user: {
-            id: number;
             name: string;
+            id: number;
         };
         service: {
-            id: number;
             name: string;
+            id: number;
         };
     } & {
         id: number;

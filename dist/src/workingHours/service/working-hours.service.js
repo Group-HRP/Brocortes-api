@@ -83,14 +83,14 @@ let WorkingHoursService = class WorkingHoursService {
     async findAll() {
         return this.prisma.workingHours.findMany({
             orderBy: {
-                dayOfWeek: 'asc',
+                id: 'asc',
             },
             select: {
                 id: true,
                 dayOfWeek: true,
                 openingTime: true,
                 closingTime: true,
-            },
+            }
         });
     }
     async findOne(id) {

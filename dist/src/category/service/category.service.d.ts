@@ -5,54 +5,54 @@ export declare class CategoryService {
     private prisma;
     constructor(prisma: PrismaClient);
     serviceExisting(serviceObj: any): Promise<{
-        id: number;
-        name: string;
         description: string | null;
-        duration: number;
-        price: number;
+        name: string;
+        id: number;
         createdAt: Date;
         updatedAt: Date;
+        duration: number;
+        price: number;
     }>;
     create(createCategoryDto: CreateCategoryDto): Promise<{
-        id: number;
         name: string;
+        id: number;
         createdAt: Date;
         atualizedAt: Date;
     }>;
     findAll(): Promise<{
-        id: number;
         name: string;
+        id: number;
     }[]>;
     findOne(id: number): Promise<{
-        id: number;
         name: string;
+        id: number;
         services: {
-            id: number;
             name: string;
+            id: number;
         }[];
     }>;
     update(id: number, updateCategoryDto: UpdateCategoryDto): Promise<{
-        id: number;
         name: string;
+        id: number;
         services: {
-            id: number;
-            name: string;
             description: string | null;
-            duration: number;
-            price: number;
+            name: string;
+            id: number;
             createdAt: Date;
             updatedAt: Date;
+            duration: number;
+            price: number;
         }[];
     }>;
     remove(id: number): Promise<{
-        id: number;
         name: string;
+        id: number;
         createdAt: Date;
         atualizedAt: Date;
     }>;
     removeService(id: number, serviceObj: any): Promise<{
-        id: number;
         name: string;
+        id: number;
         createdAt: Date;
         atualizedAt: Date;
     }>;
