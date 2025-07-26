@@ -2,10 +2,6 @@ import {
   Body,
   Controller,
   Post,
-  HttpStatus,
-  Get,
-  ParseIntPipe,
-  Param,
   UseGuards,
 } from '@nestjs/common';
 import { NotificationsService } from '../service/notifications.service';

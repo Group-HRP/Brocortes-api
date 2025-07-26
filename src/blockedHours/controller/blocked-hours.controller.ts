@@ -13,8 +13,8 @@ import {
 } from '@nestjs/common';
 import { BlockedHoursService } from '../service/blocked-hours.service';
 import { AuthGuard } from '@nestjs/passport';
-import { Roles } from 'src/decorators/roles.decorator';
-import { RolesGuard } from 'src/user/guards/roles.guard';
+import { Roles } from '../..//decorators/roles.decorator';
+import { RolesGuard } from '../..//user/guards/roles.guard';
 import { CreateBlockedHoursDto } from '../DTO/create.blockedHours.dto';
 import { BlockedHoursFilterDto } from '../DTO/filter.blockedHours.dto';
 import { BlockedHoursResponseDto } from '../DTO/response.blockedHours.dto';

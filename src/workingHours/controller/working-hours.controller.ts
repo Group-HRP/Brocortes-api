@@ -13,8 +13,8 @@ import { WorkingHoursService } from '../service/working-hours.service';
 import { CreateWorkingHourDto } from '../DTO/create-working-hour.dto';
 import { UpdateWorkingHourDto } from '../DTO/update-working-hour.dto';
 import { AuthGuard } from '@nestjs/passport';
-import { RolesGuard } from 'src/user/guards/roles.guard';
-import { Roles } from 'src/decorators/roles.decorator';
+import { RolesGuard } from '../../user/guards/roles.guard';
+import { Roles } from '../../decorators/roles.decorator';
 
 @Controller('working-hours')
 @UseGuards(AuthGuard('jwt'), RolesGuard)

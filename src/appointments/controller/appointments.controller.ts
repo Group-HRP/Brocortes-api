@@ -14,7 +14,7 @@ import {
   UseGuards,
 } from '@nestjs/common';
 import { AppointmentsService } from '../service/appointments.service';
-import { Roles } from 'src/decorators/roles.decorator';
+import { Roles } from '../../decorators/roles.decorator';
 import { AuthGuard } from '@nestjs/passport';
 import { RolesGuard } from 'src/user/guards/roles.guard';
 import { CreateAppointmentDto } from '../DTO/create.appointments.dto';

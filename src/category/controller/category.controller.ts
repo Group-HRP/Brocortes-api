@@ -12,8 +12,8 @@ import { CategoryService } from '../service/category.service';
 import { CreateCategoryDto } from '../DTO/create-category.dto';
 import { UpdateCategoryDto } from '../DTO/update-category.dto';
 import { AuthGuard } from '@nestjs/passport';
-import { RolesGuard } from 'src/user/guards/roles.guard';
-import { Roles } from 'src/decorators/roles.decorator';
+import { RolesGuard } from '../../user/guards/roles.guard';
+import { Roles } from '../../decorators/roles.decorator';
 import { ApiBearerAuth, ApiOperation, ApiResponse } from '@nestjs/swagger';
 
 @ApiBearerAuth()

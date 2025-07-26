@@ -6,7 +6,7 @@ import {
 } from '@nestjs/common';
 import { SendCodingEmail } from '../DTO/send-coding-email.dto';
 import { PrismaClient } from '@prisma/client';
-import ResetPassword from 'src/sendEmail/reset-password';
+import ResetPassword from '../../sendEmail/reset-password';
 import { ValidateCoding } from '../DTO/validate-coding.dto';
 import { ResetPasswordDto } from '../DTO/reset-password.dto';
 import * as bcrypt from 'bcrypt';

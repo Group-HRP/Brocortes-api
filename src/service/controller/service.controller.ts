@@ -13,9 +13,9 @@ import {
 } from '@nestjs/common';
 import { ServiceService } from '../service/service.service';
 import { CreateServiceDto } from '../DTO/create.service.dto';
-import { RolesGuard } from 'src/user/guards/roles.guard';
+import { RolesGuard } from '../../user/guards/roles.guard';
 import { AuthGuard } from '@nestjs/passport';
-import { Roles } from 'src/decorators/roles.decorator';
+import { Roles } from '../../decorators/roles.decorator';
 import { ServiceResponseDto } from '../DTO/response.service.dto';
 import { UpdateServiceDto } from '../DTO/update.service.dto';
 import { DeleteServiceOptionsDto } from '../DTO/delete.service.dto';
