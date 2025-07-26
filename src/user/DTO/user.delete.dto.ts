@@ -1,6 +1,6 @@
 import { ApiProperty } from '@nestjs/swagger';
 import { IsOptional, IsString } from 'class-validator';
-import { ConfirmDeletion } from 'src/decorators/confirm-deletion.decorator';
+import { ConfirmDeletion } from '../../decorators/confirm-deletion.decorator';
 
 export class DeleteUserDto {
   @ApiProperty({ example: "DELETE", description: "Palavra chave para deletar conta" })

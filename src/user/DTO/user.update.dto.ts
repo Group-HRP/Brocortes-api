@@ -1,6 +1,6 @@
 import { IsString, IsEmail, IsOptional, IsEnum, Length } from 'class-validator';
 import { UserRole } from '../../enums/user.role.enum';
-import { IsEmailUnique } from 'src/decorators/is-email-unique.decorator';
+import { IsEmailUnique } from '../../decorators/is-email-unique.decorator';
 import { ApiProperty } from '@nestjs/swagger';
 
 export class UpdateUserDto {

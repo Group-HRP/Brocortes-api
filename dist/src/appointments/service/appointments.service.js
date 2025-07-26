@@ -12,7 +12,7 @@ Object.defineProperty(exports, "__esModule", { value: true });
 exports.AppointmentsService = void 0;
 const common_1 = require("@nestjs/common");
 const client_1 = require("@prisma/client");
-const notifications_service_1 = require("../../notifications/service/notifications.service");
+const notifications_service_1 = require("../..//notifications/service/notifications.service");
 let AppointmentsService = class AppointmentsService {
     prisma;
     notificationsService;

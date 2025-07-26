@@ -1,7 +1,7 @@
 import { PrismaClient } from '@prisma/client';
 import { CreateAppointmentDto } from '../DTO/create.appointments.dto';
 import { UpdateAppointmentDto } from '../DTO/update.appointments.dto';
-import { NotificationsService } from 'src/notifications/service/notifications.service';
+import { NotificationsService } from '../..//notifications/service/notifications.service';
 export declare class AppointmentsService {
     private prisma;
     private notificationsService;
